@@ -6,6 +6,7 @@
  */
 
 package ija.ija2016.homework3.model.cards;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -182,4 +183,3 @@ public class CardStack implements CardStackInterface
 		return Objects.hash(karty, capacity);
 	}
 }
-
