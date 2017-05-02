@@ -1,79 +1,65 @@
-package ija.ija2016.homework2.model.board;
+/**
+ * Trida vytvarejicic veskere nutne hraci prostredky
+ * @author Tomáš Holík, xholik13
+ * @author Petr Buchal, xbucha02
+ * @version 0.2
+ */
 
-import ija.ija2016.homework2.model.cards.Card;
-import ija.ija2016.homework2.model.cards.CardDeck;
-import ija.ija2016.homework2.model.cards.CardStack;
-import ija.ija2016.homework2.model.cards.ICard;
-import ija.ija2016.homework2.model.cards.ICardDeck;
-import ija.ija2016.homework2.model.cards.ICardStack;
+package ija.ija2016.homework3.model.board;
+import ija.ija2016.homework3.model.cards.Card;
+import ija.ija2016.homework3.model.cards.CardDeck;
+import ija.ija2016.homework3.model.cards.CardStack;
 
 /**
- * Trida implementuje abstraktni class AbstractFactorySolitaire (tovarnu na karty)
+ * Trida implementujici abstraktni tridu factory solitaire, vytvari prostredky pro funkcnost klandike
+ * @author Tomas Holik, xholik13
+ *
  */
 public class FactoryKlondike extends AbstractFactorySolitaire {
 
 	/**
-	 * [Vytvari objekt reprezentujici balicek karet.]
-	 * @return [Balicek karet.]
+	 * Vytváøí objekt reprezentující balíèek karet
+	 * @return Balicek karet
 	 */
-	public CardDeck createCardDeck()
-	{
-		CardDeck deck = new ICardDeck(52, 1);
-        for (int i = 1; i <= 13; i++) 
-        { 
-        	Card c1 = new ICard(ICard.Color.CLUBS, i);
-        	deck.put(c1);
-        }
-        for (int i = 1; i <= 13; i++) 
-        { 
-        	Card c1 = new ICard(ICard.Color.DIAMONDS, i);
-        	deck.put(c1);
-        }
-        for (int i = 1; i <= 13; i++) 
-        { 
-        	Card c1 = new ICard(ICard.Color.HEARTS, i);
-        	deck.put(c1);
-        }
-        for (int i = 1; i <= 13; i++) 
-        { 
-        	Card c1 = new ICard(ICard.Color.SPADES, i);
-        	deck.put(c1);
-        }
+	public CardDeck createCardDeck() {
+		CardDeck deck = CardDeck.createStandardDeck();
 		return deck;
-	}
-	
-	/**
-	 * [Vytvori objekt reprezentujici kartu.]
-	 * @param  color [Barva karty.]
-	 * @param  value [Hodnota karty v rozsahu 1 az 13.]
-	 * @return       [Objekt karty. Pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null.]
-	 */
-	public Card createCard(Card.Color color, int value)
-	{
-		if (value > 13 || value < 1 )
-			return null;
-		Card c = new ICard(color, value);
-		return c;
 	}
 
 	/**
-	 * [Vytvari objekt reprezentujici cilovy balicek. Cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku.]
-	 * @param  color [Barva celeho balicku.]
-	 * @return       [Cilovy balicek.]
+	 * Vytvori objekt reprezentujici kartu
+	 * @param color - barva karty
+	 * @param value - hodnota karty
+	 * @return Objekt karty. Pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null
 	 */
-	public CardDeck createTargetPack(Card.Color color)
-	{
-		CardDeck deck = new ICardDeck(13, 2, color);
+	public Card createCard(Card.Color color, int value) {
+		if(value > 13 || value < 1) {
+			return null;
+		}
+		else {
+			Card card = new Card(color, value);
+			return card;
+		}
+
+	}
+
+	/**
+	 * Vytvari objekt reprezentujici cilovy balicek. Cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku.
+	 * @param color - Zadana barva
+	 * @return Cilovy balicek
+	 */
+	public CardDeck createTargetPack(Card.Color color) {
+		CardDeck deck = CardDeck.createTargetPack(color);
 		return deck;
 	}
-	
+
 	/**
-	 * [Vytvari objekt reprezentujici pracovni pole pro karty.]
-	 * @return [Pracovni pole.]
+	 * Vytvari objekt reprezentujici pracovni pole pro karty
+	 * @return pracovni pole
 	 */
-	public CardStack createWorkingPack()
-	{
-		CardStack stack = new ICardStack(13);
+	public CardStack createWorkingPack() {
+		CardStack stack = CardStack.createWorkingPack();
 		return stack;
 	}
+
 }

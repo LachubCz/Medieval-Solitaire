@@ -1,248 +1,185 @@
-package ija.ija2016.homework2.model.cards;
-import java.util.Arrays;
-
 /**
- * Implementace rozhrani CardStack
+ * Trida reprezentující pracujici pole.
+ * @author Tomáš Holík, xholik13
+ * @author Petr Buchal, xbucha02
+ * @version 0.2
  */
-public class ICardStack implements CardStack 
+
+package ija.ija2016.homework3.model.cards;
+import java.util.ArrayList;
+import java.util.Objects;
+
+
+public class CardStack implements CardStackInterface 
 {
-	private int size;
-	private boolean top;
-	private Card [] stack;
 	
+	private ArrayList<Card> karty;
+	private int capacity;
+	private Card Cardcolor;
+
 	/**
-	 * [Konstruktor ICardStack.]
-	 * @param  size [Velikost ICardStack.]
-	 * @return      [Void.]
+	 * Konstruktor pro vytvoreni pracujiciho pole
+	 * @param size - velikost pole
 	 */
-	public ICardStack(int size) 
+	public CardStack(int size) 
 	{
-		this.stack = new ICard[size];
-		this.size = 0;
-		this.top = true;
+		this.capacity = size;
+		this.Cardcolor = null;
+		this.karty = new ArrayList<Card>(size);
 	}
 	
 	/**
-	 * [Vlozi kartu na vrchol zasobniku.]
-	 * @param  card [card - Vkladani karta.]
-	 * @return      [Vrati true, pokud byla karta vlozena.]
+	 * Konstruktor pro vytvoreni pracujiciho pole o velikosti 13
+	 * @return Pracujici pole
+	 */
+	public static CardStack createWorkingPack() 
+	{
+		CardStack stack = new CardStack(13);
+		return stack;
+	}
+	
+	/**
+	 * Vlozi kartu na vrchol balicku
+	 * @param card - vkladana karta
+	 * @return Uspesnost akce
 	 */
 	public boolean put(Card card) 
 	{
-		if (this.top == true)
-		{
-			if (card == null)
-				return false;
-			
-			if (this.size() == 0)
-			{
-				if (card.value() == 13)
-				{
-					this.stack[this.size] = card;
-					this.size+=1;
-					return true;
-				}
-				else
-					return false;
-			}
-			
-			Card c = this.get();
-			
-			if (!c.similarColorTo(card))
-			{
-				if (c.compareValue(card) == 1)
-				{
-					this.stack[this.size] = card;
-					this.size+=1;
-					return true;
-				}		
-			}
-			return false;
+		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+			this.Cardcolor = new Card(card.color(), 13);
+				this.karty.add(card);
+				return true;
 		}
-		else
-		{
-			this.stack[this.size] = card;
-			this.size+=1;
-			return true;
+		
+		if(((this.capacity - (this.size())) == card.value()) && (this.Cardcolor != null)) {
+			 if(!(card.similarColorTo(this.Cardcolor))) {
+				this.Cardcolor = new Card(card.color(), 13);
+				this.karty.add(card);
+				return true;
+			 }
+			 else {
+				 return false;
+			 }
+		}
+		else {
+			return false;
 		}
 	}
 	
 	/**
-	 * [Vlozi karty ze zasobniku stack na vrchol zasobniku. Karty vklada ve stejnem poradi, v jakem jsou uvedeny v zasobniku stack. Karta na vrcholu zasobniku vkladanych karet stack bude i na vrcholu tohoto zasobniku.]
-	 * @param  pastestack [Zasobnik vkladanych karet.]
-	 * @return            [Vrati true, pokud byl zasobnik vlozen.]
-	 */
-	public boolean put(CardStack pastestack) 
+	 * Vloží karty ze zásobníku stack na vrchol zásobníku. Karty vkládá ve stejném poøadí, v jakém jsou uvedeny v zásobníku stack.
+	 * @param stack - Zásobník vkládaných karet.
+	 * @return Uspìšnost akce.
+	*/
+	public boolean put(CardStack stack) 
 	{
-		if (this.top == true)
-		{
-			for(int i = 0; i < pastestack.size(); i++)
-			{
-				if (this.put(pastestack.get(i)) == false)
-					return false;
-			}
-			return true;
-		}
-		else 
+		if((stack == null) || (stack.isEmpty() == true) || this.isEmpty()) {
 			return false;
+		}
+		karty.addAll(stack.karty);
+		stack.karty.clear();
+		return true;
 	}
 	
+	  
 	/**
-	 * [Test, zda je zasobnik prazdny.]
-	 * @return [Vraci true, pokud je zasobnik prazdny.]
-	 */
+	* Test, zda je balíèek karet prázdný.
+	* @return Vrací true, pokud je balíèek prázdný.
+	*/
 	public boolean isEmpty() 
 	{
-		if(this.stack[0] == null)
-			return true;
-		else
-			return false;
+		return this.karty.isEmpty();
 	}
 	
 	/**
-	 * [Vrati aktualni pocet karet v zasobniku.]
-	 * @return [Aktualni pocet karet v zasobniku.]
+	 * @return velikost balicku
 	 */
 	public int size() 
 	{
-		return this.size;
+		return this.karty.size();
 	}
 	
 	/**
-	 * [Metoda odebere ze zasobniku sekvenci karet od zadane karty az po vrchol zasobniku. Pokud je hledana karta na vrcholu, bude v sekvenci pouze jedna karta.]
-	 * @param  card [Hledana karta.]
-	 * @return      [Zasobnik karet obsahujici odebranou sekvenci. Pokud hledana karta v zasobniku neni, vraci null.]
+	 * Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null
+	 * @return Vraci kartu z vrcholu balicku
 	 */
-	public CardStack takeFrom(ICard card) 
-	{
-		int i;
-		int temp = this.size();
-
-		for(i = 0; i < this.size(); i++)
-		{
-			if(this.stack[i].equals(card))
-			{
-				int stacksize = this.size - i ;
-				CardStack stack = new ICardStack(stacksize);
-				while(i < temp)
-				{
-					stack.put(this.get(i));
-					this.size-=1;
-					i+=1;
-				}
-				return stack;
-			}
+	public Card pop() {
+		if(this.isEmpty()) {
+			return null;
 		}
-		return null;
+		Card Card = (Card)karty.remove(karty.size() - 1);
+	    
+		return Card;
 	}
 	
 	/**
-	 * [Metoda pro porovnani dvou objektu typu cardstack.]
-	 * @param  o [Porovnavany objekt.]
-	 * @return   [Vraci true, pokud jsou objekty shodne.]
-	 */
-	public boolean equals(Object o)
-	{
-        if (o == this) return true;
-        if (!(o instanceof ICardStack)) 
-        {
-            return false;
-        }
-
-        ICardStack stack1 = (ICardStack) o;
-        return Arrays.equals(stack1.stack, stack) && stack1.size == size;
-    }
-	
-	/**
-	 * [Metoda hashCode pro objekt typu cardstack.]
-	 * @return [Vraci zahashovany int z hashovaci metody.]
-	 */
-    public int hashCode() 
-    {
-        int result = 17;
-        result = 31 * result + stack.hashCode();
-        result = 31 * result + size;
-        return result;
-    }
-
-	/**
-	 * [Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null.]
-	 * @return [Karta z vrcholu balicku.]
-	 */
-	public Card pop() 
-	{
-		Card temp;
-		if (this.size == 0)
-			return null;
-		else
-		{
-			this.size-=1;
-			temp = this.stack[this.size];
-			this.stack[this.size] = null;
-			return temp;
-		}
-	}
-
-	/**
-	 * [Vrati kartu z vrcholu zasobniku (karta zustava na zasobniku). Pokud je balicek prazdny, vraci null.]
-	 * @return [Karta z vrcholu balicku.]
-	 */
-	public Card get() 
-	{
-		if (this.size() == 0)
-			return null;
-		Card c = this.stack[(this.size() - 1)];
-		return c; 
-	}
-
-	/**
-	 * [Vrati kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je balicek prazdny, nebo index mimo rozsah, vraci null.]
-	 * @param  index [Pozice karty v balicku.]
-	 * @return       [Karta z vrcholu balicku.]
-	 */
-	public Card get(int index) 
-	{
-		if (this.size() == 0)
-			return null;
-		Card c = this.stack[(index)];
-		return c;
-	}
-
-	/**
-	 * [Vyhleda kartu a odebere ji a karty pod ni z balicku.]
-	 * @param  card [Hledana karta.]
-	 * @return      [Vrati carstack obsahujici hledanou kartu a karty pod ni.]
+	 * Metoda odebere ze zásobníku sekvenci karet od zadané karty až po vrchol zásobníku. Pokud je hledaná karta na vrcholu, bude v sekvenci pouze jedna karta.
+	 * @param card - Hledaná karta.
+	 * @return Zásobník karet obsahující odebranou sekvenci. Pokud hledaná karta v zásobníku není, vrací null
 	 */
 	public CardStack pop(Card card) 
 	{
-		int i;
-		int temp = this.size();
-
-		for(i = 0; i < this.size(); i++)
-		{
-			if(this.stack[i].equals(card))
-			{
-				int stacksize = this.size - i;
-				CardStack stack = new ICardStack(stacksize);
-				while(i < temp)
-				{
-					((ICardStack)stack).changetop();
-					stack.put(this.stack[i]);
-					this.size-=1;
-					i+=1;
-				}
-				return stack;
-			}
+		int lastindex = this.karty.lastIndexOf(card);
+		
+		if(lastindex == -1) {
+			return null;
 		}
-		return null;
-	}    
+		
+		CardStack pomocny = new CardStack(this.size());
+		
+		if(lastindex == (this.karty.size()-1)) {
+			pomocny.karty.add(this.karty.get(this.size()-1));
+		}
+		else {
+			pomocny.karty.addAll((this.karty.subList(lastindex, this.size())));
+		}
 
+		
+		if(lastindex == (this.karty.size()-1)) {
+			this.karty.remove(lastindex);
+		}
+		else {
+			this.karty.subList(lastindex, this.karty.size()).clear();
+		}
+		
+		return pomocny;
+	}
+	
 	/**
-	 * [Zmeni property top (typ cardstacku).]
+	 * Prepise metodu equals, pro korektni kontrolu podobnosti objektu
 	 */
-	public void changetop ()
+	@Override
+	public boolean equals(Object obj) 
 	{
-		this.top = false;
+		
+		if(obj == this) return true;
+		if(!(obj instanceof CardStack)) {
+			return false;
+		}
+		CardStack stack = (CardStack)obj;
+		if(this.karty.isEmpty() != stack.karty.isEmpty()) {
+			return false; 
+		}
+		if(this.karty.size() != stack.karty.size()) {
+			return false;
+		}
+		if(this.capacity != stack.capacity) {
+			return false;
+		}
+		if(!(stack.karty.containsAll(this.karty))) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Prepsani metody hashCode, nutnost pri prepsani equals
+	 * @return true= hash hodnota
+	 */
+	@Override
+	public int hashCode() 
+	{
+		return Objects.hash(karty, capacity);
 	}
 }
 

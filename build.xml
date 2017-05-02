@@ -1,23 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Ukol c.3" default="run" basedir=".">
+<?xml version="1.0" encoding="Windows-1250" ?>
+<project name="ija-client" basedir="." default="run">
+
+	<property name="lib" value="lib"/>
+	<property name="src.dir" value="src/ija/ija2016/homework3/model"/>
+	<property name="test.src.dir" value="src/ija/ija2016/homework3/test"/>
+	<property name="dest.dir" value="dest-client"/>
+	<property name="build.dir.classes" value="build/main"/>
+	<property name="build.dir.tests" value="build/test"/>
+    <property name="jar.name" value="ija-client"/>
+	<property name="doc.dir" value="doc"/>
 	
-	<target name="run" depends="compile">
-		<junit>
-			<test name="ija.ija2016.homework2.HomeWork2Test"/>
-			<formatter type="brief" usefile="false"/>
-			<classpath location="./lib/junit-4.12.jar"/>
-			<classpath location="./lib/hamcrest-core-1.3.jar"/>
-			<classpath location="build"/>
-		</junit>
-	</target>
 	
 	<path id="libs">
-		<pathelement location="./lib/junit-4.12.jar"/>
-		<pathelement location="./lib/hamcrest-core-1.3.jar"/>
+		<fileset dir="${lib}" includes="*.jar"/>
+		<pathelement location="${build.dir.classes}"/>
 	</path>
 	
-	<target name="compile">
-		<javac includeantruntime="false" srcdir="./src" destdir="build" classpathref="libs"/>
-		<jar destfile = "./dest-client/ija-client.jar" basedir = "./build" includes="libs" />
+	<path id="libs2">
+		<path refid="libs"/>
+		<pathelement location="${build.dir.tests}"/>
+	</path>
+
+    <target name="clean">
+            <delete dir="${dest.dir}"/>
+            <delete dir="${build.dir.classes}"/>
+			<delete dir="${build.dir.tests}"/>
+		    <delete dir="${doc.dir}"/>
+    </target>
+	
+	<target name="doc" depends="clean">
+	    <mkdir dir="${doc.dir}"/>
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="Windows-1250"/>
 	</target>
+	
+
+    <target name="compile" depends="doc">
+        <mkdir dir="${build.dir.classes}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir.classes}" includeantruntime="false" encoding="Windows-1250"/>
+        <mkdir dir="${dest.dir}"/>
+        <jar destfile="${dest.dir}/${jar.name}.jar" basedir="${build.dir.classes}" encoding="Windows-1250"/>
+    </target>
+	
+	
+	<target name="test-compile" depends="compile">
+        <mkdir dir="${build.dir.tests}"/>
+        <javac srcdir="${test.src.dir}" destdir="${build.dir.tests}" includeantruntime="false" encoding="Windows-1250">
+			<classpath refid="libs"/>
+		</javac>
+    </target>
+	
+	
+	<target name="run" depends="test-compile">
+        <junit haltonfailure="no" printsummary="yes">
+            <classpath>
+                <path refid="libs2"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <batchtest>
+                <fileset dir="${build.dir.tests}"> 
+				<include name="**/*Test*.class"/>
+				<include name="**/Test*.class"/>
+				<include name="**/*Test.class"/>
+				</fileset>
+            </batchtest>
+        </junit>
+	</target>
+	
 </project>
