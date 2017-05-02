@@ -1,0 +1,2 @@
+# verynicesolitaire
+Projekt IJA
