@@ -1,155 +1,164 @@
-package ija.ija2016.homework2.model.cards;
+/**
+ * Trida reprezentujici hraci balicek
+ * @author Tomáš Holík, xholik13
+ * @author Petr Buchal, xbucha02
+ * @version 0.2
+ */
+
+package ija.ija2016.homework3.model.cards;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Implementace rozhrani CardDeck
+ * Trida reprezentujici hraci balicek
+ * @author Tomas Holik, xholik13
  */
-public class ICardDeck implements CardDeck 
+public class CardDeck implements CardDeckInterface 
 {
-	private int size;
-	
-	private int type;
-	
-	private Card [] deck;
-	
-	protected ICard.Color c;
-	
+	private ArrayList<Card> karty;
+	private Card.Color color;
+  
 	/**
-	 * [Konstruktor ICardDeck.]
-	 * @param  size [Velikost balicku.]
-	 * @param  type [Typ balicku.]
-	 * @return      [Void.]
+	 * Konstruktor vytvarejici balicek karet
+	 * @param size - velikost balicku
 	 */
-	public ICardDeck(int size, int type) 
+	public CardDeck(int size) 
 	{
-		this.type = type;
-		this.deck = new Card[size];
-		this.size = 0;
+    
+		if (size % 4 != 0) {
+			throw new IllegalArgumentException("Size has to be divisible by 4");
+		}
+    
+		int numberofeachcard = size / 4;
+    
+		Set<Card> cardDeck = new HashSet<Card>();
+    
+		for (int i = 1; i <= numberofeachcard; i++) cardDeck.add(new Card(Card.Color.CLUBS, i));
+		for (int i = 1; i <= numberofeachcard; i++) cardDeck.add(new Card(Card.Color.DIAMONDS, i));
+		for (int i = 1; i <= numberofeachcard; i++) cardDeck.add(new Card(Card.Color.HEARTS, i));
+		for (int i = 1; i <= numberofeachcard; i++) cardDeck.add(new Card(Card.Color.SPADES, i));
+    
+		this.color = null;
+		this.karty = new ArrayList<Card>(size);
+		this.karty.addAll(cardDeck);
+	}
+  
+	/**
+	 * Kontruktor vytvarejici standartni balicek karet
+	 * @return balicek o velikosti 52 karet, kazda 13 karet
+	 */
+	public static CardDeck createStandardDeck() 
+	{
+		CardDeck balicek = new CardDeck(52);
+		balicek.color = null;
+    
+		return balicek;
 	}
 	
 	/**
-	 * [Konstruktor ICardDeck.]
-	 * @param  size  [Velikost balicku.]
-	 * @param  type  [Typ balicku.]
-	 * @param  color [Barva balicku.]
-	 * @return       [Void.]
+	 * Vytvari cilovy balicek
+	 * @param color - cilova barva
+	 * @return Cilovy balicek
 	 */
-	public ICardDeck(int size, int type, Card.Color color) 
+	public static CardDeck createTargetPack(Card.Color color) 
 	{
-		this.type = type;
-		this.deck = new Card[size];
-		this.size = 0;
-		this.c = color;
+		CardDeck balicek = new CardDeck(16);
+		balicek.karty.clear();
+		balicek.color = color;
+    
+		return balicek;
 	}
-	
+  
 	/**
-	 * [Vrati aktualni pocet karet v balicku.]
-	 * @return [Aktualni pocet karet v balicku.]
+	 * @return velikost balicku
 	 */
-	public int size()  
+	public int size() 
 	{
-		return this.size;
+		return karty.size();
 	}
-	
+  
 	/**
-	 * [Vlozi kartu na vrchol balicku.]
-	 * @param  card [Vkladana karta.]
-	 * @return      [Uspesnost akce.]
+	 * Vlozi kartu na vrchol balicku
+	 * @param card - vkladana karta
+	 * @return Uspesnost akce
 	 */
 	public boolean put(Card card) 
 	{
-		if (card == null)
-			return false;
-		
-		if (this.type == 1)
-		{
-			this.deck[this.size] = card;
-			this.size+=1;
-			return true;
-		}
-		else
-		{
-			if(card.color() == this.color())
-				;
-			else if(card.color() == this.color())
-				;
-			else if(card.color() == this.color())
-				;
-			else if(card.color() == this.color())
-				;
-			else
-				return false;
-
-			if(this.size() == (card.value()-1))
-			{
-				this.deck[this.size] = card;
-				this.size+=1;
+		if(this.color != null) {
+			if(this.karty.isEmpty()) {
+				if((card.color() == this.color) && (card.value() == 1)) {
+					this.karty.add(card);
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if(((this.size()+1) == card.value()) && ((this.color == card.color()))) {
+				this.karty.add(card);
 				return true;
 			}
-			else
-			{
+			else {
 				return false;
 			}
 		}
+		else {
+			return false;
+		}
 	}
-	
+  
 	/**
-	 * [Metoda zjisti barvu balicku.]
-	 * @return [Barva balicku.]
-	 */
-	public ICard.Color color()
-	{
-		return this.c;
-	}
-	
-	/**
-	 * [Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null.]
-	 * @return [Karta z vrcholu balicku.]
+	 * Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null
+	 * @return Vraci kartu z vrcholu balicku
 	 */
 	public Card pop() 
 	{
-		Card temp;
-		if (this.size == 0)
+		if(this.isEmpty()) {
 			return null;
-		else
-		{
-			this.size-=1;
-			temp = this.deck[this.size];
-			this.deck[this.size] = null;
-			return temp;
 		}
+		Card Card = (Card)karty.remove(karty.size() - 1);
+    
+		return Card;
 	}
-	
+  
 	/**
-	 * [Vrati kartu z vrcholu zasobniku (karta zustava na zasobniku). Pokud je balicek prazdny, vraci null.]
-	 * @return [Karta z vrcholu balicku.]
+	 * Vrati kartu z vrcholu zasobniku (karta zustava na zasobnkiku). Pokud je balicek prazdny, vraci null.
+	 * @return Karta z vrcholu balicku
 	 */
-	public Card get()
+	public Card get() 
 	{
-		if (this.size() == 0)
+		if(this.karty.isEmpty()) {
 			return null;
-		Card c = this.deck[(this.size() - 1)];
-		return c; 
+		}
+		
+		Card card = this.karty.get(this.karty.size()-1);
+		
+		return card;
+
 	}
-	
+    
 	/**
-	 * [Vrati kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je balicek prazdny, nebo index mimo rozsah, vraci null.]
-	 * @param  index [Pozice karty v balicku.]
-	 * @return       [Karta z vrcholu balicku.]
+	 * Vrátí kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je balíèek prázdný, nebo index mimo rozsah, vrací null.
+	 * @param index - pozice karty v balicku
+	 * @return karta na uvedenem indexu
 	 */
-	public Card get(int index)
+	public Card get(int index) 
 	{
-		if (this.size() == 0)
+		if((this.karty.isEmpty()) || (index > (this.karty.size()-1)) || (index < 0)) {
 			return null;
-		Card c = this.deck[(index)];
-		return c;
+		}
+		Card card = this.karty.get(index);
+		return card;
 	}
-	
+  
 	/**
-	 * [Test, zda je balicek karet prazdny.]
-	 * @return [Vraci true, pokud je balicek prazdny.]
+	 * Test, zda je balíèek karet prázdný.
+	 * @return Vrací true, pokud je balíèek prázdný.
 	 */
-	public boolean isEmpty()
+	public boolean isEmpty() 
 	{
-		return true;
+		return this.karty.isEmpty();
 	}
 }

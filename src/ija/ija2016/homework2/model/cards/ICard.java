@@ -1,193 +1,174 @@
-package ija.ija2016.homework2.model.cards;
+/**
+ * Rozhraní reprezentující jednu kartu.
+ * @author Tomáš Holík, xholik13
+ * @author Petr Buchal, xbucha02
+ * @version 0.2
+ */
+
+package ija.ija2016.homework3.model.cards;
+
+import java.util.Objects;
 
 /**
- * Implementace rozhrani Card
+ * Trida reprezentujici jednu kartu, implementuje rozhrani CardInterface. Karta obsahuje informaci o své hodnotì (1 až 13) a barvì. Tyto informace jsou nastaveny konstruktorem. Hodnota 1 reprezentuje eso (ace), 11 až 13 postupnì kluk (jack), královna (queen) a král (king). Barvu definuje výètový typ Color.
+ * @author Holajz
  */
-public class ICard implements Card 
-{
-	protected int value;
+public class Card implements CardInterface {
+	private final Card.Color barva;
+	private final int value;
+	private boolean isturned;
 	
-	protected ICard.Color c;
-	
-	protected boolean TurnedFaceUp;
-
+	  
 	/**
-	 * [Konstruktor ICard.]
-	 * @param  c     [Barva karty.]
-	 * @param  value [Hodnota karty.]
-	 * @return       [Void.]
+	 * Konstruktor pro vytvoreni karty
+	 * @param c - barva karty
+	 * @param value - hodnota karty
 	 */
-	public ICard(Card.Color c, int value)
-	{
-		if (value > 13 || value < 1 )
-			System.exit(0);
+	public Card(Card.Color c, int value) {
+			this.isturned = false;
+			this.barva = c;
+			this.value = value;
+	}
 		
-		this.c = c;
-		this.value = value;
-		this.TurnedFaceUp = false;
-	}
-	
 	/**
-	 * [Vraci hodnotu karty.]
-	 * @return [Hodnota karty.]
+	 * Vyctovy typ reprezentujici barvu karty
+	 * @author Tomas Holik
+	 *
 	 */
-	public int value()
-	{
-		return value;
-	}
-	
-	/**
-	 * [Vrati barvu karty.]
-	 * @return [Barva karty.]
-	 */
-	public ICard.Color color()
-	{
-		return c;
-	}
-	
-	/**
-	 * [Prevede barvu a hodnotu karty na kompaktni tvar.]
-	 * @return [Retezec obsahujici kompaktni tvar karty.]
-	 */
-	public String toString()
-	{
-		String str = null;
-		
-		if (this.value > 13)
-			System.exit(0);
-		
-		if (this.value < 11 && this.value != 1)
-		{
-			str = String.format ("%d", this.value);
-			str+="(";
-			str+=this.c.toString();
-			str+=")";
-			return str;
-		}
-		if(this.value == 1)
-		{
-			str = "A";
-		}	
-		if(this.value == 11)
-		{
-			str = "J";
-		}	
-		if(this.value == 12)
-		{
-			str = "Q";
-		}	
-		if(this.value == 13)
-		{
-			str = "K";
-		}	
-			str+="(";
-			str+=this.c.toString();
-			str+=")";
-			return str;
-	}
-	
-	/**
-	 * [Metoda pro porovnani dvou objektu typu card.]
-	 * @param  o [Porovnavany objekt.]
-	 * @return   [Vraci true, pokud jsou objekty shodne.]
-	 */
-	public boolean equals(Object o)
-	{
-        if (o == this) return true;
-        if (!(o instanceof Card)) {
-            return false;
-        }
-
-        ICard card = (ICard) o;
-
-        return card.c.equals(c) &&
-                card.value == value;
-    }
-	
-	/**
-	 * [Metoda hashCode pro objekt typu card.]
-	 * @return [Vraci zahashovany int z hashovaci metody.]
-	 */
-    public int hashCode() 
-    {
-        int result = 17;
-        result = 31 * result + c.hashCode();
-        result = 31 * result + value;
-        return result;
-    }
-	
-	/**
-	 * [Testuje, zda je karta otocena licem nahoru.]
-	 * @return [Vysledek testu: true = karta je otocena licem nahoru.]
-	 */
-	public boolean isTurnedFaceUp()
-	{
-		if (this.TurnedFaceUp == true)
-			return true;
-		else
-			return false;
-	}
-	
-	/**
-	 * [Otoci kartu licem nahoru. Pokud tak uz je, nedela nic.]
-	 * @return [Informace, zda doslo k otoceni karty (=true) nebo ne.]
-	 */
-	public boolean turnFaceUp()
-	{
-		if (this.isTurnedFaceUp())
-		{
-			return false;
-		}
-		else
-		{
-			this.TurnedFaceUp = true;
-			return true;
+	public static enum Color {
+		SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C");
+			
+		private String type;
+		//pri zavolani Color se automaticky ulozi SPADES jako "S"
+		//enum.valueOf() - implicitni metoda - pri zavolani valueof("S")
+		// vrati hodnotu stringu
+		//enum.values() - implicitni metoda - vrati vsechny instance enumu
+		private Color(String typ) {
+			this.type = typ;
 		}
 			
+		@Override
+		public String toString() {
+			return this.type;
+		}
 	}
 	
 	/**
-	 * [Testuje, zda ma karta podobnou barvu jako karta zadana. Podobnou barvou se mysli cerna (piky, krize) a cervena (kary a srdce).]
-	 * @param  c [Karta pro porovnani.]
-	 * @return   [Informace o shode barev karet.]
+	 * @return Hodnota karty
 	 */
-	public boolean similarColorTo(Card c)
-	{
-		if(c.color().equals(Card.Color.HEARTS) || c.color().equals(Card.Color.DIAMONDS))
-			if(this.color().equals(Card.Color.HEARTS) || this.color().equals(Card.Color.DIAMONDS))
-				return true;
-		if(c.color().equals(Card.Color.CLUBS) || c.color().equals(Card.Color.SPADES))
-			if(this.color().equals(Card.Color.CLUBS) || this.color().equals(Card.Color.SPADES))
-				return true;
+	public int value() {
+		return this.value;
+	}
+	  
+	/**
+	 * Testuje, zda je karta otocena licem nahoru
+	 * @return Vysledek testu, true = karta je otocena licem nahoru.
+	 */
+	public boolean isTurnedFaceUp() {
+		return this.isturned;
+	}
+	  
+	/**
+	 * Otoci kartu licem nahoru. Pokud tak uz je, nedela nic.
+	 * @return Informace, zda doslo k otoceni karty (=true) nebo ne
+	 */
+	public boolean turnFaceUp() {
+		if(this.isturned == false) {
+			this.isturned = true;
+			return true;
+		}
 		return false;
 	}
-	
+	  
 	/**
-	 * [Porovna hodnotu karty se zadanou kartou c. Pokud jsou stejne, vraci 0. Pokud je karta vetsi nez zadana c, vraci kladny rozdil hodnot.]
-	 * @param  c [Karta, s kterou se porovnava.]
-	 * @return   [Vraci rozdil hodnot karet.]
+	 * @return Barva karty
 	 */
-	public int compareValue(Card c)
-	{
-		return this.value() - c.value();
+	public Card.Color color() {
+		return this.barva;
+	}
+	  
+	/**
+	 * Testuje, zda má karta podobnou barvu jako karta zadaná. Podobnou barvou se myslí èerná (piky, køíže) a èervená (káry a srdce).
+	 * @param c - karta pro srovnani
+	 * @return Informace o shodì barev karet.
+	 */
+	public boolean similarColorTo(Card c) {
+		if(((c.color() == Card.Color.CLUBS) || (c.color() == Card.Color.SPADES)) && ((this.color() == Card.Color.CLUBS) || (this.color() == Card.Color.SPADES))) {
+			return true;
+		}
+		else if(((c.color() == Card.Color.DIAMONDS) || (c.color() == Card.Color.HEARTS)) && ((this.color() == Card.Color.DIAMONDS) || (this.color() == Card.Color.HEARTS))) {
+			return true;
+		}
+		return false;
+	}
+	  
+	/**
+	 * Porovná hodnotu karty se zadanou kartou c. Pokud jsou stejné, vrací 0. Pokud je karta vìtší než zadaná c, vrací kladný rozdíl hodnot.
+	 * @param c - Karta, s kterou se porovnává.
+	 * @return Vrací rozdíl hodnot karet.
+	 */
+	public int compareValue(Card c) {
+		if(c.value == this.value) {
+			return 0;
+		}
+		else if(this.value > c.value) {
+			int difference =  this.value - c.value;
+			return difference;
+		}
+		else {
+			int difference =  this.value - c.value;
+			return difference;
+		}
+	}
+	  
+	/**
+	 * Prepsani metody toString, pro korektni vypis na vystup
+	 * @return Vraci string ve formatu [hodnota karty]([barva karty])
+	 */
+	@Override
+	public String toString() {
+		String convert = "1";
+			
+		if(this.value > 1 && this.value < 11) {
+			convert = Integer.toString(this.value);
+		}
+		else {
+			switch(value) {
+			case 1: convert = "A";
+			break;
+			case 11: convert = "J";
+			break;
+			case 12: convert = "D";
+			break;
+			case 13: convert = "K";
+			break;	
+			}
+		}
+		return (convert + "(" + this.barva.toString() + ")"); 
 	}
 	
 	/**
-	 * [Porovnava barvu dvou karet.]
-	 * @param  c [Porovnavana karta.]
-	 * @return   [Vraci true pokud jsou karty stejne.]
+	 * Prepsani metody equals, pro korektni kontrola podobnosti dvou karet
+	 * @param obj - Objekt pro porovnani
+	 * @return true= je podobny
 	 */
-	public boolean color_compare(Card c)
-	{
-		if(this.color().equals(Card.Color.HEARTS) && c.color().equals(Card.Color.HEARTS))
-			return true;
-		if(this.color().equals(Card.Color.CLUBS) && c.color().equals(Card.Color.CLUBS))
-			return true;
-		if(this.color().equals(Card.Color.DIAMONDS) && c.color().equals(Card.Color.DIAMONDS))
-			return true;
-		if(this.color().equals(Card.Color.SPADES) && c.color().equals(Card.Color.SPADES))
-			return true;
-		return false;
+	@Override
+	public boolean equals(Object obj) {
+			
+		if(obj == this) return true;
+		if(!(obj instanceof Card)) {
+			return false;
+		}
+		Card card = (Card)obj;
+		return value == card.value && Objects.equals(barva, card.barva);
+	}
+		
+	/**
+	 * Prepsani metody hashCode, nutnost pri prepsani equals
+	 * @return true= hash hodnota
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(value, barva);
 	}
 }
-
