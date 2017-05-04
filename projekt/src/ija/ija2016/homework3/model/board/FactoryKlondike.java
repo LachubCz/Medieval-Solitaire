@@ -8,7 +8,10 @@
 package ija.ija2016.homework3.model.board;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
+import ija.ija2016.homework3.model.cards.CardDeckInterface;
+import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
+import ija.ija2016.homework3.model.cards.CardStackInterface;
 
 /**
  * Trida implementujici abstraktni tridu factory solitaire, vytvari prostredky pro funkcnost klandike
@@ -16,15 +19,11 @@ import ija.ija2016.homework3.model.cards.CardStack;
  *
  */
 public class FactoryKlondike extends AbstractFactorySolitaire {
+	
+	private CardDeck deck = CardDeck.createStandardDeck();
+	
 
-	/**
-	 * Vytváøí objekt reprezentující balíèek karet
-	 * @return Balicek karet
-	 */
-	public CardDeck createCardDeck() {
-		CardDeck deck = CardDeck.createStandardDeck();
-		return deck;
-	}
+
 
 	/**
 	 * Vytvori objekt reprezentujici kartu
@@ -42,6 +41,15 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		}
 
 	}
+	
+	/**
+	 * Vytváøí objekt reprezentující balíèek karet
+	 * @return Balicek karet
+	 */
+	public CardDeck createCardDeck() {
+		CardDeck deck = CardDeck.createStandardDeck();
+		return deck;
+	}
 
 	/**
 	 * Vytvari objekt reprezentujici cilovy balicek. Cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku.
@@ -52,6 +60,17 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		CardDeck deck = CardDeck.createTargetPack(color);
 		return deck;
 	}
+	
+	public CardStack createSourcePack() {
+		CardStack stack = new CardStack();
+		return stack;
+	}
+	
+	public CardStack createSourcePack(int cardsToInsert) {
+		CardStack stack = new CardStack();
+		stack.add(this.deck, cardsToInsert);
+		return stack;
+	}
 
 	/**
 	 * Vytvari objekt reprezentujici pracovni pole pro karty
@@ -59,6 +78,12 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 	 */
 	public CardStack createWorkingPack() {
 		CardStack stack = CardStack.createWorkingPack();
+		return stack;
+	}
+
+	public CardStack createWorkingPack(int cardsToInsert) {
+		CardStack stack = CardStack.createWorkingPack();
+		stack.add(this.deck, cardsToInsert);
 		return stack;
 	}
 

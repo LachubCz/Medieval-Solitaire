@@ -25,4 +25,8 @@ public interface CardStackInterface {
 	 * @return Zásobník karet obsahující odebranou sekvenci. Pokud hledaná karta v zásobníku není, vrací null.
 	 */
 	public abstract CardStack pop(Card card);
+
+	
+	
+	public abstract void add(CardDeck deck, int cardsToInsert);
 }

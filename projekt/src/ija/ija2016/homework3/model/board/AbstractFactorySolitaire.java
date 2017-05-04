@@ -8,7 +8,10 @@
 package ija.ija2016.homework3.model.board;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
+import ija.ija2016.homework3.model.cards.CardDeckInterface;
+import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
+import ija.ija2016.homework3.model.cards.CardStackInterface;
 
 /**
  * Abstraktni trida pro factory klondike
@@ -37,9 +40,16 @@ public abstract class AbstractFactorySolitaire {
 	 */
 	public abstract CardDeck createTargetPack(Card.Color color);
 	
+	
+	public abstract CardStack createSourcePack();
+	
+	public abstract CardStack createSourcePack(int cardsToInsert);
+	
 	/**
 	 * Vytvari objekt reprezentujici pracovni pole pro karty
 	 * @return pracovni pole
 	 */
 	public abstract CardStack createWorkingPack();
+	
+	public abstract CardStack createWorkingPack(int cardsToInsert);
 }
