@@ -5,7 +5,7 @@
  * @version 0.2
  */
 
-package model.cards;
+package ija.ija2016.homework3.model.cards;
 
 import java.util.ArrayList;
 import java.util.Objects;
