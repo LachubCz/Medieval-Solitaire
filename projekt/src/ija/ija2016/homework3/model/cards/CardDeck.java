@@ -1,6 +1,6 @@
 /**
  * Trida reprezentujici hraci balicek
- * @author Tomáš Holík, xholik13
+ * @author TomÃ¡Å¡ HolÃ­k, xholik13
  * @author Petr Buchal, xbucha02
  * @version 0.2
  */
@@ -140,7 +140,7 @@ public class CardDeck implements CardDeckInterface
 	}
     
 	/**
-	 * Vrátí kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je balíèek prázdnı, nebo index mimo rozsah, vrací null.
+	 * VrÃ¡tÃ­ kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je balÃ­Äek prÃ¡zdnÃ½, nebo index mimo rozsah, vracÃ­ null.
 	 * @param index - pozice karty v balicku
 	 * @return karta na uvedenem indexu
 	 */
@@ -154,8 +154,8 @@ public class CardDeck implements CardDeckInterface
 	}
   
 	/**
-	 * Test, zda je balíèek karet prázdnı.
-	 * @return Vrací true, pokud je balíèek prázdnı.
+	 * Test, zda je balÃ­Äek karet prÃ¡zdnÃ½.
+	 * @return VracÃ­ true, pokud je balÃ­Äek prÃ¡zdnÃ½.
 	 */
 	public boolean isEmpty() 
 	{

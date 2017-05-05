@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="Windows-1250" ?>
+<project name="ija-client" basedir="." default="run">
+
+	<property name="lib" value="lib"/>
+	<property name="src.dir" value="src"/>
+	<property name="test.src.dir" value="src/ija/ija2016/homework3/test"/>
+	<property name="dest.dir" value="dest-client"/>
+	<property name="build.dir.classes" value="build/main"/>
+	<property name="build.dir.tests" value="build/test"/>
+    <property name="jar.name" value="ija-client"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="main-class" value="ija.ija2016.homework3.view.MainView"/>
+	<property name="resources.dir" value="src/ija/textures"/>
+	<property name="music.dir" value="src/ija/music"/>
+	
+	
+	<path id="libs">
+		<fileset dir="${lib}" includes="*.jar"/>
+		<pathelement location="${build.dir.classes}"/>
+	</path>
+	
+	<path id="libs2">
+		<path refid="libs"/>
+		<pathelement location="${build.dir.tests}"/>
+	</path>
+
+    <target name="clean">
+            <delete dir="${dest.dir}"/>
+            <delete dir="${build.dir.classes}"/>
+			<delete dir="${build.dir.tests}"/>
+		    <delete dir="${doc.dir}"/>
+    </target>
+	
+	
+	<target name="get-libs">
+        <!--<exec executable="/bin/bash">
+            <arg value="lib/get-libs.sh"/>
+        </exec>-->
+    </target>
+	
+
+    <target name="compile" depends=" get-libs, clean">
+        <mkdir dir="${build.dir.classes}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir.classes}" includeantruntime="false" encoding="Windows-1250"> 
+			<classpath refid="libs"/>
+		</javac>
+		<copy todir="build/main">
+		<fileset dir="src"
+             includes="**/*.wav,**/*.png" />
+		</copy>
+        <mkdir dir="${dest.dir}"/>
+        <jar destfile="${dest.dir}/${jar.name}.jar" basedir="${build.dir.classes}" encoding="Windows-1250">
+		    <manifest>
+                <attribute name="main-Class" value="${main-class}"/>
+            </manifest>
+			<fileset dir="${resources.dir}">
+                <include name="**/*.png" />
+            </fileset>
+			<fileset dir="${music.dir}">
+                <include name="**/*.wav" />
+            </fileset>   	
+		</jar>
+    </target>
+	
+	<target name="doc" depends="compile">
+	    <mkdir dir="${doc.dir}"/>
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="Windows-1250">
+			<classpath refid="libs"/>
+		</javadoc>
+	</target>
+	
+	
+	<!--<target name="test-compile" depends="compile">
+        <mkdir dir="${build.dir.tests}"/>
+        <javac srcdir="${test.src.dir}" destdir="${build.dir.tests}" includeantruntime="false" encoding="Windows-1250">
+			<classpath refid="libs"/>
+		</javac>
+    </target>
+	
+	
+	<target name="test" depends="test-compile">
+        <junit haltonfailure="no" printsummary="yes">
+            <classpath>
+                <path refid="libs2"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <batchtest>
+                <fileset dir="${build.dir.tests}"> 
+				<include name="**/*Test*.class"/>
+				<include name="**/Test*.class"/>
+				<include name="**/*Test.class"/>
+				</fileset>
+            </batchtest>
+        </junit>
+	</target>-->
+	
+	<target name="run" depends="doc">
+		<java jar="${dest.dir}/${jar.name}.jar" fork="true"/>
+	</target>
+		
+	
+</project>
