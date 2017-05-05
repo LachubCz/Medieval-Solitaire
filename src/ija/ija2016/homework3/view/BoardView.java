@@ -14,8 +14,10 @@ import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import ija.ija2016.homework3.model.cards.CardDeck;
 import ija.ija2016.homework3.model.cards.CardDeckInterface;
 import ija.ija2016.homework3.model.cards.CardInterface;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class BoardView extends JPanel implements RepaintInterface {
 	private CardDeck selectedSource;
@@ -92,49 +94,53 @@ public class BoardView extends JPanel implements RepaintInterface {
 			decks.add(deck);
 		}
                 
-                //add event handlers
-		buttonUndo.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	CommandInterface command = new CommandControl("undo");
-		    	getCommandBuilder().execute(command);
-		    }
-		});
-		//add event handlers
-		btnSave.addActionListener(new ActionListener() {
+                
+                
+                buttonSave.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
 		        if(fileName.length() > 0){
-		        	ICommand command = new ControlCommand("save", new ArrayList<String>(){{add(fileName);}});
-		        	getCommandBuilder().execute(command);
+		        	CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add(fileName);}});
+		        	commander.execute(command);
 		        }
-		    	
-		    	
 		    }
 		});
-		//add event handlers
-		btnLoad.addActionListener(new ActionListener() {
+                
+                
+		buttonUndo.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	CommandInterface command = new CommandControl("undo");
+		    	commander.execute(command);
+		    }
+		});
+                
+                
+		buttonLoad.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        loadFile();
 		    }
+
 		});
 		//add event handlers
-		btnClose.addActionListener(new ActionListener() {
+		buttonClose.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		        //your actions
 		    	closeThisBoard();
 		    }
 		});
-                
-                
-                
-                
-                
-                
-		
 	}
+        
+        public void loadFile() {
+            
+        }
+        
+        public void closeThisBoard() {
+            MainView mainWindow = (MainView)this.getTopLevelAncestor();
+            mainWindow.removeBoard(this);
+        }
 
 }
