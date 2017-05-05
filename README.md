@@ -1,2 +1,2 @@
-# MedievalSolitaire
+# Medieval Solitaire
 Projekt IJA
