@@ -18,6 +18,13 @@ public class CardStack implements CardStackInterface
 	private int capacity;
 	private Card Cardcolor;
 
+	public CardStack() 
+	{
+		this.capacity = 52;
+		this.Cardcolor = null;
+		this.karty = new ArrayList<Card>(52);
+	}
+	
 	/**
 	 * Konstruktor pro vytvoreni pracujiciho pole
 	 * @param size - velikost pole
@@ -173,6 +180,18 @@ public class CardStack implements CardStackInterface
 		}
 		
 		return pomocny;
+	}
+	
+	public void add(CardDeck deck, int count) {
+		if(count > this.capacity - this.size()) {
+			throw new IllegalArgumentException("Not enough space in the stack");
+		}
+		if(count > deck.size()) {
+			throw new IllegalArgumentException("Deck does not have enough cards");
+		}
+		for(;count > 0; count--) {
+			this.karty.add(deck.pop());
+		}
 	}
 	
 	/**
