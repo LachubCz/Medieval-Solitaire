@@ -1,25 +1,28 @@
 
-package ija.ija2016.homework3.test;
+package tests;
 
-import ija.ija2016.homework3.model.board.AbstractFactorySolitaire;
-import ija.ija2016.homework3.model.board.FactoryKlondike;
-import ija.ija2016.homework3.model.cards.Card;
-import ija.ija2016.homework3.model.cards.CardDeck;
-import ija.ija2016.homework3.model.cards.CardStack;
+import model.board.AbstractFactorySolitaire;
+import model.board.FactoryKlondike;
+import model.cards.Card;
+import model.cards.CardDeck;
+import model.cards.CardStack;
+import model.board.GameBoard;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+
 /**
  * Testovaci trida pro java projekt 2016/2017
- * @author Tomáš Holík, xholik13
+ * @author Tomï¿½ Holï¿½k, xholik13
  * @author Petr Buchal, xbucha02
  */
-public class HomeWork3Test {
+public class Tests {
     
     protected AbstractFactorySolitaire factory;
     
@@ -182,6 +185,23 @@ public class HomeWork3Test {
         
         Assert.assertEquals("Pracovni balicek c. 2 obsahuje 3 karty.", 3, pack2.size());
     }    
+    
+    /**
+     * Druhy test pracujiciho pole
+     */
+    @Test
+    public void testCountsGameBoard() {
+        
+        GameBoard board = new GameBoard();
+        
+        CardDeck testdeck = board.GetSourceDeck();
+        Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
+
+        CardStack teststack0 = board.GetWorkingStack(0);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 1 karty.", 1, teststack0.size());
+        CardStack teststack1 = board.GetWorkingStack(1);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 2 karty.", 2, teststack1.size());
+        CardStack teststack2 = board.GetWorkingStack(2);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 3 karty.", 3, teststack2.size());
+    }    
 }
-
-
