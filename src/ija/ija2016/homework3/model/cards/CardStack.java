@@ -1,11 +1,11 @@
 /**
- * Trida reprezentuj�c� pracujici pole.
- * @author Tom� Hol�k, xholik13
+ * Trida reprezentující pracujici pole.
+ * @author Tomáš Holík, xholik13
  * @author Petr Buchal, xbucha02
  * @version 0.2
  */
 
-package ija.ija2016.homework3.model.cards;
+package model.cards;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,16 +17,6 @@ public class CardStack implements CardStackInterface
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
-	
-	/**
-	 * Konstruktor pro vytvoreni pracujiciho pole
-	 */
-	public CardStack() 
-	{
-		this.capacity = 52;
-		this.Cardcolor = null;
-		this.karty = new ArrayList<Card>(52);
-	}
 
 	/**
 	 * Konstruktor pro vytvoreni pracujiciho pole
@@ -39,13 +29,19 @@ public class CardStack implements CardStackInterface
 		this.karty = new ArrayList<Card>(size);
 	}
 	
+	public void InitPut(Card card)		
+	{		
+		this.Cardcolor = new Card(card.color(), 13);		
+		this.karty.add(card);		
+	}
+	
 	/**
 	 * Konstruktor pro vytvoreni pracujiciho pole o velikosti 13
 	 * @return Pracujici pole
 	 */
 	public static CardStack createWorkingPack() 
 	{
-		CardStack stack = new CardStack(13);
+		CardStack stack = new CardStack(19);
 		return stack;
 	}
 	
@@ -62,15 +58,21 @@ public class CardStack implements CardStackInterface
 				return true;
 		}
 		
-		if(((this.capacity - (this.size())) == card.value()) && (this.Cardcolor != null)) {
-			 if(!(card.similarColorTo(this.Cardcolor))) {
-				this.Cardcolor = new Card(card.color(), 13);
-				this.karty.add(card);
-				return true;
-			 }
-			 else {
-				 return false;
-			 }
+		if (!this.isEmpty())
+		{
+			if((this.CanPut() == card.value()) && (this.Cardcolor != null)) {
+				 if(!(card.similarColorTo(this.Cardcolor))) {
+					this.Cardcolor = new Card(card.color(), 13);
+					this.karty.add(card);
+					return true;
+				 }
+				 else {
+					 return false;
+				 }
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;
@@ -78,9 +80,9 @@ public class CardStack implements CardStackInterface
 	}
 	
 	/**
-	 * Vlo�� karty ze z�sobn�ku stack na vrchol z�sobn�ku. Karty vkl�d� ve stejn�m po�ad�, v jak�m jsou uvedeny v z�sobn�ku stack.
-	 * @param stack - Z�sobn�k vkl�dan�ch karet.
-	 * @return Usp�nost akce.
+	 * Vloží karty ze zásobníku stack na vrchol zásobníku. Karty vkládá ve stejném poøadí, v jakém jsou uvedeny v zásobníku stack.
+	 * @param stack - Zásobník vkládaných karet.
+	 * @return Uspìšnost akce.
 	*/
 	public boolean put(CardStack stack) 
 	{
@@ -94,8 +96,8 @@ public class CardStack implements CardStackInterface
 	
 	  
 	/**
-	* Test, zda je bal��ek karet pr�zdn�.
-	* @return Vrac� true, pokud je bal��ek pr�zdn�.
+	* Test, zda je balíèek karet prázdný.
+	* @return Vrací true, pokud je balíèek prázdný.
 	*/
 	public boolean isEmpty() 
 	{
@@ -110,6 +112,12 @@ public class CardStack implements CardStackInterface
 		return this.karty.size();
 	}
 	
+	public int CanPut()
+	{
+		Card card = (Card)karty.get(karty.size() - 1);
+		return (card.value() - 1); 
+	}
+	
 	/**
 	 * Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null
 	 * @return Vraci kartu z vrcholu balicku
@@ -119,14 +127,25 @@ public class CardStack implements CardStackInterface
 			return null;
 		}
 		Card Card = (Card)karty.remove(karty.size() - 1);
-	    
+		
+		if(this.isEmpty())		
+		{		
+			return Card;		
+		}		
+		else		
+		{		
+			Card Temp = (Card)karty.remove(karty.size() - 1);		
+			Temp.turnFaceUp();		
+			this.InitPut(Temp);		
+		}		
+		
 		return Card;
 	}
 	
 	/**
-	 * Metoda odebere ze z�sobn�ku sekvenci karet od zadan� karty a� po vrchol z�sobn�ku. Pokud je hledan� karta na vrcholu, bude v sekvenci pouze jedna karta.
-	 * @param card - Hledan� karta.
-	 * @return Z�sobn�k karet obsahuj�c� odebranou sekvenci. Pokud hledan� karta v z�sobn�ku nen�, vrac� null
+	 * Metoda odebere ze zásobníku sekvenci karet od zadané karty až po vrchol zásobníku. Pokud je hledaná karta na vrcholu, bude v sekvenci pouze jedna karta.
+	 * @param card - Hledaná karta.
+	 * @return Zásobník karet obsahující odebranou sekvenci. Pokud hledaná karta v zásobníku není, vrací null
 	 */
 	public CardStack pop(Card card) 
 	{
@@ -154,18 +173,6 @@ public class CardStack implements CardStackInterface
 		}
 		
 		return pomocny;
-	}
-	
-	public void add(CardDeck deck, int count) {
-		if(count > this.capacity - this.size()) {
-			throw new IllegalArgumentException("Not enough space in the stack");
-		}
-		if(count > deck.size()) {
-			throw new IllegalArgumentException("Deck does not have enough cards");
-		}
-		for(;count > 0; count--) {
-			this.karty.add(deck.pop());
-		}
 	}
 	
 	/**
