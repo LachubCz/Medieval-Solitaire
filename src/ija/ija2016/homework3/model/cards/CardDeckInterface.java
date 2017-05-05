@@ -7,11 +7,13 @@
 
 package ija.ija2016.homework3.model.cards;
 
+import java.io.Serializable;
+
 /**
  * Rozhrani reprezentujici balicek karet.
  * @author Tomas Holik, xholik13
  */
-public interface CardDeckInterface {
+public interface CardDeckInterface extends Serializable{
 	
 	/**
 	 * Vr�t� kartu z vrcholu z�sobn�ku (karta z�st�v� na z�sobn�ku). Pokud je bal��ek pr�zdn�, vrac� null.
