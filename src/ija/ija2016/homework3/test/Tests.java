@@ -6,20 +6,23 @@ import ija.ija2016.homework3.model.board.FactoryKlondike;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
 import ija.ija2016.homework3.model.cards.CardStack;
+import ija.ija2016.homework3.model.cards.CardBoard;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 
 /**
  * Testovaci trida pro java projekt 2016/2017
  * @author Tom� Hol�k, xholik13
  * @author Petr Buchal, xbucha02
  */
-public class HomeWork3Test {
+public class Tests {
     
     protected AbstractFactorySolitaire factory;
     
@@ -182,6 +185,49 @@ public class HomeWork3Test {
         
         Assert.assertEquals("Pracovni balicek c. 2 obsahuje 3 karty.", 3, pack2.size());
     }    
+    
+    /**
+     * Test poctu generovanych karet ve tride CardBoard
+     */
+    @Test
+    public void testCountsCardBoard() {
+        
+    	CardBoard board = new CardBoard();
+        
+        CardDeck testdeck = board.GetSourceDeck();
+        Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
+        
+        CardStack teststack0 = board.getStack(0);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 1 karty.", 1, teststack0.size());
+        Card c1 = teststack0.pop();
+        Assert.assertTrue("Karta c1 ma byt otocena licem nahoru.", c1.isTurnedFaceUp());
+        CardStack teststack1 = board.getStack(1);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 2 karty.", 2, teststack1.size());
+        CardStack teststack2 = board.getStack(2);
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 3 karty.", 3, teststack2.size());
+        Card c2 = teststack2.pop();
+        Assert.assertTrue("Karta c2 ma byt otocena licem nahoru.", c2.isTurnedFaceUp());
+        Card c3 = teststack2.pop();
+        Assert.assertTrue("Karta c3 ma byt otocena licem nahoru.", c3.isTurnedFaceUp());
+    }
+    
+    /**
+     * Test poctu generovanych karet ve tride CardBoard
+     */
+    @Test
+    public void testSaveLoadGame() {
+        
+    	CardBoard board1 = new CardBoard();
+        
+    	board1.SaveGame("testsave.dat");
+    	CardStack teststack1 = board1.getStack(0);
+    	Card c1 = teststack1.pop();
+    	
+    	CardBoard board2 = new CardBoard();
+    	board2.LoadGame("testsave.dat");
+    	CardStack teststack2 = board2.getStack(0);
+    	Card c2 = teststack2.pop();
+    	
+    	Assert.assertEquals("Shoda objektu.", c1, c2);
+    }
 }
-
-

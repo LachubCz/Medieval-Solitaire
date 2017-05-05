@@ -1,2 +1,2 @@
-# verynicesolitaire
+# Medieval Solitaire
 Projekt IJA
