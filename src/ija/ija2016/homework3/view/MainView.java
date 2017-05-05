@@ -105,7 +105,7 @@ public class MainView extends JFrame{
                 stopButton.setForeground(Color.BLACK);
 		topP.add(stopButton);
                 
-                path = "/ija/music/m1.wav";
+                path = "/ija/music/m2.wav";
                 music(path);
                 
                 		

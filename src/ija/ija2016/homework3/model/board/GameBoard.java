@@ -67,7 +67,7 @@ public class GameBoard {
         for (int i = 0; i < 52; i++)
         {
             int RandomCard = NumberGenerator.nextInt(51);
-            Collections.swap(Deck.karty, i, RandomCard);
+            //Collections.swap(Deck.karty, i, RandomCard);
         }
         return Deck;
     }
