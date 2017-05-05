@@ -1,2 +1,2 @@
-# verynicesolitaire
+# MedievalSolitaire
 Projekt IJA
