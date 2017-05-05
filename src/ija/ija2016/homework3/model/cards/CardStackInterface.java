@@ -7,11 +7,13 @@
 
 package ija.ija2016.homework3.model.cards;
 
+import java.io.Serializable;
+
 /**
  * rozhrani reprezentujici pracujici pole, rozsiruje balicek karet
  * @author Tomas Holik, xholik13
  */
-public interface CardStackInterface {
+public interface CardStackInterface extends Serializable {
 	/**
 	 * Vlo�� karty ze z�sobn�ku stack na vrchol z�sobn�ku. Karty vkl�d� ve stejn�m po�ad�, v jak�m jsou uvedeny v z�sobn�ku stack.
 	 * @param stack - zasobnik vkladanych karet
