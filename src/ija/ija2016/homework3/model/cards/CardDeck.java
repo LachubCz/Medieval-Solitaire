@@ -5,7 +5,7 @@
  * @version 0.2
  */
 
-package ija.ija2016.homework3.model.cards;
+package model.cards;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,9 +17,15 @@ import java.util.Set;
  */
 public class CardDeck implements CardDeckInterface 
 {
-	private ArrayList<Card> karty;
+	public ArrayList<Card> karty;
 	private Card.Color color;
   
+	public CardDeck(Card.Color color) 
+	{
+		this.color = color;
+		this.karty = new ArrayList<Card>(13);
+	}
+	
 	/**
 	 * Konstruktor vytvarejici balicek karet
 	 * @param size - velikost balicku
@@ -64,10 +70,7 @@ public class CardDeck implements CardDeckInterface
 	 */
 	public static CardDeck createTargetPack(Card.Color color) 
 	{
-		CardDeck balicek = new CardDeck(13);
-		balicek.karty.clear();
-		balicek.color = color;
-    
+		CardDeck balicek = new CardDeck(color);
 		return balicek;
 	}
   
