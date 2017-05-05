@@ -34,7 +34,7 @@ public class CardBoard implements CardBoardInterface{
 	}
         
         public CardStack getSourcePack(){
-        return this.SourcePack;
+            return this.SourcePack;
         }
 
         public CardDeck getDeck(int index) {
@@ -42,6 +42,10 @@ public class CardBoard implements CardBoardInterface{
         }
 
         public CardStack getStack(int index) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        public boolean isGameOver() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 

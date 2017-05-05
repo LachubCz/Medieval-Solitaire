@@ -88,5 +88,9 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		stack.add(this.deck, cardsToInsert);
 		return stack;
 	}
+        
+        public int availableCards() {
+            return this.deck.size();
+        }
 
 }

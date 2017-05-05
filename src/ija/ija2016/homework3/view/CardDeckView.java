@@ -1,23 +1,34 @@
 package ija.ija2016.homework3.view;
 
+import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
 
 public class CardDeckView {
+    public int x,y;
+    public BoardView board;
+    private CardView card;
+    CardDeck deck;
 
-    void setXY(int i, int i0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setXY(int newX, int newY) {
+	x = newX;
+	y = newY;
     }
 
-    void setPanel(BoardView aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setPanel(BoardView newBoard) {
+	board = newBoard;
     }
 
     void paint() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CardView cardView;
+        Card stackCard = deck.top();
+        
+        if(stackCard != null) {
+            cardView = new CardView(CardView.CardViewColor.ColorView(stackCard.color()), stackCard.value(), x, y);
+        }
     }
 
-    void setModel(CardDeck deck) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void setModel(CardDeck newDeck) {
+        deck = newDeck;
     }
 
 }

@@ -6,4 +6,6 @@ public interface CardBoardInterface {
         public CardDeck getDeck(int index);
         
         public  CardStack getStack(int index);
+
+        public boolean isGameOver();
 }

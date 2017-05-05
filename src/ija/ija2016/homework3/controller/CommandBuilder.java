@@ -5,14 +5,12 @@ import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import java.util.ArrayList;
 
 public class CommandBuilder {
-        public static final String saveExtension = ".XXX";
+        public static final String saveExtension = ".XXXXXX";
         CardBoardInterface cardBoard = null;
         ArrayList<CommandInterface> undoStack;
-        ArrayList<CommandInterface> redoStack;
 
     public CommandBuilder(CardBoard newCardBoard) {
         this.undoStack = new ArrayList<>();
-        this.redoStack = new ArrayList<>();
         this.cardBoard = newCardBoard;
     }
 

@@ -5,7 +5,7 @@
  * @version 0.2
  */
 
-package model.cards;
+package ija.ija2016.homework3.model.cards;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -164,4 +164,16 @@ public class CardDeck implements CardDeckInterface
 	{
 		return this.karty.isEmpty();
 	}
+        
+        public Card top() {
+            return this.isEmpty() ? null : this.karty.get(this.size() - 1);
+        }
+
+    public boolean canPut(Card top) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void emplace(Card pop) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

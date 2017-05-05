@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,11 +12,7 @@ import javax.swing.JPanel;
 
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,8 +35,9 @@ public class MainView extends JFrame{
 	private GridLayout layout4Tiles;
         boolean stopPlayback = false;
         public JButton stopButton;
-        private final String path;
         private static Clip clip;
+        private static ArrayList<String> songs = new ArrayList<>();
+        private int songPlayed = 0;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,11 +46,7 @@ public class MainView extends JFrame{
 				MainView frame = null;
                             try {
                                 frame = new MainView();
-                            } catch (LineUnavailableException ex) {
-                                Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (IOException ex) {
-                                Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (UnsupportedAudioFileException ex) {
+                            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
                                 Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                             }
 				frame.setVisible(true);
@@ -97,18 +89,42 @@ public class MainView extends JFrame{
 			}
 		});
                 
-
-                
                 stopButton = new JButton("Mute Music");
                 stopButton.setBounds(0, 0, 140, 25);
                 stopButton.setBackground(Color.ORANGE);
                 stopButton.setForeground(Color.BLACK);
 		topP.add(stopButton);
                 
-                path = "/ija/music/m3.wav";
-                music(path);
+                songs.add("/ija/music/m1.wav");
+                songs.add("/ija/music/m2.wav");
+                songs.add("/ija/music/m3.wav");
+                music(songs.get(songPlayed));
                 
-                		
+                JButton ChangeSong = new JButton("Change Music");
+                ChangeSong.setBounds(0, 0, 140, 25);
+                ChangeSong.setBackground(Color.ORANGE);
+                ChangeSong.setForeground(Color.BLACK);
+		topP.add(ChangeSong);
+		
+		ChangeSong.addActionListener(new ActionListener() {
+			@Override
+			//button click
+			public void actionPerformed(ActionEvent e) {
+				songPlayed++;
+                                if(songPlayed == 3) {
+                                    songPlayed = 0;
+                                }
+                                try {
+                                    clip.stop();
+                                    music(songs.get(songPlayed));
+                                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+			}
+		});
+                
+                
 		
 		stopButton.addActionListener(new ActionListener() {
 			@Override
@@ -130,10 +146,7 @@ public class MainView extends JFrame{
 
 			}
 		});
-                
-                
-	}
-
+        }
 
 
 	public void addBoard() {
@@ -155,7 +168,7 @@ public class MainView extends JFrame{
 		boards.add(boardView);
 		
 		this.DoRepainting();
-	}
+        }
 	
 	public void removeBoard(BoardView board) {
 		if(boards.size() == 2) {
@@ -184,7 +197,6 @@ public class MainView extends JFrame{
 	public void changeView(GridLayout layout) {
 		this.mainPanel.setLayout(layout);
 		
-		//je treba zmenit velikost karet, boardy apod.
 		//LayoutVisualization.get().setUsingMiniatures((layout == this.layout4Tiles));
 	}
         

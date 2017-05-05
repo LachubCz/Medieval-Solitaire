@@ -1,11 +1,11 @@
 /**
- * Trida reprezentující pracujici pole.
- * @author Tomáš Holík, xholik13
+ * Trida reprezentujĂ­cĂ­ pracujici pole.
+ * @author TomĂˇĹˇ HolĂ­k, xholik13
  * @author Petr Buchal, xbucha02
  * @version 0.2
  */
 
-package model.cards;
+package ija.ija2016.homework3.model.cards;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -87,9 +87,9 @@ public class CardStack implements CardStackInterface
 	}
 	
 	/**
-	 * Vloží karty ze zásobníku stack na vrchol zásobníku. Karty vkládá ve stejném poøadí, v jakém jsou uvedeny v zásobníku stack.
-	 * @param stack - Zásobník vkládaných karet.
-	 * @return Uspìšnost akce.
+	 * VloĹľĂ­ karty ze zĂˇsobnĂ­ku stack na vrchol zĂˇsobnĂ­ku. Karty vklĂˇdĂˇ ve stejnĂ©m poĂ¸adĂ­, v jakĂ©m jsou uvedeny v zĂˇsobnĂ­ku stack.
+	 * @param stack - ZĂˇsobnĂ­k vklĂˇdanĂ˝ch karet.
+	 * @return UspĂ¬Ĺˇnost akce.
 	*/
 	public boolean put(CardStack stack) 
 	{
@@ -103,8 +103,8 @@ public class CardStack implements CardStackInterface
 	
 	  
 	/**
-	* Test, zda je balíèek karet prázdný.
-	* @return Vrací true, pokud je balíèek prázdný.
+	* Test, zda je balĂ­Ă¨ek karet prĂˇzdnĂ˝.
+	* @return VracĂ­ true, pokud je balĂ­Ă¨ek prĂˇzdnĂ˝.
 	*/
 	public boolean isEmpty() 
 	{
@@ -150,9 +150,9 @@ public class CardStack implements CardStackInterface
 	}
 	
 	/**
-	 * Metoda odebere ze zásobníku sekvenci karet od zadané karty až po vrchol zásobníku. Pokud je hledaná karta na vrcholu, bude v sekvenci pouze jedna karta.
-	 * @param card - Hledaná karta.
-	 * @return Zásobník karet obsahující odebranou sekvenci. Pokud hledaná karta v zásobníku není, vrací null
+	 * Metoda odebere ze zĂˇsobnĂ­ku sekvenci karet od zadanĂ© karty aĹľ po vrchol zĂˇsobnĂ­ku. Pokud je hledanĂˇ karta na vrcholu, bude v sekvenci pouze jedna karta.
+	 * @param card - HledanĂˇ karta.
+	 * @return ZĂˇsobnĂ­k karet obsahujĂ­cĂ­ odebranou sekvenci. Pokud hledanĂˇ karta v zĂˇsobnĂ­ku nenĂ­, vracĂ­ null
 	 */
 	public CardStack pop(Card card) 
 	{
@@ -230,4 +230,28 @@ public class CardStack implements CardStackInterface
 	{
 		return Objects.hash(karty, capacity);
 	}
+
+    public void showNext() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void hideTopCard() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean isAnyHidden() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void turnOver() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Card get(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void emplace(Card remove) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

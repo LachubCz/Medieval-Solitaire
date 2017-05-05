@@ -29,6 +29,10 @@ public class Card implements CardInterface {
 			this.barva = c;
 			this.value = value;
 	}
+
+    public void turnFaceDown() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 		
 	/**
 	 * Vyctovy typ reprezentujici barvu karty
