@@ -64,7 +64,7 @@ public class CardDeck implements CardDeckInterface
 	 */
 	public static CardDeck createTargetPack(Card.Color color) 
 	{
-		CardDeck balicek = new CardDeck(13);
+		CardDeck balicek = new CardDeck(16);
 		balicek.karty.clear();
 		balicek.color = color;
     
