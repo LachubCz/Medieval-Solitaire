@@ -1,6 +1,6 @@
 /**
- * Trida reprezentující pracujici pole.
- * @author Tomáš Holík, xholik13
+ * Trida reprezentujÃ­cÃ­ pracujici pole.
+ * @author TomÃ¡Å¡ HolÃ­k, xholik13
  * @author Petr Buchal, xbucha02
  * @version 0.2
  */
@@ -79,9 +79,9 @@ public class CardStack implements CardStackInterface
 	}
 	
 	/**
-	 * Vloží karty ze zásobníku stack na vrchol zásobníku. Karty vkládá ve stejném poøadí, v jakém jsou uvedeny v zásobníku stack.
-	 * @param stack - Zásobník vkládaných karet.
-	 * @return Uspìšnost akce.
+	 * VloÅ¾Ã­ karty ze zÃ¡sobnÃ­ku stack na vrchol zÃ¡sobnÃ­ku. Karty vklÃ¡dÃ¡ ve stejnÃ©m poÃ¸adÃ­, v jakÃ©m jsou uvedeny v zÃ¡sobnÃ­ku stack.
+	 * @param stack - ZÃ¡sobnÃ­k vklÃ¡danÃ½ch karet.
+	 * @return UspÃ¬Å¡nost akce.
 	*/
 	public boolean put(CardStack stack) 
 	{
@@ -95,8 +95,8 @@ public class CardStack implements CardStackInterface
 	
 	  
 	/**
-	* Test, zda je balíèek karet prázdný.
-	* @return Vrací true, pokud je balíèek prázdný.
+	* Test, zda je balÃ­Ã¨ek karet prÃ¡zdnÃ½.
+	* @return VracÃ­ true, pokud je balÃ­Ã¨ek prÃ¡zdnÃ½.
 	*/
 	public boolean isEmpty() 
 	{
@@ -125,9 +125,9 @@ public class CardStack implements CardStackInterface
 	}
 	
 	/**
-	 * Metoda odebere ze zásobníku sekvenci karet od zadané karty až po vrchol zásobníku. Pokud je hledaná karta na vrcholu, bude v sekvenci pouze jedna karta.
-	 * @param card - Hledaná karta.
-	 * @return Zásobník karet obsahující odebranou sekvenci. Pokud hledaná karta v zásobníku není, vrací null
+	 * Metoda odebere ze zÃ¡sobnÃ­ku sekvenci karet od zadanÃ© karty aÅ¾ po vrchol zÃ¡sobnÃ­ku. Pokud je hledanÃ¡ karta na vrcholu, bude v sekvenci pouze jedna karta.
+	 * @param card - HledanÃ¡ karta.
+	 * @return ZÃ¡sobnÃ­k karet obsahujÃ­cÃ­ odebranou sekvenci. Pokud hledanÃ¡ karta v zÃ¡sobnÃ­ku nenÃ­, vracÃ­ null
 	 */
 	public CardStack pop(Card card) 
 	{
@@ -194,6 +194,185 @@ public class CardStack implements CardStackInterface
 			return false;
 		}
 		return true;
+	}/**
+ * Trida reprezentujï¿½cï¿½ pracujici pole.
+ * @author Tomï¿½ Holï¿½k, xholik13
+ * @author Petr Buchal, xbucha02
+ * @version 0.2
+ */
+
+package model.cards;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+
+public class CardStack implements CardStackInterface 
+{
+	
+	private ArrayList<Card> karty;
+	private int capacity;
+	private Card Cardcolor;
+
+	/**
+	 * Konstruktor pro vytvoreni pracujiciho pole
+	 * @param size - velikost pole
+	 */
+	public CardStack(int size) 
+	{
+		this.capacity = size;
+		this.Cardcolor = null;
+		this.karty = new ArrayList<Card>(size);
+	}
+	
+	/**
+	 * Konstruktor pro vytvoreni pracujiciho pole o velikosti 13
+	 * @return Pracujici pole
+	 */
+	public static CardStack createWorkingPack() 
+	{
+		CardStack stack = new CardStack(13);
+		return stack;
+	}
+	
+	/**
+	 * Vlozi kartu na vrchol balicku
+	 * @param card - vkladana karta
+	 * @return Uspesnost akce
+	 */
+	public boolean put(Card card) 
+	{
+		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+			this.Cardcolor = new Card(card.color(), 13);
+				this.karty.add(card);
+				return true;
+		}
+		
+		if(((this.capacity - (this.size())) == card.value()) && (this.Cardcolor != null)) {
+			 if(!(card.similarColorTo(this.Cardcolor))) {
+				this.Cardcolor = new Card(card.color(), 13);
+				this.karty.add(card);
+				return true;
+			 }
+			 else {
+				 return false;
+			 }
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void InitPut(Card card)
+	{
+		this.Cardcolor = new Card(card.color(), 13);
+		this.karty.add(card);
+	}
+	
+	/**
+	 * Vloï¿½ï¿½ karty ze zï¿½sobnï¿½ku stack na vrchol zï¿½sobnï¿½ku. Karty vklï¿½dï¿½ ve stejnï¿½m poï¿½adï¿½, v jakï¿½m jsou uvedeny v zï¿½sobnï¿½ku stack.
+	 * @param stack - Zï¿½sobnï¿½k vklï¿½danï¿½ch karet.
+	 * @return Uspï¿½nost akce.
+	*/
+	public boolean put(CardStack stack) 
+	{
+		if((stack == null) || (stack.isEmpty() == true) || this.isEmpty()) {
+			return false;
+		}
+		karty.addAll(stack.karty);
+		stack.karty.clear();
+		return true;
+	}
+	
+	  
+	/**
+	* Test, zda je balï¿½ï¿½ek karet prï¿½zdnï¿½.
+	* @return Vracï¿½ true, pokud je balï¿½ï¿½ek prï¿½zdnï¿½.
+	*/
+	public boolean isEmpty() 
+	{
+		return this.karty.isEmpty();
+	}
+	
+	/**
+	 * @return velikost balicku
+	 */
+	public int size() 
+	{
+		return this.karty.size();
+	}
+	
+	/**
+	 * Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null
+	 * @return Vraci kartu z vrcholu balicku
+	 */
+	public Card pop() {
+		if(this.isEmpty()) {
+			return null;
+		}
+		Card Card = (Card)karty.remove(karty.size() - 1);
+	    
+		return Card;
+	}
+	
+	/**
+	 * Metoda odebere ze zï¿½sobnï¿½ku sekvenci karet od zadanï¿½ karty aï¿½ po vrchol zï¿½sobnï¿½ku. Pokud je hledanï¿½ karta na vrcholu, bude v sekvenci pouze jedna karta.
+	 * @param card - Hledanï¿½ karta.
+	 * @return Zï¿½sobnï¿½k karet obsahujï¿½cï¿½ odebranou sekvenci. Pokud hledanï¿½ karta v zï¿½sobnï¿½ku nenï¿½, vracï¿½ null
+	 */
+	public CardStack pop(Card card) 
+	{
+		int lastindex = this.karty.lastIndexOf(card);
+		
+		if(lastindex == -1) {
+			return null;
+		}
+		
+		CardStack pomocny = new CardStack(this.size());
+		
+		if(lastindex == (this.karty.size()-1)) {
+			pomocny.karty.add(this.karty.get(this.size()-1));
+		}
+		else {
+			pomocny.karty.addAll((this.karty.subList(lastindex, this.size())));
+		}
+
+		
+		if(lastindex == (this.karty.size()-1)) {
+			this.karty.remove(lastindex);
+		}
+		else {
+			this.karty.subList(lastindex, this.karty.size()).clear();
+		}
+		
+		return pomocny;
+	}
+	
+	/**
+	 * Prepise metodu equals, pro korektni kontrolu podobnosti objektu
+	 */
+	@Override
+	public boolean equals(Object obj) 
+	{
+		
+		if(obj == this) return true;
+		if(!(obj instanceof CardStack)) {
+			return false;
+		}
+		CardStack stack = (CardStack)obj;
+		if(this.karty.isEmpty() != stack.karty.isEmpty()) {
+			return false; 
+		}
+		if(this.karty.size() != stack.karty.size()) {
+			return false;
+		}
+		if(this.capacity != stack.capacity) {
+			return false;
+		}
+		if(!(stack.karty.containsAll(this.karty))) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -206,3 +385,4 @@ public class CardStack implements CardStackInterface
 		return Objects.hash(karty, capacity);
 	}
 }
+
