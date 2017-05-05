@@ -4,6 +4,12 @@ import ija.ija2016.homework3.model.board.AbstractFactorySolitaire;
 import ija.ija2016.homework3.model.board.FactoryKlondike;
 import ija.ija2016.homework3.model.cards.CardDeck;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -73,13 +79,45 @@ public class CardBoard implements CardBoardInterface{
         	return this.WorkingStacks.get(index);
         }
         
-        public boolean LoadGame ()
+        public boolean LoadGame (String filename)
         {
+        	try 
+        	{
+        		 FileInputStream fin = new FileInputStream(filename);
+        		 ObjectInputStream ois = new ObjectInputStream(fin);
+        	     this.SourcePack = (CardDeck)  ois.readObject();
+        	     this.observers = (ArrayList<RepaintInterface>)  ois.readObject();
+        	     this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
+        	     this.Targetdecks = (ArrayList<CardDeck>)  ois.readObject();
+        		 fin.close();
+        		 ois.close();
+        	}
+        	catch (Exception e)
+        	{ 
+        		e.printStackTrace();
+        		return false;
+        	}
             return true;
         }
         
-        public boolean SaveGame ()
+        public boolean SaveGame (String filename)
         {
+        	try 
+        	{
+	      	      FileOutputStream fout = new FileOutputStream(filename);
+	      	      ObjectOutputStream oos = new ObjectOutputStream(fout);
+	      	      oos.writeObject(this.SourcePack);
+	      	      oos.writeObject(this.observers);
+	      	      oos.writeObject(this.WorkingStacks);
+	      	      oos.writeObject(this.Targetdecks);
+	      	      fout.close();
+	      	      oos.close();
+      	    }
+      	   	catch (Exception e) 
+        	{	
+      	   		 e.printStackTrace();
+      	   		 return false;
+      	   	}
             return true;
         }
         
