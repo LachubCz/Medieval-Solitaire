@@ -28,7 +28,14 @@ public class GameBoard {
         	this.WorkingStack[i] = Maker.createWorkingPack();
             for(int u = 0; u <= i; u++)
             {
-            	this.WorkingStack[i].InitPut(this.SourceDeck.pop());
+            	if (u == i)
+            	{
+            		Card c = this.SourceDeck.pop();
+            		c.turnFaceUp();
+            		this.WorkingStack[i].InitPut(c);
+            	}
+            	else
+            		this.WorkingStack[i].InitPut(this.SourceDeck.pop());
             }
         }
         
