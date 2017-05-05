@@ -6,12 +6,14 @@
  */
 package ija.ija2016.homework3.model.cards;
 
+import java.io.Serializable;
+
 /**
  * Rozhrani reprezentujici jednu kartu. Karta obsahuje informaci o sv� hodnot� (1 a� 13) a barv�. Tyto informace jsou nastaveny konstruktorem. Hodnota 1 reprezentuje eso (ace), 11 a� 13 postupn� kluk (jack), kr�lovna (queen) a kr�l (king). Barvu definuje v��tov� typ Color.
  * @author Tomas Holik, xholik13
  *
  */
-public interface CardInterface {
+public interface CardInterface extends Serializable{
 	
 	/**
 	 * @return Hodnota karty
