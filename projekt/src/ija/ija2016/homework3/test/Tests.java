@@ -196,12 +196,18 @@ public class Tests {
         
         CardDeck testdeck = board.GetSourceDeck();
         Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
-
+        
         CardStack teststack0 = board.GetWorkingStack(0);
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 1 karty.", 1, teststack0.size());
+        Card c1 = teststack0.pop();
+        Assert.assertTrue("Karta c1 ma byt otocena licem nahoru.", c1.isTurnedFaceUp());
         CardStack teststack1 = board.GetWorkingStack(1);
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 2 karty.", 2, teststack1.size());
         CardStack teststack2 = board.GetWorkingStack(2);
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 3 karty.", 3, teststack2.size());
+        Card c2 = teststack2.pop();
+        Assert.assertTrue("Karta c2 ma byt otocena licem nahoru.", c2.isTurnedFaceUp());
+        Card c3 = teststack2.pop();
+        Assert.assertTrue("Karta c3 ma byt otocena licem nahoru.", c3.isTurnedFaceUp());
     }    
 }
