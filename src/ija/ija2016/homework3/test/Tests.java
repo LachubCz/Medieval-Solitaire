@@ -187,10 +187,10 @@ public class Tests {
     }    
     
     /**
-     * Druhy test pracujiciho pole
+     * Test poctu generovanych karet ve tride CardBoard
      */
     @Test
-    public void testCountsGameBoard() {
+    public void testCountsCardBoard() {
         
     	CardBoard board = new CardBoard();
         
@@ -209,5 +209,25 @@ public class Tests {
         Assert.assertTrue("Karta c2 ma byt otocena licem nahoru.", c2.isTurnedFaceUp());
         Card c3 = teststack2.pop();
         Assert.assertTrue("Karta c3 ma byt otocena licem nahoru.", c3.isTurnedFaceUp());
-    }    
+    }
+    
+    /**
+     * Test poctu generovanych karet ve tride CardBoard
+     */
+    @Test
+    public void testSaveLoadGame() {
+        
+    	CardBoard board1 = new CardBoard();
+        
+    	board1.SaveGame("testsave.dat");
+    	CardStack teststack1 = board1.getStack(0);
+    	Card c1 = teststack1.pop();
+    	
+    	CardBoard board2 = new CardBoard();
+    	board2.LoadGame("testsave.dat");
+    	CardStack teststack2 = board2.getStack(0);
+    	Card c2 = teststack2.pop();
+    	
+    	Assert.assertEquals("Shoda objektu.", c1, c2);
+    }
 }
