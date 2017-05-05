@@ -16,14 +16,14 @@ public class CommandNext implements CommandInterface{
 
     public void execute(){
         if(this.canExecute())
-            repository.showNext();
+            stack.showNext();
     }
 
     public void unexecute(){
-        repository.hideTopCard();
+        stack.hideTopCard();
     }
 
     public boolean canExecute(){
-        return this.repository.isAnyHidden();
+        return this.stack.isAnyHidden();
     }
 }
