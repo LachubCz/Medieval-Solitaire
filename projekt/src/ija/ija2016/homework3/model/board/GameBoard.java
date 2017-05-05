@@ -16,23 +16,26 @@ public class GameBoard {
     
     public GameBoard()
     {
-        FactoryKlondike Maker = new FactoryKlondike();
+    	this.TargetDeck = new CardDeck[4];
+    	this.WorkingStack = new CardStack[7];
+    	
+    	AbstractFactorySolitaire Maker = new FactoryKlondike();
         this.SourceDeck = Maker.createCardDeck();
-        SourceDeck = RandomSwap(SourceDeck);
+        this.SourceDeck = RandomSwap(SourceDeck);
         
         for (int i = 0; i < 7; i++)
         {
-            WorkingStack[i] = Maker.createWorkingPack();
+        	this.WorkingStack[i] = Maker.createWorkingPack();
             for(int u = 0; u <= i; u++)
             {
-                WorkingStack[i].put(SourceDeck.pop());
+            	this.WorkingStack[i].InitPut(this.SourceDeck.pop());
             }
         }
         
-        TargetDeck[0] = Maker.createTargetPack(Card.Color.DIAMONDS);
-        TargetDeck[1] = Maker.createTargetPack(Card.Color.HEARTS);
-        TargetDeck[2] = Maker.createTargetPack(Card.Color.SPADES);
-        TargetDeck[3] = Maker.createTargetPack(Card.Color.CLUBS);
+        this.TargetDeck[0] = Maker.createTargetPack(Card.Color.DIAMONDS);
+        this.TargetDeck[1] = Maker.createTargetPack(Card.Color.HEARTS);
+        this.TargetDeck[2] = Maker.createTargetPack(Card.Color.SPADES);
+        this.TargetDeck[3] = Maker.createTargetPack(Card.Color.CLUBS);
     }
     
     public CardDeck GetTargetPack(int index)
@@ -43,6 +46,11 @@ public class GameBoard {
     public CardStack GetWorkingStack(int index)
     {
         return this.WorkingStack[index];
+    }
+    
+    public CardDeck GetSourceDeck()
+    {
+        return this.SourceDeck;
     }
     
     public boolean LoadGame ()
