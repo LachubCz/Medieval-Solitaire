@@ -112,18 +112,37 @@ public class CommandMove implements CommandInterface{
     public boolean canExecute() {
     	if (destination != null)
     	{
-            if(!destination.canPut(source.top())) {
-                return false;
-            }
-            return true;
+    		if(source != null)
+    		{
+                if(!destination.canPut(source.top())) {
+                    return false;
+                }
+                return true;
+    		}
+    		if(sourceStack != null)
+    		{
+                if(!destination.canPut(sourceStack.top())) {
+                    return false;
+                }
+                return true;
+    		}
     	}
-    	
     	if (destinationStack != null)
     	{
-            if(!destinationStack.canPutCard(source.top())) {
-                return false;
-            }
-            return true;
+    		if(source != null)
+    		{
+                if(!destinationStack.canPutCard(source.top())) {
+                    return false;
+                }
+                return true;
+    		}
+    		if(sourceStack != null)
+    		{
+                if(!destinationStack.canPutCard(sourceStack.top())) {
+                    return false;
+                }
+                return true;
+    		}
     	}
     	return false;
     }
