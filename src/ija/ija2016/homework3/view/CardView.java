@@ -32,7 +32,7 @@ public class CardView extends JLabel{
         this.color = CardViewColor.toColor(cardColor);
         this.value = cardValue;
         
-        ImageIcon icon = LayoutVisualization.get().getCardIcon(cardColor, cardValue);
+        ImageIcon icon = LayoutVisualization.get().getCardImage(cardColor, cardValue);
         this.setIcon(icon);
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
@@ -102,8 +102,8 @@ public class CardView extends JLabel{
 			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED) :
 							LayoutVisualization.get().getState(CardView.CardViewState.HINT_TARGET);
 			
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-                        getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 0.4f));
+                        //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
 			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
 			g2.dispose();
 		}
