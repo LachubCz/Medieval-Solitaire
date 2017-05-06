@@ -60,7 +60,8 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		CardDeck deck = CardDeck.createTargetPack(color);
 		return deck;
 	}
-	
+        
+        
         
         
 	public CardStack createSourcePack() {

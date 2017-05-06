@@ -8,4 +8,6 @@ public interface CardBoardInterface {
         public  CardStack getStack(int index);
 
         public boolean isGameOver();
+
+    public CardHint hintForCard(Card toCard);
 }

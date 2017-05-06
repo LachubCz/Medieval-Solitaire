@@ -36,6 +36,10 @@ public class CardView extends JLabel{
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
+    void setHintTarget(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
         public static enum CardViewColor {
             SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE");
@@ -110,6 +114,7 @@ public class CardView extends JLabel{
             this.isHint = isHint;
             repaint();
         }
+        
         
     
     
