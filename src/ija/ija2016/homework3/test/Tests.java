@@ -193,10 +193,7 @@ public class Tests {
     public void testCountsCardBoard() {
         
     	CardBoard board = new CardBoard();
-        
-       // CardDeck testdeck = board.getStandardDeck();
-        //Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
-        
+
         CardStack teststack0 = board.getStack(0);
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 1 karty.", 1, teststack0.size());
         Card c1 = teststack0.pop();
