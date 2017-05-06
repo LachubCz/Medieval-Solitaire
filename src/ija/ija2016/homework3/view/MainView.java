@@ -58,7 +58,7 @@ public class MainView extends JFrame{
 	public MainView() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		super("Medieval Klondike");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 700);
+		setBounds(100, 100, 1280, 720);
 		getContentPane().setLayout(null);
 		
 		layoutFull = new GridLayout(1,1,0,0);
@@ -68,7 +68,7 @@ public class MainView extends JFrame{
 		topP.setBounds(0, 0, 1280, 25);
 		
 		JPanel mainP = new JPanel(layoutFull);
-		mainP.setBounds(0, 25, 1280, 660);
+		mainP.setBounds(0, 25, 1280, 680);
 		
 		getContentPane().add(topP);
 		getContentPane().add(mainP);
@@ -110,7 +110,8 @@ public class MainView extends JFrame{
 			@Override
 			//button click
 			public void actionPerformed(ActionEvent e) {
-				songPlayed++;
+                            if(stopButton.getText().equals("Mute Music")) {
+                                songPlayed++;
                                 if(songPlayed == 3) {
                                     songPlayed = 0;
                                 }
@@ -120,6 +121,8 @@ public class MainView extends JFrame{
                                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                                     Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                            }
+
 
 			}
 		});

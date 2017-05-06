@@ -212,4 +212,8 @@ public class CardDeck implements CardDeckInterface
     public void emplace(Card pop) {
         this.karty.add(pop);
     }
+
+    boolean contains(Card card) {
+        return this.karty.contains(card);
+    }
 }

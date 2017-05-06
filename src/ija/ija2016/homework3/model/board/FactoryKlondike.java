@@ -12,6 +12,7 @@ import ija.ija2016.homework3.model.cards.CardDeckInterface;
 import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
 import ija.ija2016.homework3.model.cards.CardStackInterface;
+import java.util.ArrayList;
 
 /**
  * Trida implementujici abstraktni tridu factory solitaire, vytvari prostredky pro funkcnost klandike
@@ -19,12 +20,6 @@ import ija.ija2016.homework3.model.cards.CardStackInterface;
  *
  */
 public class FactoryKlondike extends AbstractFactorySolitaire {
-	
-	private CardDeck deck = CardDeck.createStandardDeck();
-	
-
-
-
 	/**
 	 * Vytvori objekt reprezentujici kartu
 	 * @param color - barva karty
@@ -69,9 +64,9 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		return stack;
 	}
 	
-	public CardStack createSourcePack(int cardsToInsert) {
+	public CardStack createSourcePack(CardDeck deck) {
 		CardStack stack = new CardStack();
-		stack.add(this.deck, cardsToInsert);
+		stack.add(deck, deck.size());
 		return stack;
 	}
 
@@ -84,14 +79,10 @@ public class FactoryKlondike extends AbstractFactorySolitaire {
 		return stack;
 	}
 
-	public CardStack createWorkingPack(int cardsToInsert) {
+	public CardStack createWorkingPack(CardDeck deck) {
 		CardStack stack = CardStack.createWorkingPack();
-		stack.add(this.deck, cardsToInsert);
+		stack.add(deck, deck.size());
 		return stack;
 	}
-        
-        public int availableCards() {
-            return this.deck.size();
-        }
 
 }

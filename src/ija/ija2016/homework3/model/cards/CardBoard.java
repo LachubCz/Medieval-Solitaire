@@ -32,9 +32,10 @@ public class CardBoard implements CardBoardInterface {
 	        AbstractFactorySolitaire Maker = new FactoryKlondike(); 
 	        
 	        this.StandardDeck = Maker.createCardDeck();
-	        this.SourcePack = Maker.createSourcePack();
-	        this.StandardDeck = RandomSwap(StandardDeck);
-	        
+                this.StandardDeck = RandomSwap(StandardDeck);
+                
+	        this.SourcePack = Maker.createSourcePack(StandardDeck);
+                
 	        for (int i = 0; i < 7; i++)
 	        {
 	        	this.WorkingStacks.add(Maker.createWorkingPack());
@@ -59,17 +60,12 @@ public class CardBoard implements CardBoardInterface {
 		
         public void registerObserver(RepaintInterface repaintInterface) 
         {
-        	;// TODO Auto-generated method stub
+            observers.add(repaintInterface);
         }
 		
-		public CardStack getSourcePack() {
-        	return this.SourcePack;
-		}
-		
-        public CardDeck getStandardDeck() 
-		{
-			return this.StandardDeck;
-		}
+	public CardStack getSourcePack() {
+            return this.SourcePack;
+	}
         
         public CardDeck getDeck(int index)
         {

@@ -18,6 +18,9 @@ public class CardStack implements CardStackInterface
 	private int capacity;
 	private Card Cardcolor;
 
+        
+        
+        
 	public CardStack() 
 	{
 		this.capacity = 52;
@@ -45,6 +48,8 @@ public class CardStack implements CardStackInterface
 		this.Cardcolor = new Card(card.color(), 13);		
 		this.karty.add(card);		
 	}
+        
+        
 	
 	/**
 	 * Konstruktor pro vytvoreni pracujiciho pole o velikosti 13
@@ -261,23 +266,39 @@ public class CardStack implements CardStackInterface
 	}
 
     //funkce pracujici se stack
-    public void showNext() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean showNext() {
+        if(this.size() > 0) {
+            Card card = this.karty.remove(this.size() - 1);
+            card.turnFaceUp();
+            return this.source.karty.add(card);
+        }
+        return false;
     }
 
     //funkce pracujici se stack
-    public void hideTopCard() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean hideTopCard() {
+        if(!this.source.karty.isEmpty()) {
+            Card card = this.source.karty.remove(this.karty.size() - 1);
+            card.turnFaceDown();
+            return this.karty.add(card);
+        }
+        return false;
     }
 
     //funkce pracujici se stack
-    public void turnOver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean turnOver() {
+        if(this.sizeOfStack() > 0) {
+            for(int i = this.source.size() - 1; i >= 0; i--) {
+                this.karty.add(this.source.karty.remove(i));
+                this.karty.get(this.sizeOfStack() - 1).turnFaceDown();
+            }
+        }
+        return false;
     }
     
     //funkce pracujici se stack
     public int sizeOfStack() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.size();
     }
     
 
@@ -289,27 +310,27 @@ public class CardStack implements CardStackInterface
     }
     
     public boolean isSourceEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return source.isEmpty();
     }
     
     public Card get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return source.get(index);
     }
 
     public void emplace(Card remove) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        source.emplace(remove);
     }
 
     public Card top() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return source.top();
     }
 
     public boolean canPut(Card card) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return source.canPut(card);
     }
 
     public boolean contains(Card card) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return source.contains(card);
     }
     
 
