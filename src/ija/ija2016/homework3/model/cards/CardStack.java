@@ -13,8 +13,7 @@ import java.util.Objects;
 
 public class CardStack implements CardStackInterface 
 {
-        
-	private CardDeck source; 
+	
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
@@ -87,7 +86,7 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
-		public boolean canPutCard(Card card) 
+	public boolean canPutCard(Card card) 
 	{
 		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
 				return true;
@@ -257,56 +256,62 @@ public class CardStack implements CardStackInterface
 		return Objects.hash(karty, capacity);
 	}
 
-    //funkce pracujici se stack
-    public void showNext() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean showNext() {
+    	if (this.karty.size() == 0)
+    		return false;
+    	else
+    	{
+    		if (this.karty.get(this.karty.size() - 1).turnFaceUp())
+    			return true;
+    		else
+    			return false;
+    	}
     }
 
-    //funkce pracujici se stack
-    public void hideTopCard() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean hideTopCard() {
+    	if (this.karty.size() == 0)
+    		return false;
+    	else
+    	{
+    		if (this.karty.get(this.karty.size() - 1).turnFaceDown())
+    			return true;
+    		else
+    			return false;
+    	}
     }
 
-    //funkce pracujici se stack
+    public boolean isAnyHidden() {
+    	for (int i = 0; i < this.karty.size(); i++)
+    		if (!(this.karty.get(i).isTurnedFaceUp()))
+    		{
+    			return true;
+    		}
+    	return false;
+    }
+
     public void turnOver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    //funkce pracujici se stack
-    public int sizeOfStack() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    //funkce pracujici se stack
-    public boolean isStackEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	for (int i = 0; i < this.karty.size(); i++)
+    		this.karty.get(i).turnFaceDown();
     }
 
-    
-    //na zbytek funkci pouzit funkce z CardDeck
-    public CardDeck getDeck() {
-        return this.source;
-    }
     public Card get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void emplace(Card remove) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	if(index < this.karty.size())
+    		return this.karty.get(index);
+    	return null;
     }
 
     public Card top() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public boolean canPut(Card card) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	if(this.karty.size() > 0)
+    		return this.karty.get(this.karty.size() - 1);
+    	return null;
     }
 
     public boolean contains(Card card) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	for (int i = 0; i < this.karty.size(); i++)
+    	{
+    		if (this.karty.get(i).equals(card))
+    			return true;
+    	}
+    	return false;
     }
-    
-
-    
 }
