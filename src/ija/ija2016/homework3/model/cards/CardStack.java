@@ -17,9 +17,6 @@ public class CardStack implements CardStackInterface
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
-
-        
-        
         
 	public CardStack() 
 	{
@@ -120,6 +117,14 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
+	public Card getFromStack(int index)
+	{
+		if (!this.karty.isEmpty())
+			return this.karty.get(index);
+		else
+			return null;
+	}
+		
 	/**
 	 * VloĹľĂ­ karty ze zĂˇsobnĂ­ku stack na vrchol zĂˇsobnĂ­ku. Karty vklĂˇdĂˇ ve stejnĂ©m poĂ¸adĂ­, v jakĂ©m jsou uvedeny v zĂˇsobnĂ­ku stack.
 	 * @param stack - ZĂˇsobnĂ­k vklĂˇdanĂ˝ch karet.
@@ -310,29 +315,28 @@ public class CardStack implements CardStackInterface
     }
     
     public boolean isSourceEmpty() {
-        return source.isEmpty();
+        return this.source.isEmpty();
     }
     
     public Card get(int index) {
-        return source.get(index);
+        return this.source.get(index);
     }
 
     public void emplace(Card remove) {
-        source.emplace(remove);
+        this.source.emplace(remove);
     }
 
     public Card top() {
-        return source.top();
+        return this.source.top();
     }
 
     public boolean canPut(Card card) {
-        return source.canPut(card);
+        return this.source.canPut(card);
     }
 
     public boolean contains(Card card) {
-        return source.contains(card);
+        return this.source.contains(card);
     }
     
-
     
 }
