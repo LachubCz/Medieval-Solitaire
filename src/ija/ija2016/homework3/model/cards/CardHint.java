@@ -16,31 +16,33 @@ import java.util.ArrayList;
  * @author Holajz
  */
 public class CardHint {
-    private ArrayList<CardDeck>  decks  = new ArrayList<>();
+    private ArrayList<CardDeck> decks  = new ArrayList<>();
     private ArrayList<CardStack> stacks = new ArrayList<>();
-    private Card card = null;
-    private CardDeck sourceDeck = null;
     
-    public CardHint(Card card, CardDeck sourcedeck) {
-        this.card = card;
-        this.sourceDeck = sourceDeck;
+    public CardDeck getCardDeck(int i) {
+        return this.decks.get(i);
+    }
+
+    public CardStack getCardStack(int i) {
+    	return this.stacks.get(i);
     }
     
-
     public ArrayList<CardDeck> getCardDecks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.decks;
     }
 
     public ArrayList<CardStack> getCardStacks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return this.stacks;
     }
     
     public boolean add(CardStack stack) {
-        return true;
+        this.stacks.add(stack);
+    	return true;
     }
     
     public boolean add(CardDeck deck) {
-        return true;
+        this.decks.add(deck);
+    	return true;
     }
     
 }

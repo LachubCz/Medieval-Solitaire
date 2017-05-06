@@ -87,6 +87,31 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
+		public boolean canPutCard(Card card) 
+	{
+		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+				return true;
+		}
+		
+		if (!this.isEmpty())
+		{
+			if((this.CanPut() == card.value()) && (this.Cardcolor != null)) {
+				 if(!(card.similarColorTo(this.Cardcolor))) {
+					return true;
+				 }
+				 else {
+					 return false;
+				 }
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/**
 	 * VloĹľĂ­ karty ze zĂˇsobnĂ­ku stack na vrchol zĂˇsobnĂ­ku. Karty vklĂˇdĂˇ ve stejnĂ©m poĂ¸adĂ­, v jakĂ©m jsou uvedeny v zĂˇsobnĂ­ku stack.
 	 * @param stack - ZĂˇsobnĂ­k vklĂˇdanĂ˝ch karet.

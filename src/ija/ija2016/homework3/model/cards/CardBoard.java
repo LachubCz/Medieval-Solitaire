@@ -10,20 +10,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.Random;
+
+import org.junit.Assert;
 
 public class CardBoard implements CardBoardInterface {
         protected CardStack SourcePack = null;
         protected CardDeck StandardDeck = null;
         protected ArrayList<CardStack> WorkingStacks;
-        protected ArrayList<CardDeck> Targetdecks;
+        protected ArrayList<CardDeck> TargetDecks;
         protected ArrayList<RepaintInterface> observers;
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
         
         public CardBoard() {
-	        this.Targetdecks = new ArrayList<>();
+	        this.TargetDecks = new ArrayList<>();
 	        this.WorkingStacks = new ArrayList<>();
 	        this.observers = new ArrayList<>();
 	        AbstractFactorySolitaire Maker = new FactoryKlondike(); 
@@ -48,10 +51,10 @@ public class CardBoard implements CardBoardInterface {
 	            }
 	        }
 	        
-	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.DIAMONDS));
-	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.HEARTS));
-	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.SPADES));
-	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.CLUBS));
+	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.DIAMONDS));
+	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.HEARTS));
+	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.SPADES));
+	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.CLUBS));
         }
 		
         public void registerObserver(RepaintInterface repaintInterface) 
@@ -59,9 +62,9 @@ public class CardBoard implements CardBoardInterface {
         	;// TODO Auto-generated method stub
         }
 		
-	public CardStack getSourcePack() {
-            return this.SourcePack;
-	}
+		public CardStack getSourcePack() {
+        	return this.SourcePack;
+		}
 		
         public CardDeck getStandardDeck() 
 		{
@@ -70,7 +73,7 @@ public class CardBoard implements CardBoardInterface {
         
         public CardDeck getDeck(int index)
         {
-        	return this.Targetdecks.get(index);
+        	return this.TargetDecks.get(index);
         }
         
         public CardStack getStack(int index)
@@ -92,7 +95,7 @@ public class CardBoard implements CardBoardInterface {
         	     this.StandardDeck = (CardDeck)  ois.readObject();
         	     this.SourcePack = (CardStack)  ois.readObject();
         	     this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
-        	     this.Targetdecks = (ArrayList<CardDeck>)  ois.readObject();
+        	     this.TargetDecks = (ArrayList<CardDeck>)  ois.readObject();
         		 fin.close();
         		 ois.close();
         	}
@@ -114,7 +117,7 @@ public class CardBoard implements CardBoardInterface {
 	      	      oos.writeObject(this.StandardDeck);
 	      	      oos.writeObject(this.SourcePack);
 	      	      oos.writeObject(this.WorkingStacks);
-	      	      oos.writeObject(this.Targetdecks);
+	      	      oos.writeObject(this.TargetDecks);
 	      	      fout.close();
 	      	      oos.close();
       	    }
@@ -137,7 +140,54 @@ public class CardBoard implements CardBoardInterface {
             return Deck;
         }
         
-        public CardHint hintForCard(Card toCard) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public int createHint(Card Card){
+        	
+        	CardHint hint = hintForCard(Card);
+        	
+        	if (!(hint.getCardDecks().isEmpty()))
+        	{
+                for (int i = 0; i < 4; i++)
+                {
+            		if (hint.getCardDeck(0).equals(this.getDeck(i)))
+            		{
+            			return i;
+            		}
+                }
+        	}
+        	
+        	if (!(hint.getCardStacks().isEmpty()))
+        	{
+                for (int i = 0; i < 7; i++)
+                {
+            		if (hint.getCardStack(0).equals(this.getStack(i)))
+            		{
+            			return 10 + i;
+            		}
+                }
+        	}
+        	return -1;
+        }
+
+        public CardHint hintForCard(Card Card){
+        	
+        	CardHint hint = new CardHint();
+        	
+	        for (int i = 0; i < 7; i++)
+	        {
+	        	if (this.getStack(i).canPutCard(Card))
+	        	{
+	        		hint.add(this.getStack(i));
+	        	}
+	        }
+	        
+	        for (int i = 0; i < 4; i++)
+	        {
+	        	if (this.getDeck(i).canPutCard(Card))
+	        	{
+	        		hint.add(this.getDeck(i));
+	        	}
+	        }
+	        
+        	return hint;
         }
 }

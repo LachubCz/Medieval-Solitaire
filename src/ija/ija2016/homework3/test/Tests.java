@@ -235,7 +235,7 @@ public class Tests {
      * Test na brzkou vyhru
      */
     @Test
-    public void testAlmostWin() {
+    public void testSaveAndHint() {
         
     	CardBoard board = new CardBoard();
     	
@@ -275,5 +275,9 @@ public class Tests {
         board.getStack(5).InitPut(new Card(Card.Color.CLUBS, 13));
         
         board.SaveGame("AlmostWin");
+        
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", -1, board.createHint(board.getStack(5).pop()));
+        
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 3, board.createHint(board.getStack(2).pop()));
     }
 }

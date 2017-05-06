@@ -111,7 +111,30 @@ public class CardDeck implements CardDeckInterface
 			return false;
 		}
 	}
-  
+	
+  	public boolean canPutCard(Card card) 
+	{
+		if(this.color != null) {
+			if(this.karty.isEmpty()) {
+				if((card.color() == this.color) && (card.value() == 1)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if(((this.size()+1) == card.value()) && ((this.color == card.color()))) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Odebere kartu z vrcholu balicku. Pokud je balicek prazdny, vraci null
 	 * @return Vraci kartu z vrcholu balicku
