@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class CardBoard implements CardBoardInterface{
-        protected CardDeck SourcePack = null;
-        protected ArrayList<RepaintInterface> observers;
+public class CardBoard implements CardBoardInterface {
+        protected CardStack SourcePack = null;
+        protected CardDeck StandardDeck = null;
         protected ArrayList<CardStack> WorkingStacks;
         protected ArrayList<CardDeck> Targetdecks;
+        protected ArrayList<RepaintInterface> observers;
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
@@ -27,8 +28,9 @@ public class CardBoard implements CardBoardInterface{
 	        this.observers = new ArrayList<>();
 	        AbstractFactorySolitaire Maker = new FactoryKlondike(); 
 	        
-	        this.SourcePack = Maker.createCardDeck();
-	        this.SourcePack = RandomSwap(SourcePack);
+	        this.StandardDeck = Maker.createCardDeck();
+	        this.SourcePack = Maker.createSourcePack();
+	        this.StandardDeck = RandomSwap(StandardDeck);
 	        
 	        for (int i = 0; i < 7; i++)
 	        {
@@ -37,12 +39,12 @@ public class CardBoard implements CardBoardInterface{
 	            {
 	            	if (u == i)
 	            	{
-	            		Card c = this.SourcePack.pop();
+	            		Card c = this.StandardDeck.pop();
 	            		c.turnFaceUp();
 	            		this.WorkingStacks.get(i).InitPut(c);
 	            	}
 	            	else
-	            		this.WorkingStacks.get(i).InitPut(this.SourcePack.pop());
+	            		this.WorkingStacks.get(i).InitPut(this.StandardDeck.pop());
 	            }
 	        }
 	        
@@ -51,21 +53,20 @@ public class CardBoard implements CardBoardInterface{
 	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.SPADES));
 	        this.Targetdecks.add(Maker.createTargetPack(Card.Color.CLUBS));
         }
-    
-		@Override
-		public CardStack getSourcePack() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 		
-        public void registerObserver(RepaintInterface repaintInterface) {
+        public void registerObserver(RepaintInterface repaintInterface) 
+        {
         	;// TODO Auto-generated method stub
         }
-        
-        public CardDeck GetSourceDeck()
-        {
-            return this.SourcePack;
-        }
+		
+		public CardStack getSourcePack() {
+        	return this.SourcePack;
+		}
+		
+        public CardDeck getStandardDeck() 
+		{
+			return this.StandardDeck;
+		}
         
         public CardDeck getDeck(int index)
         {
@@ -76,11 +77,10 @@ public class CardBoard implements CardBoardInterface{
         {
         	return this.WorkingStacks.get(index);
         }
-
-        public boolean isGameOver() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		
+        public boolean isGameOver() {		
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.		
         }
-
         
         public boolean LoadGame (String filename)
         {
@@ -88,8 +88,9 @@ public class CardBoard implements CardBoardInterface{
         	{
         		 FileInputStream fin = new FileInputStream(filename);
         		 ObjectInputStream ois = new ObjectInputStream(fin);
-        	     this.SourcePack = (CardDeck)  ois.readObject();
         	     this.observers = (ArrayList<RepaintInterface>)  ois.readObject();
+        	     this.StandardDeck = (CardDeck)  ois.readObject();
+        	     this.SourcePack = (CardStack)  ois.readObject();
         	     this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
         	     this.Targetdecks = (ArrayList<CardDeck>)  ois.readObject();
         		 fin.close();
@@ -109,8 +110,9 @@ public class CardBoard implements CardBoardInterface{
         	{
 	      	      FileOutputStream fout = new FileOutputStream(filename);
 	      	      ObjectOutputStream oos = new ObjectOutputStream(fout);
-	      	      oos.writeObject(this.SourcePack);
 	      	      oos.writeObject(this.observers);
+	      	      oos.writeObject(this.StandardDeck);
+	      	      oos.writeObject(this.SourcePack);
 	      	      oos.writeObject(this.WorkingStacks);
 	      	      oos.writeObject(this.Targetdecks);
 	      	      fout.close();
