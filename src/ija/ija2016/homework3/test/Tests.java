@@ -194,7 +194,7 @@ public class Tests {
         
     	CardBoard board = new CardBoard();
         
-        CardDeck testdeck = board.GetSourceDeck();
+        CardDeck testdeck = board.getStandardDeck();
         Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
         
         CardStack teststack0 = board.getStack(0);
@@ -229,5 +229,51 @@ public class Tests {
     	Card c2 = teststack2.pop();
     	
     	Assert.assertEquals("Shoda objektu.", c1, c2);
+    }
+    
+    /**
+     * Test na brzkou vyhru
+     */
+    @Test
+    public void testAlmostWin() {
+        
+    	CardBoard board = new CardBoard();
+    	
+        for (int i = 0; i < 7; i++)
+        {
+            for(int u = 0; u <= i; u++)
+            {
+            	board.getStack(i).pop();
+            }
+        }
+        
+        for (int i = 0; i < 7; i++)
+        {
+        	Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 0, board.getStack(i).size());
+        }
+        
+        for (int i = 0; i < 24; i++)
+        {
+        	board.getStandardDeck().pop();
+        }
+        
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 0, board.getStandardDeck().size());
+        
+		for (int i = 1; i < 14; i++) board.getDeck(0).put(new Card(Card.Color.DIAMONDS, i));
+		for (int i = 1; i < 14; i++) board.getDeck(1).put(new Card(Card.Color.HEARTS, i));
+		for (int i = 1; i < 14; i++) board.getDeck(2).put(new Card(Card.Color.SPADES, i));
+		for (int i = 1; i < 12; i++) board.getDeck(3).put(new Card(Card.Color.CLUBS, i));
+		
+        for (int i = 0; i < 3; i++)
+        {
+        	Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 13, board.getDeck(i).size());
+        }
+        
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 11, board.getDeck(3).size());
+        
+        board.getStack(2).InitPut(new Card(Card.Color.CLUBS, 12));
+        board.getStack(5).InitPut(new Card(Card.Color.CLUBS, 13));
+        
+        board.SaveGame("AlmostWin.dat");
     }
 }
