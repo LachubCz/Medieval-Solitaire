@@ -53,7 +53,9 @@ public class CardStackView {
             board.add(cardView);
             
             if(index == stack.size() - 1 ) {
+                //if last card in the stack, create move event
 		cardView.addMouseListener(new MouseAdapter() {  
+                    @Override
                     public void mouseReleased(MouseEvent e) {  
                             moveStackHere(cardView);
                     }  
@@ -63,13 +65,25 @@ public class CardStackView {
             else {
                 if(card.isTurnedFaceUp()) {
                     cardView.addMouseListener(new MouseAdapter() {  
+                        @Override
                         public void mouseReleased(MouseEvent e) {  
-                            board.setSelectedSourceDeck(stack.getDeck(), cardView);
+                            board.setSelectedSource(null, stack, cardView);
                             board.setMultiMoveCard(card);
                         }  
                     });
                 }
             }
+        }
+        
+        if(stack.size() == 0) {
+            CardView card = new CardView(CardView.CardViewColor.NONE, 0, x, y);
+            board.add(card);
+            
+            card.addMouseListener(new MouseAdapter() {
+                if(board.isMoveSourceSelected()) {
+                    moveStackHere(card);
+                }
+            });
         }
 
     }

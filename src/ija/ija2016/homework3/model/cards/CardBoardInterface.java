@@ -9,5 +9,7 @@ public interface CardBoardInterface {
 
         public boolean isGameOver();
 
-    public CardHint hintForCard(Card toCard);
+        public CardHint hintForCard(Card toCard);
+
+        public int createHint(Card toCard);
 }

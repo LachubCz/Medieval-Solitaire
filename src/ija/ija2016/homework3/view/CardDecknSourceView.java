@@ -73,7 +73,7 @@ class CardDecknSourceView {
 			
             card.addMouseListener(new MouseAdapter() {  
 		public void mouseReleased(MouseEvent e) {  
-                    board.setSelectedSourceDeck(pack.getDeck(), card);
+                    board.setSelectedSource(pack.getDeck(), null, card);
 		}  
             }); 
         }
