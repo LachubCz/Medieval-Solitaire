@@ -23,14 +23,6 @@ public class CardDeckView {
     public void setPanel(BoardView newBoard) {
 	board = newBoard;
     }
-    
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public CardView top() {
         return this.card;

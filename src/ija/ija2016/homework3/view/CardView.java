@@ -44,7 +44,7 @@ public class CardView extends JLabel{
 
 
         public static enum CardViewColor {
-            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE");
+            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK");
             
             private final String cardValue;
             

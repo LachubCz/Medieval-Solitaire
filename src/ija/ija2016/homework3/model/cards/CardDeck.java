@@ -17,7 +17,6 @@ import java.util.Set;
  */
 public class CardDeck implements CardDeckInterface 
 {
-        public String Name = "";
 	public ArrayList<Card> karty;
 	private Card.Color color;
   
@@ -185,13 +184,5 @@ public class CardDeck implements CardDeckInterface
 
     public void emplace(Card pop) {
         this.karty.add(pop);
-    }
-    
-    public void setName(String name){
-        this.Name = name;
-    }
-
-    public String getName() {
-        return this.Name;
     }
 }

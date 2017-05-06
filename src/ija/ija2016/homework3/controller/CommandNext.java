@@ -15,8 +15,10 @@ public class CommandNext implements CommandInterface{
     }
 
     public void execute(){
-        if(this.canExecute())
+        if(this.canExecute()) {
             stack.showNext();
+        }
+
     }
 
     public void unexecute(){
@@ -24,6 +26,6 @@ public class CommandNext implements CommandInterface{
     }
 
     public boolean canExecute(){
-        return this.stack.isAnyHidden();
+        return !this.stack.isStackEmpty();
     }
 }

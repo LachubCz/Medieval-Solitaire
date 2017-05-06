@@ -13,7 +13,8 @@ import java.util.Objects;
 
 public class CardStack implements CardStackInterface 
 {
-	
+        
+	private CardDeck source; 
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
@@ -231,22 +232,36 @@ public class CardStack implements CardStackInterface
 		return Objects.hash(karty, capacity);
 	}
 
+    //funkce pracujici se stack
     public void showNext() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //funkce pracujici se stack
     public void hideTopCard() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean isAnyHidden() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    //funkce pracujici se stack
     public void turnOver() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    //funkce pracujici se stack
+    public int sizeOfStack() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    //funkce pracujici se stack
+    public boolean isStackEmpty() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    
+    //na zbytek funkci pouzit funkce z CardDeck
+    public CardDeck getDeck() {
+        return this.source;
+    }
     public Card get(int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -266,9 +281,7 @@ public class CardStack implements CardStackInterface
     public boolean contains(Card card) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
-    public Object getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

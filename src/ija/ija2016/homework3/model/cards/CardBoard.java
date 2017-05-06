@@ -59,9 +59,9 @@ public class CardBoard implements CardBoardInterface {
         	;// TODO Auto-generated method stub
         }
 		
-		public CardStack getSourcePack() {
-        	return this.SourcePack;
-		}
+	public CardStack getSourcePack() {
+            return this.SourcePack;
+	}
 		
         public CardDeck getStandardDeck() 
 		{
