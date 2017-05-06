@@ -11,7 +11,6 @@ public class CardDeckView {
 
     public int x,y;
     public BoardView board;
-    public String name = "";
     private CardView card;
     CardDeck deck;
     

@@ -83,6 +83,11 @@ class CardDecknSourceView {
 		}  
             }); 
         }
+        else {
+            CardView card = new CardView(CardView.CardViewColor.NONE, 0, x, y  );
+            board.add(card);
+            putAside = card;
+        }
         
     }
 

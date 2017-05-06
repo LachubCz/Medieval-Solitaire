@@ -1,5 +1,6 @@
+package ija.ija2016.homework3.controller;
 
-import ija.ija2016.homework3.controller.CommandInterface;
+
 import ija.ija2016.homework3.model.cards.CardStack;
 
 /**
@@ -14,6 +15,7 @@ public class CommandNext implements CommandInterface{
         this.stack = stack;
     }
 
+    @Override
     public void execute(){
         if(this.canExecute()) {
             stack.showNext();
@@ -21,10 +23,12 @@ public class CommandNext implements CommandInterface{
 
     }
 
+    @Override
     public void unexecute(){
         stack.hideTopCard();
     }
 
+    @Override
     public boolean canExecute(){
         return !this.stack.isStackEmpty();
     }
