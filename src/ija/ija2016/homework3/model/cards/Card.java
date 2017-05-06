@@ -30,8 +30,12 @@ public class Card implements CardInterface {
 			this.value = value;
 	}
 
-    public void turnFaceDown() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean turnFaceDown() {
+		if(this.isturned == true) {
+			this.isturned = false;
+			return true;
+		}
+		return false;
     }
 		
 	/**
@@ -176,5 +180,3 @@ public class Card implements CardInterface {
 		return Objects.hash(value, barva);
 	}
 }
-
-
