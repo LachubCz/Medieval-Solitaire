@@ -76,7 +76,7 @@ public class LayoutVisualization {
         cards.add(imageEmpty);
         smallCards.add(imageEmptySmall);
         
-        ImageIcon imageReasamble= new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/reasamble.png"))
+        ImageIcon imageReasamble= new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/reassemble.png"))
                 .getImage().getScaledInstance(100, 194, Image.SCALE_SMOOTH));
         ImageIcon imageReasambleSmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
         
