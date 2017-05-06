@@ -45,10 +45,8 @@ class CardDecknSourceView {
             board.add(card);
             picker = card;	
 			
-            card.addMouseListener(new MouseAdapter()  
-			{  
-             public void mouseReleased(MouseEvent e)  
-                {  
+            card.addMouseListener(new MouseAdapter() {  
+             public void mouseReleased(MouseEvent e) {  
                     CommandInterface command = new CommandNext(pack);
                     board.getCommandBuilder().execute(command);
 		}  
@@ -59,10 +57,8 @@ class CardDecknSourceView {
             board.add(card);
             picker = card;
             
-            card.addMouseListener(new MouseAdapter()  
-			{  
-            public void mouseReleased(MouseEvent e)  
-                {  
+            card.addMouseListener(new MouseAdapter() {  
+            public void mouseReleased(MouseEvent e) {  
                     CommandInterface command = new CommandRenew(pack);
                     board.getCommandBuilder().execute(command);
 		}  
@@ -75,11 +71,9 @@ class CardDecknSourceView {
             board.add(card);
             putAside = card; 
 			
-            card.addMouseListener(new MouseAdapter()  
-            {  
-		public void mouseReleased(MouseEvent e)  
-                {  
-                    board.setSelectedSource(pack.getDeck(), card);
+            card.addMouseListener(new MouseAdapter() {  
+		public void mouseReleased(MouseEvent e) {  
+                    board.setSelectedSourceDeck(pack.getDeck(), card);
 		}  
             }); 
         }

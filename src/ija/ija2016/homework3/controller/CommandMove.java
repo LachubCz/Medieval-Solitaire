@@ -6,6 +6,7 @@
 package ija.ija2016.homework3.controller;
 
 import ija.ija2016.homework3.model.cards.CardDeck;
+import ija.ija2016.homework3.model.cards.CardStack;
 
 /**
  *
@@ -13,7 +14,9 @@ import ija.ija2016.homework3.model.cards.CardDeck;
  */
 public class CommandMove implements CommandInterface{
     CardDeck source = null;
+    CardStack sourceStack = null;
     CardDeck destination = null;
+    CardStack destinationStack = null;
     boolean isTurnedUp = false;
     
     
@@ -21,16 +24,32 @@ public class CommandMove implements CommandInterface{
         this.source = source;
         this.destination = destination;
     }
+    
+    public CommandMove(CardStack source, CardDeck destination) {
+        this.sourceStack = source;
+        this.destination = destination;
+    }
+    
+    public CommandMove(CardStack source, CardStack destination) {
+        this.sourceStack = source;
+        this.destinationStack = destination;
+    }
+    
+    public CommandMove(CardDeck source, CardStack destination) {
+        this.source = source;
+        this.destinationStack = destination;
+    }
 
     public void execute() {
-        if(this.canExecute()) {
-            isTurnedUp = false;
-            this.destination.put(source.pop());
-            if(!this.source.isEmpty()) {
-                this.isTurnedUp = this.source.top().isTurnedFaceUp();
-                this.source.top().turnFaceUp();
+            if(this.canExecute()) {
+                isTurnedUp = false;
+                this.destination.put(source.pop());
+                if(!this.source.isEmpty()) {
+                    this.isTurnedUp = this.source.top().isTurnedFaceUp();
+                    this.source.top().turnFaceUp();
+                }
             }
-        }
+
     }
 
     public void unexecute() {

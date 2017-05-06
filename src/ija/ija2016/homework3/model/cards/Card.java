@@ -30,9 +30,9 @@ public class Card implements CardInterface {
 			this.value = value;
 	}
 
-    public void turnFaceDown() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        public void turnFaceDown() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 		
 	/**
 	 * Vyctovy typ reprezentujici barvu karty

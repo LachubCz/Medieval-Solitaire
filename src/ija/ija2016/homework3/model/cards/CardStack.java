@@ -36,6 +36,10 @@ public class CardStack implements CardStackInterface
 		this.Cardcolor = null;
 		this.karty = new ArrayList<Card>(size);
 	}
+        
+        public void emplaceStack(Card pop) {
+            this.karty.add(pop);
+        }
 	
 	public void InitPut(Card card)		
 	{		

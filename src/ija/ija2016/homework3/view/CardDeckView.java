@@ -4,6 +4,7 @@ import ija.ija2016.homework3.controller.CommandInterface;
 import ija.ija2016.homework3.controller.CommandMove;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
+import ija.ija2016.homework3.model.cards.CardStack;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -43,20 +44,26 @@ public class CardDeckView {
 	card.addMouseListener(new MouseAdapter() {  
 		public void mouseReleased(MouseEvent e)  
 		    {  
-			if(board.isSourceSelected()){
-                            CardDeck source = board.getSelectedSource();	
-                            CommandInterface command = new CommandMove(source, deck);
-                        
+			if(board.isSourceDeckorStackSelected()){
+                            CommandInterface command;
+                            CardDeck source = board.getSelectedSourceDeck();
+                            if(source == null) {
+                                CardStack sourceStack = board.getSelectedSourceStack();
+                                command = new CommandMove(sourceStack, deck);
+                            }
+                            else {
+                                command = new CommandMove(source, deck);
+                            }
                             if(command.canExecute()) {
                                 board.getCommandBuilder().execute(command);
                                 board.unselectSelectedSource();
                             }
                             else if(!deck.isEmpty())  {
-                                board.setSelectedSource(deck, card);
+                                board.setSelectedSource(deck, null, card);
                             }
 			}		
 			else if(!deck.isEmpty()) {
-                            board.setSelectedSource(deck, card);
+                            board.setSelectedSource(deck, null, card);
                         }
 		    }
 		}); 
