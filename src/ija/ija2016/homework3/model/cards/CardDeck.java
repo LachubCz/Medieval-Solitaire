@@ -17,6 +17,7 @@ import java.util.Set;
  */
 public class CardDeck implements CardDeckInterface 
 {
+        public String Name = "";
 	public ArrayList<Card> karty;
 	private Card.Color color;
   
@@ -169,15 +170,28 @@ public class CardDeck implements CardDeckInterface
             return this.isEmpty() ? null : this.karty.get(this.size() - 1);
         }
 
-    public boolean canPut(Card top) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //target pack methods
+    public boolean canPut(Card card) {
+        if(card == null) {
+            return false;
+        }
+
+        if(this.isEmpty()) {
+            return card.value() == 1 && card.color() == this.color;
+        }
+
+        return this.top().value() + 1 == card.value() && this.top().color() == card.color();
     }
 
     public void emplace(Card pop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.karty.add(pop);
+    }
+    
+    public void setName(String name){
+        this.Name = name;
     }
 
-    public Object getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getName() {
+        return this.Name;
     }
 }

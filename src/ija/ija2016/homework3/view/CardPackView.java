@@ -12,21 +12,37 @@ import ija.ija2016.homework3.model.cards.CardStack;
  * @author Holajz
  */
 class CardPackView {
+    public int x,y;
+    public BoardView board;
+    public String name;
     
-    void setXY(int i, int i0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private CardStack pack; //source pack
+    
+    public void setXY(int newX, int newY) {
+	x = newX;
+	y = newY;
+    }
+
+    public void setPanel(BoardView newBoard) {
+        board = newBoard;
     }
     
-    void setPanel(BoardView aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getName(){
+	return this.name;
     } 
+    
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    void setModel(CardStack sourcePack) {
+        this.pack = sourcePack;
+    }
     
     void paint() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    void setModel(CardStack sourcePack) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

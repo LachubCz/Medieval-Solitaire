@@ -22,15 +22,17 @@ import javax.swing.SwingConstants;
  */
 public class CardView extends JLabel{
     
-    Card.Color color;
+    private Card.Color color;
     int value;
     private float opacity;
     private boolean isSelected;
     private boolean isHint;
     
     CardView(CardView.CardViewColor cardColor, int cardValue, int x, int y) {
-        ImageIcon icon = LayoutVisualization.get().getCardIcon(cardColor, cardValue);
+        this.color = CardViewColor.toColor(cardColor);
+        this.value = cardValue;
         
+        ImageIcon icon = LayoutVisualization.get().getCardIcon(cardColor, cardValue);
         this.setIcon(icon);
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
@@ -64,6 +66,20 @@ public class CardView extends JLabel{
                     return SPADES;
             }
             
+            public static Card.Color toColor(CardView.CardViewColor color) {
+                    switch(color) {
+                        case SPADES:
+                            return Card.Color.SPADES;
+                        case DIAMONDS:
+                            return Card.Color.DIAMONDS;
+                        case HEARTS:
+                            return Card.Color.HEARTS;
+                        case CLUBS:
+                            return Card.Color.CLUBS;
+                    }
+                    return Card.Color.SPADES;
+            }
+            
         }
         
         public static enum CardViewState {
@@ -94,9 +110,6 @@ public class CardView extends JLabel{
         }
         
         
-        public Card toCard() {
-            return new Card(this.color, this.value);
-        }
         
         public float getOpacity() {
             return this.opacity;
@@ -108,6 +121,10 @@ public class CardView extends JLabel{
         
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
+        }
+        
+        public Card toCard() {
+            return new Card(this.color, this.value);
         }
         
         public void setHint(boolean isHint) {
