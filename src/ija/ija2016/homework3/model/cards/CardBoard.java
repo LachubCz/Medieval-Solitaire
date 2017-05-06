@@ -86,7 +86,7 @@ public class CardBoard implements CardBoardInterface {
         {
         	try 
         	{
-        		 FileInputStream fin = new FileInputStream(filename);
+        		 FileInputStream fin = new FileInputStream(filename + saveExtension);
         		 ObjectInputStream ois = new ObjectInputStream(fin);
         	     this.observers = (ArrayList<RepaintInterface>)  ois.readObject();
         	     this.StandardDeck = (CardDeck)  ois.readObject();
@@ -108,7 +108,7 @@ public class CardBoard implements CardBoardInterface {
         {
         	try 
         	{
-	      	      FileOutputStream fout = new FileOutputStream(filename);
+	      	      FileOutputStream fout = new FileOutputStream(filename + saveExtension);
 	      	      ObjectOutputStream oos = new ObjectOutputStream(fout);
 	      	      oos.writeObject(this.observers);
 	      	      oos.writeObject(this.StandardDeck);
@@ -136,8 +136,4 @@ public class CardBoard implements CardBoardInterface {
             }
             return Deck;
         }
-
-    public CardHint hintForCard(Card toCard) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
