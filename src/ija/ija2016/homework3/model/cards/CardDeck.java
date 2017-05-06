@@ -50,6 +50,10 @@ public class CardDeck implements CardDeckInterface
 		this.karty = new ArrayList<Card>(size);
 		this.karty.addAll(cardDeck);
 	}
+        
+        public CardDeck() {
+                this.karty = new ArrayList<Card>(52);
+        }
   
 	/**
 	 * Kontruktor vytvarejici standartni balicek karet

@@ -40,7 +40,7 @@ class CardDecknSourceView {
     }
     
     public void paint() {
-        if(pack.isStackEmpty()) {
+        if(pack.isSourceEmpty()) {
             CardView card = new CardView(CardView.CardViewColor.BACK, 0, 0, y  );
             board.add(card);
             picker = card;	

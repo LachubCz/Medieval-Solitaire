@@ -13,8 +13,7 @@ import java.util.Objects;
 
 public class CardStack implements CardStackInterface 
 {
-        
-	private CardDeck source; 
+	private CardDeck source = new CardDeck(); 
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
@@ -281,16 +280,18 @@ public class CardStack implements CardStackInterface
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    //funkce pracujici se stack
-    public boolean isStackEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     
     //na zbytek funkci pouzit funkce z CardDeck
     public CardDeck getDeck() {
         return this.source;
     }
+    
+    public boolean isSourceEmpty() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public Card get(int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

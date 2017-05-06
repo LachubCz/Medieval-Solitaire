@@ -37,7 +37,7 @@ public class CommandRenew implements CommandInterface{
 
     @Override
     public void unexecute(){
-        while(!stack.isStackEmpty())
+        while(!stack.isSourceEmpty())
             stack.showNext();
         while(stack.size() > 0)
             stack.pop();
@@ -47,6 +47,6 @@ public class CommandRenew implements CommandInterface{
 
     @Override
     public boolean canExecute(){
-        return !this.stack.isStackEmpty();
+        return !this.stack.isSourceEmpty();
     }
 }

@@ -1,5 +1,8 @@
 package ija.ija2016.homework3.view;
 
+import ija.ija2016.homework3.controller.CommandInterface;
+import ija.ija2016.homework3.controller.CommandMove;
+import ija.ija2016.homework3.controller.CommandMoveMultiple;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
 import ija.ija2016.homework3.model.cards.CardStack;
@@ -57,7 +60,7 @@ public class CardStackView {
 		cardView.addMouseListener(new MouseAdapter() {  
                     @Override
                     public void mouseReleased(MouseEvent e) {  
-                            moveStackHere(cardView);
+                            moveStackorSelect(cardView);
                     }  
 		});
             this.topCard = cardView;
@@ -68,7 +71,7 @@ public class CardStackView {
                         @Override
                         public void mouseReleased(MouseEvent e) {  
                             board.setSelectedSource(null, stack, cardView);
-                            board.setMultiMoveCard(card);
+                            board.setSelectedtMultipleMoveCard(card);
                         }  
                     });
                 }
@@ -80,15 +83,55 @@ public class CardStackView {
             board.add(card);
             
             card.addMouseListener(new MouseAdapter() {
-                if(board.isMoveSourceSelected()) {
-                    moveStackHere(card);
+                public void mouseReleased(MouseEvent e) {
+                    if(board.isSourceDeckorStackSelected()) {
+                        moveStackorSelect(card);
+                    }
                 }
             });
+            this.topCard = card;
         }
 
     }
     
-    public void moveStackHere(CardView card) {
+    public void moveStackorSelect(CardView card) {
+        CommandInterface command = null;
+        if(board.isSourceDeckorStackSelected()) {
+            if(board.getSelectedtMultipleMoveCard() == null) {
+                CardDeck source = board.getSelectedSourceDeck();
+                if(source == null) {
+                    CardStack sourceStack = board.getSelectedSourceStack();
+                    command = new CommandMove(sourceStack, stack);
+                }
+                else {
+                    command = new CommandMove(source, stack);
+                }
+                board.unselectSelectedSource();
+            }
+            else {
+                CardStack source = board.getSelectedSourceStack();
+                if(source == null) {
+                
+                }
+                else {
+                    command = new CommandMoveMultiple(source, stack, board.getSelectedtMultipleMoveCard());
+                }
+            board.unselectSelectedSource();
+            }
+            
+            if(command != null) {
+                if(command.canExecute()) {
+                    board.getCommandBuilder().execute(command);
+                }
+            }
+            else {
+                board.setSelectedSource(null, stack, card);
+            }
+        }
+        else {
+            board.setSelectedSource(null, stack, card);
+        }
+
         
     }
 }

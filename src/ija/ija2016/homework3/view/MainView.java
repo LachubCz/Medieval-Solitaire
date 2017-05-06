@@ -197,7 +197,7 @@ public class MainView extends JFrame{
 	public void changeView(GridLayout layout) {
 		this.mainPanel.setLayout(layout);
 		
-		//LayoutVisualization.get().setUsingMiniatures((layout == this.layout4Tiles));
+		LayoutVisualization.get().setUsingMiniatures((layout == this.layout4Tiles));
 	}
         
         public static void music(String file) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
