@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class CardStack implements CardStackInterface 
 {
-	
+	private CardDeck source; 
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
