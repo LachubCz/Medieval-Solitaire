@@ -35,12 +35,12 @@ class CardPackView {
         this.name = name;
     }
     
-    void setModel(CardStack sourcePack) {
+    public void setModel(CardStack sourcePack) {
         this.pack = sourcePack;
     }
     
-    void paint() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void paint() {
+        
     }
 
 
