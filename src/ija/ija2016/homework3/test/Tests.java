@@ -274,6 +274,6 @@ public class Tests {
         board.getStack(2).InitPut(new Card(Card.Color.CLUBS, 12));
         board.getStack(5).InitPut(new Card(Card.Color.CLUBS, 13));
         
-        board.SaveGame("AlmostWin.dat");
+        board.SaveGame("AlmostWin");
     }
 }
