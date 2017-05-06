@@ -32,9 +32,7 @@ public class CardBoard implements CardBoardInterface {
 	        AbstractFactorySolitaire Maker = new FactoryKlondike(); 
 	        
 	        this.StandardDeck = Maker.createCardDeck();
-                this.StandardDeck = RandomSwap(StandardDeck);
-                
-	        this.SourcePack = Maker.createSourcePack(StandardDeck);
+            this.StandardDeck = RandomSwap(StandardDeck);
                 
 	        for (int i = 0; i < 7; i++)
 	        {
@@ -51,6 +49,8 @@ public class CardBoard implements CardBoardInterface {
 	            		this.WorkingStacks.get(i).InitPut(this.StandardDeck.pop());
 	            }
 	        }
+	        
+	        this.SourcePack = Maker.createSourcePack(StandardDeck);
 	        
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.DIAMONDS));
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.HEARTS));
