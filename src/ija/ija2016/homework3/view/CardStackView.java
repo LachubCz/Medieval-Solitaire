@@ -44,7 +44,7 @@ public class CardStackView {
         
         
         for(int index = stack.size() - 1; index >= 0; index--) {
-            Card card = stack.get(index);
+            Card card = stack.getFromStack(index);
             CardView cardView;
             
             if(card.isTurnedFaceUp()) {
