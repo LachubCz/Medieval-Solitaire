@@ -65,7 +65,7 @@ class CardDecknSourceView {
             }); 
         }
         
-        if(!pack.isEmpty()) {
+        if(!pack.isSourceEmpty()) {
             Card modelCard = pack.top();
             CardView card = new CardView(CardView.CardViewColor.ColorView(modelCard.color()), modelCard.value(), x, y  );
             board.add(card);
