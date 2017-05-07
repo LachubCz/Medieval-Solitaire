@@ -212,36 +212,47 @@ public class BoardView extends JPanel implements PleaseRepaint {
 	}
         
         public void loadFile() {
-            ArrayList<String> filesString = new ArrayList<String>();
+ 
             
-		File[] FileList = new File("saves").listFiles(new FilenameFilter() { 
-	            public boolean accept(File dir, String filename) {
-	            	return filename.endsWith(".XXX"); 
-	            }
-		});
-
+		File[] FileList = new File("saves").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
+                
 		if(FileList == null) {
                     JOptionPane.showMessageDialog(null, "There are no saved games in the saves folder.", "Error finding saved games.", JOptionPane.INFORMATION_MESSAGE);
                     return;
 		}
-
+                
+                String[] fileString = new String[FileList.length];
+                
+                int i = 0;
 		for (File file : FileList) {
-		   filesString.add(file.getName().replaceAll("\\.XXX$", ""));
+                   fileString[i] = file.getName().replaceAll("\\.XXX$", "");
+                   i++;
 		}		
 		
-		Object[] fileNamesArray = filesString.toArray(new Object[filesString.size()]);
+                /*
+                public static Object showInputDialog(Component parentComponent,
+                     Object message,
+                     String title,
+                     int messageType,
+                     Icon icon,
+                     Object[] selectionValues,
+                     Object initialSelectionValue)
+                */
+                
+                Object[] fileNamesArray = new Object[fileString.length];
+		fileNamesArray = (Object[])fileString;
+                
 		String fileToLoad = (String)JOptionPane.showInputDialog(
 		                    this,
-		                    "Select file to load,\n" +
-		                    "Here are your choices:",
-		                    "Load dialog",
+		                    "Select Game you want to play",
+		                    "Load game",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
 		                    fileNamesArray,
 		                    "loadDialog");
 
 		// If a string was returned, execute load command
-		if (fileToLoad != null && fileToLoad.length() > 0) {
+		if (fileToLoad != null) {
 			CommandInterface command = new CommandControl("load", new ArrayList<String>(){{add("saves/" + fileToLoad);}});
 			this.getCommandBuilder().execute(command);
 		}

@@ -307,7 +307,7 @@ public class CardStack implements CardStackInterface
 
     //funkce pracujici se stack
     public boolean MoveBackToStack() {
-        if(!isSourceEmpty()) {
+        if(this.sizeOfStack() == 0) {
             for(int i = this.source.size() - 1; i >= 0; i--) {
                 this.karty.add(this.source.karty.remove(i));
                 this.karty.get(this.sizeOfStack() - 1).turnFaceDown();
