@@ -65,7 +65,7 @@ public class CardStack implements CardStackInterface
 	 */
 	public boolean put(Card card) 
 	{
-		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+		if((this.isEmpty()) && (card.value() == 13)) {
 			this.Cardcolor = new Card(card.color(), 13);
 				this.karty.add(card);
 				return true;
@@ -100,7 +100,7 @@ public class CardStack implements CardStackInterface
 	
 	public boolean canPutCard(Card card) 
 	{
-		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+		if((this.isEmpty()) && (card.value() == 13)) {
 				return true;
 		}
 		
