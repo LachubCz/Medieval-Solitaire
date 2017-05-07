@@ -121,7 +121,7 @@ public class CardView extends JLabel{
 			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD) :
 							LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
 			
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
                         //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
 			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
 			g2.dispose();
