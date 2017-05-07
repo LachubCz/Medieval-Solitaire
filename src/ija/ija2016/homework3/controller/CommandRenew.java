@@ -19,7 +19,6 @@ import java.util.ArrayList;
  */
 public class CommandRenew implements CommandInterface{
     CardStack stack = null;
-    ArrayList<Card> cards= null;
 
     public CommandRenew(CardStack source){
         this.stack = source;
@@ -28,25 +27,18 @@ public class CommandRenew implements CommandInterface{
     @Override
     public void execute(){
         if(this.canExecute()){
-            cards= new ArrayList<>();
-            for(int index = 0; index < stack.size(); index++)
-                cards.add(stack.get(index));
             stack.turnOver();
         }       
     }
 
     @Override
     public void unexecute(){
-        while(!stack.isSourceEmpty())
+        while(!stack.isEmpty())
             stack.showNext();
-        while(stack.size() > 0)
-            stack.pop();
-        while(stack.size() > 0)
-            stack.emplace(cards.remove(0));
     }
 
     @Override
     public boolean canExecute(){
-        return !this.stack.isSourceEmpty();
+        return this.stack.isEmpty();
     }
 }
