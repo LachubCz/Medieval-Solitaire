@@ -24,6 +24,7 @@ public class CardBoard implements CardBoardInterface {
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
+        int game = 1;
         
         public CardBoard() {
 	        this.TargetDecks = new ArrayList<>();
@@ -186,4 +187,21 @@ public class CardBoard implements CardBoardInterface {
 	        
         	return hint;
         }
+
+		@Override
+		public void update() {
+	        this.game = this.isGameOn();
+	        for(RepaintInterface observer : this.observers)
+	            observer.repaint();
+		}
+		
+		public int isGameOn()
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				if (this.getStack(i).size() != 13)
+					return 1;
+			}
+			return 0;
+		}
 }
