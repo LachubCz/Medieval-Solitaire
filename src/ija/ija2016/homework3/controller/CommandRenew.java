@@ -31,7 +31,7 @@ public class CommandRenew implements CommandInterface{
             cards= new ArrayList<>();
             for(int index = 0; index < stack.size(); index++)
                 cards.add(stack.get(index));
-            stack.turnOver();
+            stack.MoveBackToStack();
         }       
     }
 

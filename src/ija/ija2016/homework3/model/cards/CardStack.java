@@ -306,8 +306,8 @@ public class CardStack implements CardStackInterface
     }
 
     //funkce pracujici se stack
-    public boolean turnOver() {
-        if(this.sizeOfStack() > 0) {
+    public boolean MoveBackToStack() {
+        if(!isSourceEmpty()) {
             for(int i = this.source.size() - 1; i >= 0; i--) {
                 this.karty.add(this.source.karty.remove(i));
                 this.karty.get(this.sizeOfStack() - 1).turnFaceDown();
