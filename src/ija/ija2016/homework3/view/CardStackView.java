@@ -36,10 +36,10 @@ public class CardStackView {
     void paint() {
         int distance;
         if(LayoutVisualization.get().isLayoutChanged()) {
-            distance = 15;
+            distance = 20;
         }
         else {
-            distance = 30;
+            distance = 40;
         }
         
         

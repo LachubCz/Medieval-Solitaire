@@ -27,7 +27,6 @@ public class MainView extends JFrame{
 
 
 	private static final long serialVersionUID = 1L;
-	
 	public static final int BOARD_LIMIT = 4;
 	private ArrayList<BoardView> boards = new ArrayList<>();
 	private JPanel mainPanel;
@@ -197,6 +196,7 @@ public class MainView extends JFrame{
 		this.revalidate();
 		
 	}
+        
 
 	public void changeView(GridLayout layout) {
 		this.mainPanel.setLayout(layout);

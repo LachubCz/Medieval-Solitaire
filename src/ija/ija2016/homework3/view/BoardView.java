@@ -94,9 +94,9 @@ public class BoardView extends JPanel implements RepaintInterface {
                 buttonClose.setForeground(Color.BLACK);
                 this.add(buttonClose);
                 
+                
                 int basicValue = this.getHeight();
  
-                System.out.println(basicValue);
 
                 
                 int cardSpace = (int)(basicValue / 4.6);
@@ -112,7 +112,7 @@ public class BoardView extends JPanel implements RepaintInterface {
                 for(int i = 0; i < 7; i++) {
                     CardStackView stack = new CardStackView();
                     stack.setModel(cardBoard.getStack(i));
-                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.9 )  );
+                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.70 )  );
                     stack.setPanel(this);
                     stack.paint();
                     stacks.add(stack);
@@ -179,7 +179,7 @@ public class BoardView extends JPanel implements RepaintInterface {
 		});
 	}
         
-        public void Recreate() {
+        public void repaint() {
             removeComponents();
             this.removeAll();
             
@@ -197,7 +197,9 @@ public class BoardView extends JPanel implements RepaintInterface {
         
         public void CreateGameOver(){
             JButton buttonClose= new JButton("Game Over");
-            buttonClose.setBounds(250, 60, 140, 80);
+            buttonClose.setBounds(300, 60, 200, 200);
+            buttonClose.setBackground(Color.ORANGE);
+            buttonClose.setForeground(Color.BLACK);
             this.add(buttonClose); 
             
 		buttonClose.addActionListener(new ActionListener() {

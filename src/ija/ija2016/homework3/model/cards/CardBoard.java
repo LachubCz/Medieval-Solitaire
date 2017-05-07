@@ -25,7 +25,7 @@ public class CardBoard implements CardBoardInterface {
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
-        int game = 1;
+        private boolean game = true;
         
         public CardBoard() {
 	        this.TargetDecks = new ArrayList<>();
@@ -79,9 +79,6 @@ public class CardBoard implements CardBoardInterface {
         	return this.WorkingStacks.get(index);
         }
 		
-        public boolean isGameOver() {		
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.		
-        }
         
         public boolean LoadGame (String filename)
         {
@@ -189,19 +186,23 @@ public class CardBoard implements CardBoardInterface {
         	return hint;
         }
         
+        @Override
 	public void update() {
-	    this.game = this.isGameOn();
-	    for(RepaintInterface observer : this.observers)
-	    observer.repaint();
+	    this.game = this.isGameOver();
+            this.observers.forEach((observer) -> {
+                observer.repaint();
+            });
 	}
 		
-	public int isGameOn()
+	public boolean isGameOver()
 	{
             for(int i = 0; i < 4; i++)
 		{
                     if (this.getStack(i).size() != 13)
-			return 1;
-                    }
-		return 0;
+			return false;
+                }
+            return true;
 	}
+
+
 }
