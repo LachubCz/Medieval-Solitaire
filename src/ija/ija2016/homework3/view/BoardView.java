@@ -51,7 +51,6 @@ public class BoardView extends JPanel implements PleaseRepaint {
 
 	private ArrayList<CardDeckView> decks = new ArrayList<>(); //target pack
 	private ArrayList<CardStackView> stacks = new ArrayList<>(); //working pack
-        private ArrayList<CardView> hintCards = new ArrayList<>();
 
         private boolean hintNeeded = false;
         
@@ -70,8 +69,13 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 buttonSave.setBackground(Color.ORANGE);
                 buttonSave.setForeground(Color.BLACK);
                 this.add(buttonSave);
-                
-                JButton buttonHint = new JButton("Hint Off");
+                JButton buttonHint;
+                if(hintNeeded) {
+                    buttonHint = new JButton("Hint On");
+                }
+                else {
+                    buttonHint = new JButton("Hint Off");
+                }
                 buttonHint.setBounds(80, 0, 80, 25);
                 buttonHint.setBackground(Color.ORANGE);
                 buttonHint.setForeground(Color.BLACK);
@@ -146,7 +150,6 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(hintNeeded) {
                             hintNeeded = false;
-                            clearHints();
                             buttonHint.setText("Hint Off");
                         }
                         else {
@@ -251,7 +254,6 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		                    fileNamesArray,
 		                    "loadDialog");
 
-		// If a string was returned, execute load command
 		if (fileToLoad != null) {
 			CommandInterface command = new CommandControl("load", new ArrayList<String>(){{add("saves/" + fileToLoad);}});
 			this.getCommandBuilder().execute(command);
@@ -302,6 +304,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		if(sourceCard != null){
 		sourceCard.setSelected(true);
                     if(this.hintNeeded) {
+                        System.out.println("jsem tu pro vytvoreni hintu");
                         this.createHints();
                     }
 		}
@@ -329,33 +332,28 @@ public class BoardView extends JPanel implements PleaseRepaint {
         
             if(hint == -1)
             {
+                System.out.println("Nic jsem nenasel");
                 return;
             }
         
             if(hint < 10)
             {
         	CardDeckView deck = this.decks.get(hint);
+                System.out.println("nasel jsem neco na target decku cislo " + (hint+1));
                 CardView card = deck.top();
                 card.setHint(true);
-                this.hintCards.add(card);
             }
             else
             {
         	//hint = cislo workingpacku
         	hint = hint - 10;
                 CardStackView stack = this.stacks.get(hint);
+                System.out.println("nasel jsem neco na working packu cislo " + (hint+1));
                 CardView card = stack.top();
                 card.setHint(true);
-                this.hintCards.add(card);
-                
             }
 	}
         
-        public void clearHints() {
-            while(!this.hintCards.isEmpty()){
-		this.hintCards.remove(0).setHint(false);
-            }
-        }
         
         @Override
         protected void paintComponent(final Graphics g) {

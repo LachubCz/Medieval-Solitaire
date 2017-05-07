@@ -114,24 +114,36 @@ public class CardView extends JLabel{
             return new Card(this.color, this.value);
         }
         
-        public void setHint(boolean isHint) {
-            this.isHint = isHint;
+        public void setHint(boolean isHinterino) {
+            if(isHinterino == true) {
+                System.out.println("jsem hint target a jdu si ho vykreslit");
+            }
+
+            this.isHint = isHinterino;
             repaint();
         }
         
         @Override
         public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
-		if(isSelected || isHint){
-			Graphics2D g2 = (Graphics2D)g;
-			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD) :
-							LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
-			
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
-                        //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
-			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
-			g2.dispose();
+		if(this.isSelected){
+                    Graphics2D g2 = (Graphics2D)g;
+                    BufferedImage im =  LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
+                    //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
+                    g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
+                    g2.dispose();
 		}
+                if(this.isHint) {
+                    System.out.println("jsem v bode vyskresleni uz neni cesty zpet");
+                    Graphics2D g2 = (Graphics2D)g;
+                    BufferedImage im = LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
+                    //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
+                    g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
+                    g2.dispose();
+                }
+
         }
         
         
