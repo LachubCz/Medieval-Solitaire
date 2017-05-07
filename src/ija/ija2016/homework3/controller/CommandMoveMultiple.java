@@ -29,15 +29,15 @@ public class CommandMoveMultiple implements CommandInterface{
             wasTurnedUp = false;
             this.destination.put(this.source.pop(card));
             if(!this.source.isEmpty()){
-                this.wasTurnedUp = this.source.top().isTurnedFaceUp();
-                this.source.top().turnFaceUp();
+                this.wasTurnedUp = this.source.topStack().isTurnedFaceUp();
+                this.source.topStack().turnFaceUp();
             }
         }
     }
 
     public void unexecute(){
         if(!this.wasTurnedUp)
-            this.source.top().turnFaceDown();
+            this.source.topStack().turnFaceDown();
         CardStack takenDeck = this.destination.pop(card);
         for(int index = 0; index < takenDeck.size(); index++){
             this.source.emplace(takenDeck.get(index));
@@ -45,6 +45,6 @@ public class CommandMoveMultiple implements CommandInterface{
     }
 
     public boolean canExecute(){
-        return this.destination.canPut(this.card) && this.source.contains(card);
+        return this.destination.canPutCard(this.card);
     }
 }
