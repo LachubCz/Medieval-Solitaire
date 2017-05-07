@@ -94,22 +94,6 @@ public class CardView extends JLabel{
 		}
 	}
         
-        @Override
-        public void paintComponent(final Graphics g) {
-		super.paintComponent(g);
-		if(isSelected || isHint){
-			Graphics2D g2 = (Graphics2D)g;
-			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED) :
-							LayoutVisualization.get().getState(CardView.CardViewState.HINT_TARGET);
-			
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 0.4f));
-                        //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
-			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
-			g2.dispose();
-		}
-        }
-        
-        
         
         public float getOpacity() {
             return this.opacity;
@@ -130,6 +114,21 @@ public class CardView extends JLabel{
         public void setHint(boolean isHint) {
             this.isHint = isHint;
             repaint();
+        }
+        
+        @Override
+        public void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+		if(isSelected || isHint){
+			Graphics2D g2 = (Graphics2D)g;
+			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED) :
+							LayoutVisualization.get().getState(CardView.CardViewState.HINT_TARGET);
+			
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 0.4f));
+                        //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
+			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
+			g2.dispose();
+		}
         }
         
         

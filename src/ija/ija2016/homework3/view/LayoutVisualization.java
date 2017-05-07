@@ -21,16 +21,16 @@ public class LayoutVisualization {
     LayoutVisualization() {
         ImageIcon imageEmpty = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/empty.png"))
                 .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
-        ImageIcon imageEmptySmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+        ImageIcon imageEmptySmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(82, 160, Image.SCALE_SMOOTH));
         
         cards.add(imageEmpty);
         smallCards.add(imageEmptySmall);
         
         for(int i = 1; i <= 13; i++) {
             ImageIcon imageCard = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/S" + i + ".png"))
-                .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(165, 320, Image.SCALE_FAST));
             
-            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(82, 160, Image.SCALE_FAST));
             
             cards.add(imageCard);
             smallCards.add(imageCardSmall);
@@ -38,9 +38,9 @@ public class LayoutVisualization {
         
         for(int i = 1; i <= 13; i++) {
             ImageIcon imageCard = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/D" + i + ".png"))
-                .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(165, 320, Image.SCALE_FAST));
             
-            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(82, 160, Image.SCALE_FAST));
             
             cards.add(imageCard);
             smallCards.add(imageCardSmall);
@@ -48,9 +48,9 @@ public class LayoutVisualization {
         
         for(int i = 1; i <= 13; i++) {
             ImageIcon imageCard = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/H" + i + ".png"))
-                .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(165, 320, Image.SCALE_FAST));
             
-            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(82, 160, Image.SCALE_FAST));
             
             cards.add(imageCard);
             smallCards.add(imageCardSmall);
@@ -58,9 +58,9 @@ public class LayoutVisualization {
         
         for(int i = 1; i <= 13; i++) {
             ImageIcon imageCard = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/C" + i + ".png"))
-                .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(165, 320, Image.SCALE_FAST));
             
-            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+            ImageIcon imageCardSmall = new ImageIcon(imageCard.getImage().getScaledInstance(82, 160, Image.SCALE_FAST));
             
             cards.add(imageCard);
             smallCards.add(imageCardSmall);
@@ -68,7 +68,7 @@ public class LayoutVisualization {
         
         ImageIcon imageBack= new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/card_back.png"))
                 .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
-        ImageIcon imageBackSmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+        ImageIcon imageBackSmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(82, 160, Image.SCALE_SMOOTH));
         
         cards.add(imageBack);
         smallCards.add(imageBackSmall);
@@ -78,7 +78,7 @@ public class LayoutVisualization {
         
         ImageIcon imageReasamble= new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/reassemble.png"))
                 .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
-        ImageIcon imageReasambleSmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(50, 97, Image.SCALE_SMOOTH));
+        ImageIcon imageReasambleSmall = new ImageIcon(imageEmpty.getImage().getScaledInstance(82, 160, Image.SCALE_SMOOTH));
         
         cards.add(imageReasamble);
         smallCards.add(imageReasambleSmall);
@@ -116,14 +116,16 @@ public class LayoutVisualization {
     }
         
     public BufferedImage getState(CardView.CardViewState state) {
-        if(state == CardView.CardViewState.HINT_TARGET) {
-            return this.stateHint;
-        }
-        else if(state == CardView.CardViewState.SELECTED) {
-            return this.stateSelected;
-        }
-        else {
+        if(null == state) {
             return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
+        }
+        else switch (state) {
+            case HINT_TARGET:
+                return this.stateHint;
+            case SELECTED:
+                return this.stateSelected;
+            default:
+                return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
         }
     }
     

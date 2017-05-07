@@ -16,6 +16,7 @@ import java.util.Random;
 import org.junit.Assert;
 
 public class CardBoard implements CardBoardInterface {
+        private boolean gameOver = false;
         protected CardStack SourcePack = null;
         protected CardDeck StandardDeck = null;
         protected ArrayList<CardStack> WorkingStacks;
@@ -62,7 +63,13 @@ public class CardBoard implements CardBoardInterface {
         {
             observers.add(repaintInterface);
         }
-		
+	
+        public void update() {
+            this.gameOver = this.isGameOver();
+            for(RepaintInterface observer : this.observers)
+                observer.repaint();
+        }
+        
 	public CardStack getSourcePack() {
             return this.SourcePack;
 	}

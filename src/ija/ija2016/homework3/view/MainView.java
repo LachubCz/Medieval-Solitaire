@@ -29,15 +29,14 @@ public class MainView extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	public static final int BOARD_LIMIT = 4;
-	protected ArrayList<BoardView> boards = new ArrayList<>();
-	public JPanel mainPanel;
+	private ArrayList<BoardView> boards = new ArrayList<>();
+	private JPanel mainPanel;
 	private GridLayout layoutFull;
 	private GridLayout layout4Tiles;
-	private boolean isAdding;
         boolean stopPlayback = false;
         public JButton stopButton;
         private static Clip clip;
-        private static ArrayList<String> songs = new ArrayList<>();
+        private static final ArrayList<String> songs = new ArrayList<>();
         private int songPlayed = 0;
 	
 	public static void main(String[] args) {
@@ -47,9 +46,8 @@ public class MainView extends JFrame{
 				MainView frame = null;
                             try {
                                 frame = new MainView();
-                                frame.pack();
-                				frame.setVisible(true);
-                				frame.addBoard();
+                		frame.setVisible(true);
+                		frame.addBoard();
                             } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
                                 Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -77,6 +75,7 @@ public class MainView extends JFrame{
 		getContentPane().add(mainP);
 		
 		this.mainPanel = mainP;
+                this.mainPanel.setVisible(true);
 		
 		JButton NewGameButton = new JButton("New Game");
                 NewGameButton.setBounds(0, 0, 1000, 25);
@@ -156,7 +155,6 @@ public class MainView extends JFrame{
 
 
 	public void addBoard() {
-		isAdding = true;
 		if(boards.size() < BOARD_LIMIT) {
 			if(boards.size() == 1) {
 				this.changeView(layout4Tiles);
@@ -178,7 +176,6 @@ public class MainView extends JFrame{
         }
 	
 	public void removeBoard(BoardView board) {
-		isAdding = false;
 		if(boards.size() == 2) {
 			//changes to full layout
 			this.changeView(layoutFull);
@@ -193,20 +190,6 @@ public class MainView extends JFrame{
 		this.DoRepainting();
 	}
 	
-	public boolean getAdding()
-	{
-		return this.isAdding;
-	}
-
-	public int getBoardSize()
-	{
-		if(boards != null)
-		{
-			return this.boards.size();
-		}
-		else
-			return -1;
-	}
 	
 	public void DoRepainting() {
 		//repaint GUI
@@ -219,6 +202,7 @@ public class MainView extends JFrame{
 		this.mainPanel.setLayout(layout);
 		
 		LayoutVisualization.get().setUsingSmallCards((layout == this.layout4Tiles));
+                this.DoRepainting();
 	}
         
         public static void music(String file) throws UnsupportedAudioFileException, IOException, LineUnavailableException{

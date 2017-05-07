@@ -11,10 +11,13 @@ import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import ija.ija2016.homework3.model.cards.CardDeck;
 import ija.ija2016.homework3.model.cards.CardHint;
 import ija.ija2016.homework3.model.cards.CardStack;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -27,10 +30,12 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 
 
 public class BoardView extends JPanel implements RepaintInterface {
+ 
 	private CardDeck selectedSourceDeck = null;
         private CardStack selectedSourceStack = null;
 	private Card selectedMultipleCard = null;
@@ -55,37 +60,50 @@ public class BoardView extends JPanel implements RepaintInterface {
 		this.setLayout(null);
 		cardBoard = newCardBoard;
 		newCardBoard.registerObserver((RepaintInterface)this);
-		this.CreateAll();
+                this.CreateAll();
 	}
 
 	private void CreateAll() {
                 JButton buttonSave = new JButton("Save");
                 buttonSave.setBounds(0, 0, 80, 25);
+                buttonSave.setBackground(Color.ORANGE);
+                buttonSave.setForeground(Color.BLACK);
                 this.add(buttonSave);
                 
                 JButton buttonHint = new JButton("Hint Off");
                 buttonHint.setBounds(80, 0, 80, 25);
+                buttonHint.setBackground(Color.ORANGE);
+                buttonHint.setForeground(Color.BLACK);
                 this.add(buttonHint);
                 
 		JButton buttonUndo = new JButton("Undo");
                 buttonUndo.setBounds(160, 0, 80, 25);
+                buttonUndo.setBackground(Color.ORANGE);
+                buttonUndo.setForeground(Color.BLACK);
                 this.add(buttonUndo);
 
                 JButton buttonLoad = new JButton("Load");
                 buttonLoad.setBounds(240, 0, 80, 25);
+                buttonLoad.setBackground(Color.ORANGE);
+                buttonLoad.setForeground(Color.BLACK);
                 this.add(buttonLoad);
                 
                 JButton buttonClose = new JButton("Close");
                 buttonClose.setBounds(320, 0, 80, 25);
+                buttonClose.setBackground(Color.ORANGE);
+                buttonClose.setForeground(Color.BLACK);
                 this.add(buttonClose);
                 
-                int basicValue = 1080;
+                int basicValue = this.getHeight();
+ 
+                System.out.println(basicValue);
+
                 
-                int cardSpace = (int)(basicValue / 4.4);
+                int cardSpace = (int)(basicValue / 4.6);
                 
                 CardDecknSourceView packPicker = new CardDecknSourceView();
                 packPicker.setModel(cardBoard.getSourcePack());
-                packPicker.setXY(cardSpace * (1), 35);
+                packPicker.setXY(cardSpace * (1), 30);
                 packPicker.setPanel(this);
                 packPicker.paint();
                 
@@ -94,7 +112,7 @@ public class BoardView extends JPanel implements RepaintInterface {
                 for(int i = 0; i < 7; i++) {
                     CardStackView stack = new CardStackView();
                     stack.setModel(cardBoard.getStack(i));
-                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.4 )  );
+                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.9 )  );
                     stack.setPanel(this);
                     stack.paint();
                     stacks.add(stack);
@@ -103,7 +121,7 @@ public class BoardView extends JPanel implements RepaintInterface {
                 for(int i = 0; i < 4; i++) {
                     CardDeckView deck = new CardDeckView();
                     deck.setModel(cardBoard.getDeck(i));
-                    deck.setXY(cardSpace * (i+4), 35  );
+                    deck.setXY(cardSpace * (i+4), 30);
                     deck.setPanel(this);
                     deck.paint();
                     decks.add(deck);
@@ -296,7 +314,5 @@ public class BoardView extends JPanel implements RepaintInterface {
             }
             g.drawImage(image, 0, 0, null);
         }
-        
-
 }
 
