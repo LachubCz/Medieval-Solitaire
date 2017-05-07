@@ -92,7 +92,13 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
-		public boolean canPutCard(Card card) 
+	public int CanPutStack()
+	{
+		Card card = (Card)karty.get(karty.size() - 1);
+		return (card.value() - 1); 
+	}
+	
+	public boolean canPutCard(Card card) 
 	{
 		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
 				return true;
@@ -100,7 +106,7 @@ public class CardStack implements CardStackInterface
 		
 		if (!this.isEmpty())
 		{
-			if((this.CanPut() == card.value()) && (this.Cardcolor != null)) {
+			if((this.CanPutStack() == card.value()) && (this.Cardcolor != null)) {
 				 if(!(card.similarColorTo(this.Cardcolor))) {
 					return true;
 				 }
@@ -157,6 +163,10 @@ public class CardStack implements CardStackInterface
 	{
 		return this.karty.size();
 	}
+	
+    public Card getStack(int index) {
+        return this.karty.get(index);
+    }
 	
 	public int CanPut()
 	{
