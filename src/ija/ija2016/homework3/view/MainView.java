@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -58,6 +59,7 @@ public class MainView extends JFrame{
 	public MainView() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		super("Medieval Klondike");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setIcon();
 		setBounds(100, 100, 1920, 1080);
 		getContentPane().setLayout(null);
 		
@@ -216,5 +218,10 @@ public class MainView extends JFrame{
     
 
         }
+
+    private void setIcon() {
+        URL url = MainView.class.getResource("/ija/textures/icon.png");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(url));
+    }
     
 }

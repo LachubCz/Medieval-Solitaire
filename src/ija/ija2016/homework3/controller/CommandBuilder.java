@@ -73,5 +73,9 @@ public class CommandBuilder {
     public void movemultiple(CardStack source, CardStack destination, Card card){
     	this.execute(new CommandMoveMultiple(source, destination, card));
     }
+    
+    public void Update() {
+        this.cardBoard.update();
+    }
 }
 	

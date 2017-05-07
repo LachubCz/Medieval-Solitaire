@@ -32,6 +32,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import ija.ija2016.homework3.model.cards.PleaseRepaint;
 import java.io.FilenameFilter;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
 
@@ -69,6 +71,25 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 buttonSave.setBackground(Color.ORANGE);
                 buttonSave.setForeground(Color.BLACK);
                 this.add(buttonSave);
+                
+		JButton buttonUndo = new JButton("Undo");
+                buttonUndo.setBounds(80, 0, 80, 25);
+                buttonUndo.setBackground(Color.ORANGE);
+                buttonUndo.setForeground(Color.BLACK);
+                this.add(buttonUndo);
+
+                JButton buttonLoad = new JButton("Load");
+                buttonLoad.setBounds(160, 0, 80, 25);
+                buttonLoad.setBackground(Color.ORANGE);
+                buttonLoad.setForeground(Color.BLACK);
+                this.add(buttonLoad);
+                
+                JButton buttonClose = new JButton("Close");
+                buttonClose.setBounds(240, 0, 80, 25);
+                buttonClose.setBackground(Color.ORANGE);
+                buttonClose.setForeground(Color.BLACK);
+                this.add(buttonClose);
+                
                 JButton buttonHint;
                 if(hintNeeded) {
                     buttonHint = new JButton("Hint On");
@@ -76,28 +97,10 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 else {
                     buttonHint = new JButton("Hint Off");
                 }
-                buttonHint.setBounds(80, 0, 80, 25);
+                buttonHint.setBounds(320, 0, 80, 25);
                 buttonHint.setBackground(Color.ORANGE);
                 buttonHint.setForeground(Color.BLACK);
                 this.add(buttonHint);
-                
-		JButton buttonUndo = new JButton("Undo");
-                buttonUndo.setBounds(160, 0, 80, 25);
-                buttonUndo.setBackground(Color.ORANGE);
-                buttonUndo.setForeground(Color.BLACK);
-                this.add(buttonUndo);
-
-                JButton buttonLoad = new JButton("Load");
-                buttonLoad.setBounds(240, 0, 80, 25);
-                buttonLoad.setBackground(Color.ORANGE);
-                buttonLoad.setForeground(Color.BLACK);
-                this.add(buttonLoad);
-                
-                JButton buttonClose = new JButton("Close");
-                buttonClose.setBounds(320, 0, 80, 25);
-                buttonClose.setBackground(Color.ORANGE);
-                buttonClose.setForeground(Color.BLACK);
-                this.add(buttonClose);
                 
                 
                 int basicValue = this.getHeight();
@@ -183,6 +186,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		});
 	}
         
+        @Override
         public void repaint() {
             removeComponents();
             this.removeAll();
@@ -328,6 +332,14 @@ public class BoardView extends JPanel implements PleaseRepaint {
         
         public void createHints() {
             int hint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
+            URL url = LayoutVisualization.class.getResource("/ija/textures/background.png");
+           // ImageIcon icon = createImageIcon(url);
+            //JLabel label1 = new JLabel("Image and Text",
+            //        icon,
+            //        JLabel.CENTER);
+            //label1.setVerticalTextPosition(JLabel.BOTTOM);
+            //label1.setHorizontalTextPosition(JLabel.CENTER);
+            //this.add(label1);
         
             if(hint == -1)
             {
@@ -338,16 +350,17 @@ public class BoardView extends JPanel implements PleaseRepaint {
             if(hint < 10)
             {
         	CardDeckView deck = this.decks.get(hint);
-                System.out.println("nasel jsem neco na target decku cislo " + (hint+1));
+                System.out.println("I found something on target deck number " + (hint+1));
                 CardView card = deck.top();
                 card.setHint(true);
+                this.getCommandBuilder().Update();
             }
             else
             {
         	//hint = cislo workingpacku
         	hint = hint - 10;
                 CardStackView stack = this.stacks.get(hint);
-                System.out.println("nasel jsem neco na working packu cislo " + (hint+1));
+                System.out.println("I found something on working stack number " + (hint+1));
                 CardView card = stack.top();
                 card.setHint(true);
             }
@@ -366,5 +379,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
             }
             g.drawImage(image, 0, 0, null);
         }
+
+    private ImageIcon createImageIcon(String imagesmiddlegif) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

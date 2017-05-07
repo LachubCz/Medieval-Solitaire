@@ -5,10 +5,13 @@
  */
 package ija.ija2016.homework3.view;
 
+
+import ija.ija2016.homework3.controller.CommandInterface;
 import ija.ija2016.homework3.model.cards.Card;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -27,10 +30,14 @@ public class CardView extends JLabel{
     private float opacity;
     private boolean isSelected;
     private boolean isHint;
+    private int x;
+    private int y;
     
     CardView(CardView.CardViewColor cardColor, int cardValue, int x, int y) {
         this.color = CardViewColor.toColor(cardColor);
         this.value = cardValue;
+        this.x = x;
+        this.y = y;
         
         ImageIcon icon = LayoutVisualization.get().getCardImage(cardColor, cardValue);
         this.setIcon(icon);
@@ -107,7 +114,6 @@ public class CardView extends JLabel{
         
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
-
             this.repaint();
         }
         
@@ -116,45 +122,36 @@ public class CardView extends JLabel{
         }
         
         public void setHint(boolean isHinterino) {
-
-
-
             this.isHint = isHinterino;
-
-            if(this.isHint == true) {
-                System.out.println("jsem hint target a jdu si ho vykreslit, hint je true");
-            }
-
             this.repaint();
-            
-            if(this.isHint == true) {
-                System.out.println("hint je stale true");
-            }
-            System.out.println("vykreslil jsem se");
+        }
+        
+        public boolean getHint() {
+            return this.isHint;
+        }
+        
+        public boolean getSelected() {
+            return this.isSelected;
         }
         
         @Override
         public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
                 
-		if(this.isSelected){
-                    Graphics2D g2 = (Graphics2D)g;
-                    BufferedImage im =  LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
-                    //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
-                    g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
-                    g2.dispose();
+                Graphics2D g2 = (Graphics2D)g;
+                BufferedImage im = null;
+                
+		if(this.getSelected()){
+                    im =  LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD);
 		}
-                if(this.isHint) {
-                    System.out.println("jsem v bode vyskresleni uz neni cesty zpet");
-                    Graphics2D g2 = (Graphics2D)g;
-                    BufferedImage im = LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
-                    //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
+                if(this.getHint()) {
+                    im = LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
+                }
+                if(this.getSelected() || this.getHint()) {
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
                     g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
                     g2.dispose();
                 }
-
         }
         
         
