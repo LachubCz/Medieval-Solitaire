@@ -35,10 +35,28 @@ public class CardDeckView {
     void paint() {
         CardView cardView;
         Card stackCard = deck.top();
-        
-        CardView card = this.card = stackCard != null ?
-	new CardView(CardView.CardViewColor.ColorView(stackCard.color()), stackCard.value(), x, y ) :
-	new CardView(CardView.CardViewColor.NONE, 0, x, y );
+
+        CardView card;
+        if(stackCard != null) {
+            this.card = new CardView(CardView.CardViewColor.ColorView(stackCard.color()), stackCard.value(), x, y );
+            card = this.card;
+        }
+        else {
+            if(deck.getDeckColor() == Card.Color.CLUBS) {
+                this.card = new CardView(CardView.CardViewColor.NONE_C, 0, x, y );
+            }
+            else if(deck.getDeckColor() == Card.Color.SPADES) {
+                this.card = new CardView(CardView.CardViewColor.NONE_S, 0, x, y );
+            }
+            else if(deck.getDeckColor() == Card.Color.HEARTS) {
+                this.card = new CardView(CardView.CardViewColor.NONE_H, 0, x, y );
+            }
+            else if(deck.getDeckColor() == Card.Color.DIAMONDS) {
+                this.card = new CardView(CardView.CardViewColor.NONE_D, 0, x, y );
+            }
+            card = this.card;
+        }
+
 	board.add(this.card);	
 			
 	card.addMouseListener(new MouseAdapter() {  

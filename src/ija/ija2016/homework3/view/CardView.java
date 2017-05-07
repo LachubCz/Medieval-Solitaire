@@ -40,7 +40,9 @@ public class CardView extends JLabel{
 
 
         public static enum CardViewColor {
-            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK");
+            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK"),
+            NONE_S("Sempty"), NONE_D("Dempty"), NONE_H("Hempty"), NONE_C("Cempty");
+            
             
             private final String cardValue;
             
@@ -81,7 +83,11 @@ public class CardView extends JLabel{
         public static enum CardViewState {
 		NONE("NONE"),
 		SELECTED_CARD("SELECTED CARD"),
-		HINT_CARD("HINT TARGET");
+		HINT_CARD("HINT TARGET"),
+                NONE_S("Sempty"),
+                NONE_D("Dempty"),
+                NONE_H("Hempty"),
+                NONE_C("Cempty");
 
 		private final String cardValue;
 
