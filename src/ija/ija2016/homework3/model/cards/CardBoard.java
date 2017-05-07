@@ -21,7 +21,7 @@ public class CardBoard implements CardBoardInterface {
         protected CardDeck StandardDeck = null;
         protected ArrayList<CardStack> WorkingStacks;
         protected ArrayList<CardDeck> TargetDecks;
-        protected ArrayList<RepaintInterface> observers;
+        protected ArrayList<PleaseRepaint> observers;
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
@@ -60,7 +60,7 @@ public class CardBoard implements CardBoardInterface {
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.CLUBS));
         }
 		
-        public void registerObserver(RepaintInterface repaintInterface) 
+        public void registerObserver(PleaseRepaint repaintInterface) 
         {
             observers.add(repaintInterface);
         }
@@ -86,7 +86,7 @@ public class CardBoard implements CardBoardInterface {
         	{
         		 FileInputStream fin = new FileInputStream(filename + saveExtension);
         		 ObjectInputStream ois = new ObjectInputStream(fin);
-        	     this.observers = (ArrayList<RepaintInterface>)  ois.readObject();
+        	     this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
         	     this.StandardDeck = (CardDeck)  ois.readObject();
         	     this.SourcePack = (CardStack)  ois.readObject();
         	     this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();

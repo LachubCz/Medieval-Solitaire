@@ -38,10 +38,6 @@ public class CardView extends JLabel{
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
-    void setHintTarget(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 
         public static enum CardViewColor {
             SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK");
@@ -84,8 +80,8 @@ public class CardView extends JLabel{
         
         public static enum CardViewState {
 		NONE("NONE"),
-		SELECTED("SELECTED"),
-		HINT_TARGET("HINT TARGET");
+		SELECTED_CARD("SELECTED CARD"),
+		HINT_CARD("HINT TARGET");
 
 		private final String cardValue;
 
@@ -105,6 +101,7 @@ public class CardView extends JLabel{
         
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
+            repaint();
         }
         
         public Card toCard() {
@@ -121,10 +118,10 @@ public class CardView extends JLabel{
 		super.paintComponent(g);
 		if(isSelected || isHint){
 			Graphics2D g2 = (Graphics2D)g;
-			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED) :
-							LayoutVisualization.get().getState(CardView.CardViewState.HINT_TARGET);
+			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD) :
+							LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
 			
-                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 0.4f));
+                        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
                         //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
 			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
 			g2.dispose();

@@ -2,7 +2,6 @@ package ija.ija2016.homework3.view;
 import ija.ija2016.homework3.controller.CommandInterface;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import ija.ija2016.homework3.model.cards.RepaintInterface;
 import ija.ija2016.homework3.controller.CommandBuilder;
 import ija.ija2016.homework3.controller.CommandControl;
 import ija.ija2016.homework3.model.cards.Card;
@@ -31,10 +30,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import ija.ija2016.homework3.model.cards.PleaseRepaint;
 
 
 
-public class BoardView extends JPanel implements RepaintInterface {
+public class BoardView extends JPanel implements PleaseRepaint {
  
 	private CardDeck selectedSourceDeck = null;
         private CardStack selectedSourceStack = null;
@@ -59,7 +59,7 @@ public class BoardView extends JPanel implements RepaintInterface {
 		commander = new CommandBuilder(newCardBoard);
 		this.setLayout(null);
 		cardBoard = newCardBoard;
-		newCardBoard.registerObserver((RepaintInterface)this);
+		newCardBoard.registerObserver((PleaseRepaint)this);
                 this.CreateAll();
 	}
 
@@ -197,7 +197,7 @@ public class BoardView extends JPanel implements RepaintInterface {
         
         public void CreateGameOver(){
             JButton buttonClose= new JButton("Game Over");
-            buttonClose.setBounds(300, 60, 200, 200);
+            buttonClose.setBounds(400, 200, 200, 200);
             buttonClose.setBackground(Color.ORANGE);
             buttonClose.setForeground(Color.BLACK);
             this.add(buttonClose); 
@@ -211,6 +211,7 @@ public class BoardView extends JPanel implements RepaintInterface {
 	}
         
         public void loadFile() {
+            
         }
         
         public void closeThisBoard() {
@@ -289,18 +290,26 @@ public class BoardView extends JPanel implements RepaintInterface {
         
             if(hint < 10)
             {
-        	
+        	CardDeckView deck = this.decks.get(hint);
+                CardView card = deck.top();
+                card.setHint(true);
+                this.hintCards.add(card);
             }
             else
             {
         	//hint = cislo workingpacku
         	hint = hint - 10;
+                CardStackView stack = this.stacks.get(hint);
+                CardView card = stack.top();
+                card.setHint(true);
+                this.hintCards.add(card);
+                
             }
 	}
         
         public void clearHints() {
             while(!this.hintCards.isEmpty()){
-		this.hintCards.remove(0).setHintTarget(false);
+		this.hintCards.remove(0).setHint(false);
             }
         }
         

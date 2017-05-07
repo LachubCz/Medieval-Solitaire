@@ -99,6 +99,8 @@ public class LayoutVisualization {
         try {
             URL url = LayoutVisualization.class.getResource("/ija/textures/hint.png");
             this.stateHint = ImageIO.read(url);
+            if(this.stateHint == null) {
+            }
         }
         catch(IOException e) {
             this.stateHint = new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
@@ -109,6 +111,7 @@ public class LayoutVisualization {
             this.stateSelected = ImageIO.read(url);
         }
         catch(IOException e) {
+
             this.stateSelected = new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
         }
 
@@ -120,9 +123,9 @@ public class LayoutVisualization {
             return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
         }
         else switch (state) {
-            case HINT_TARGET:
+            case HINT_CARD:
                 return this.stateHint;
-            case SELECTED:
+            case SELECTED_CARD:
                 return this.stateSelected;
             default:
                 return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
