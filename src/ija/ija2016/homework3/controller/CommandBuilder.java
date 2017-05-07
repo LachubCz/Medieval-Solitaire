@@ -1,5 +1,6 @@
 package ija.ija2016.homework3.controller;
 
+import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardBoard;
 import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import ija.ija2016.homework3.model.cards.CardDeck;
@@ -59,6 +60,18 @@ public class CommandBuilder {
     
     public void move(CardDeck source, CardStack destination){
         this.execute(new CommandMove(source, destination));
+    }
+    
+    public void next(CardStack stack){
+    	this.execute(new CommandNext(stack));
+    }
+    
+    public void renew(CardStack source){
+    	this.execute(new CommandRenew(source));
+    }
+    
+    public void movemultiple(CardStack source, CardStack destination, Card card){
+    	this.execute(new CommandMoveMultiple(source, destination, card));
     }
 }
 	
