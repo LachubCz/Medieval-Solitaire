@@ -121,7 +121,7 @@ public class CommandMove implements CommandInterface{
     		}
     		if(sourceStack != null)
     		{
-                if(!destination.canPut(sourceStack.top())) {
+                if(!destination.canPut(sourceStack.getStack(sourceStack.size()-1))) {
                     return false;
                 }
                 return true;
@@ -138,7 +138,7 @@ public class CommandMove implements CommandInterface{
     		}
     		if(sourceStack != null)
     		{
-                if(!destinationStack.canPutCard(sourceStack.top())) {
+                if(!destinationStack.canPutCard(sourceStack.getStack(sourceStack.size()-1))) {
                     return false;
                 }
                 return true;
