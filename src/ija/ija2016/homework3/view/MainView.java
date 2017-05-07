@@ -30,9 +30,10 @@ public class MainView extends JFrame{
 	
 	public static final int BOARD_LIMIT = 4;
 	protected ArrayList<BoardView> boards = new ArrayList<>();
-	private JPanel mainPanel;
+	public JPanel mainPanel;
 	private GridLayout layoutFull;
 	private GridLayout layout4Tiles;
+	private boolean isAdding;
         boolean stopPlayback = false;
         public JButton stopButton;
         private static Clip clip;
@@ -46,11 +47,13 @@ public class MainView extends JFrame{
 				MainView frame = null;
                             try {
                                 frame = new MainView();
+                                frame.pack();
+                				frame.setVisible(true);
+                				frame.addBoard();
                             } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
                                 Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                             }
-				frame.setVisible(true);
-				frame.addBoard();
+
 			}
 		});
 	}
@@ -58,17 +61,17 @@ public class MainView extends JFrame{
 	public MainView() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		super("Medieval Klondike");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		setBounds(100, 100, 1920, 1080);
 		getContentPane().setLayout(null);
 		
 		layoutFull = new GridLayout(1,1,0,0);
 		layout4Tiles = new GridLayout(2,2,0,0);
 		
 		JPanel topP = new JPanel(layoutFull);
-		topP.setBounds(0, 0, 1280, 25);
+		topP.setBounds(0, 0, 1920, 25);
 		
 		JPanel mainP = new JPanel(layoutFull);
-		mainP.setBounds(0, 25, 1280, 680);
+		mainP.setBounds(0, 25, 1920, 1040);
 		
 		getContentPane().add(topP);
 		getContentPane().add(mainP);
@@ -153,6 +156,7 @@ public class MainView extends JFrame{
 
 
 	public void addBoard() {
+		isAdding = true;
 		if(boards.size() < BOARD_LIMIT) {
 			if(boards.size() == 1) {
 				this.changeView(layout4Tiles);
@@ -174,6 +178,7 @@ public class MainView extends JFrame{
         }
 	
 	public void removeBoard(BoardView board) {
+		isAdding = false;
 		if(boards.size() == 2) {
 			//changes to full layout
 			this.changeView(layoutFull);
@@ -188,8 +193,21 @@ public class MainView extends JFrame{
 		this.DoRepainting();
 	}
 	
-	
+	public boolean getAdding()
+	{
+		return this.isAdding;
+	}
 
+	public int getBoardSize()
+	{
+		if(boards != null)
+		{
+			return this.boards.size();
+		}
+		else
+			return -1;
+	}
+	
 	public void DoRepainting() {
 		//repaint GUI
 		this.repaint();
