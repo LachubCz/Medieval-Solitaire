@@ -304,7 +304,6 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		if(sourceCard != null){
 		sourceCard.setSelected(true);
                     if(this.hintNeeded) {
-                        System.out.println("jsem tu pro vytvoreni hintu");
                         this.createHints();
                     }
 		}

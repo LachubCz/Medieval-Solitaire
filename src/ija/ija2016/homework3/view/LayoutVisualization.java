@@ -152,7 +152,6 @@ public class LayoutVisualization {
         }
         else switch (state) {
             case HINT_CARD:
-                System.out.println("Ziskavam obrazek hintu");
                 return this.stateHint;
             case SELECTED_CARD:
                 return this.stateSelected;

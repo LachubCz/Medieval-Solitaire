@@ -107,7 +107,8 @@ public class CardView extends JLabel{
         
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
-            repaint();
+
+            this.repaint();
         }
         
         public Card toCard() {
@@ -115,17 +116,27 @@ public class CardView extends JLabel{
         }
         
         public void setHint(boolean isHinterino) {
-            if(isHinterino == true) {
-                System.out.println("jsem hint target a jdu si ho vykreslit");
-            }
+
+
 
             this.isHint = isHinterino;
-            repaint();
+
+            if(this.isHint == true) {
+                System.out.println("jsem hint target a jdu si ho vykreslit, hint je true");
+            }
+
+            this.repaint();
+            
+            if(this.isHint == true) {
+                System.out.println("hint je stale true");
+            }
+            System.out.println("vykreslil jsem se");
         }
         
         @Override
         public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
+                
 		if(this.isSelected){
                     Graphics2D g2 = (Graphics2D)g;
                     BufferedImage im =  LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD);
