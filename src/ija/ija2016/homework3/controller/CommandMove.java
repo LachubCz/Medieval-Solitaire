@@ -55,16 +55,16 @@ public class CommandMove implements CommandInterface{
                 {
                     this.destinationStack.put(sourceStack.pop());
                     if(!this.sourceStack.isEmpty()) {
-                        this.isTurnedUp = this.sourceStack.top().isTurnedFaceUp();
-                        this.sourceStack.top().turnFaceUp();
+                        this.isTurnedUp = this.sourceStack.topStack().isTurnedFaceUp();
+                        this.sourceStack.topStack().turnFaceUp();
                     }
                 }
                 if(destination != null && sourceStack != null)
                 {
                     this.destination.put(sourceStack.pop());
                     if(!this.sourceStack.isEmpty()) {
-                        this.isTurnedUp = this.sourceStack.top().isTurnedFaceUp();
-                        this.sourceStack.top().turnFaceUp();
+                        this.isTurnedUp = this.sourceStack.topStack().isTurnedFaceUp();
+                        this.sourceStack.topStack().turnFaceUp();
                     }
                 }
                 if(destinationStack != null && source != null)

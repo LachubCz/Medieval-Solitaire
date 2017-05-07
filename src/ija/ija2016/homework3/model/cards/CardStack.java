@@ -146,7 +146,12 @@ public class CardStack implements CardStackInterface
 		return true;
 	}
 	
-	  
+    public Card topStack() {
+    	if(!this.karty.isEmpty())
+    		return this.karty.get(this.karty.size()-1);
+    	return null;
+    }
+    
 	/**
 	* Test, zda je balĂ­Ă¨ek karet prĂˇzdnĂ˝.
 	* @return VracĂ­ true, pokud je balĂ­Ă¨ek prĂˇzdnĂ˝.

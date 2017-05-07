@@ -12,4 +12,6 @@ public interface CardBoardInterface {
         public CardHint hintForCard(Card toCard);
 
         public int createHint(Card toCard);
+        
+        public void update();
 }
