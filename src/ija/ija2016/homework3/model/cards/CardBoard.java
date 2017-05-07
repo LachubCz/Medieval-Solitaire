@@ -21,7 +21,7 @@ public class CardBoard implements CardBoardInterface {
         protected CardDeck StandardDeck = null;
         protected ArrayList<CardStack> WorkingStacks;
         protected ArrayList<CardDeck> TargetDecks;
-        protected ArrayList<PleaseRepaint> observers;
+        protected ArrayList<RepaintInterface> observers;
         public static final int stackCount = 7;
         public static final int deckCount = 4;
         public static final String saveExtension = ".XXX";
@@ -34,7 +34,7 @@ public class CardBoard implements CardBoardInterface {
 	        AbstractFactorySolitaire Maker = new FactoryKlondike(); 
 	        
 	        this.StandardDeck = Maker.createCardDeck();
-                this.StandardDeck = RandomSwap(StandardDeck);
+            this.StandardDeck = RandomSwap(StandardDeck);
                 
 	        for (int i = 0; i < 7; i++)
 	        {
@@ -51,15 +51,29 @@ public class CardBoard implements CardBoardInterface {
 	            		this.WorkingStacks.get(i).InitPut(this.StandardDeck.pop());
 	            }
 	        }
+	        
 	        this.SourcePack = Maker.createSourcePack(StandardDeck);
 	        
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.DIAMONDS));
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.HEARTS));
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.SPADES));
 	        this.TargetDecks.add(Maker.createTargetPack(Card.Color.CLUBS));
+	        
+	        //debug pro multipresun
+	        /*
+	        this.WorkingStacks.get(0).pop();
+	        this.WorkingStacks.get(0).InitPut(Maker.createCard(Card.Color.HEARTS, 2));
+	        this.WorkingStacks.get(0).getFromStack(0).turnFaceUp();
+	        this.WorkingStacks.get(0).InitPut(Maker.createCard(Card.Color.CLUBS, 1));
+	        this.WorkingStacks.get(0).getFromStack(1).turnFaceUp();
+	        this.WorkingStacks.get(1).pop();
+	        this.WorkingStacks.get(1).pop();
+	        this.WorkingStacks.get(1).InitPut(Maker.createCard(Card.Color.CLUBS, 3));
+	        this.WorkingStacks.get(1).getFromStack(0).turnFaceUp();
+	        */
         }
 		
-        public void registerObserver(PleaseRepaint repaintInterface) 
+        public void registerObserver(RepaintInterface repaintInterface) 
         {
             observers.add(repaintInterface);
         }
@@ -85,7 +99,7 @@ public class CardBoard implements CardBoardInterface {
         	{
         		 FileInputStream fin = new FileInputStream(filename + saveExtension);
         		 ObjectInputStream ois = new ObjectInputStream(fin);
-        	     this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
+        	     this.observers = (ArrayList<RepaintInterface>)  ois.readObject();
         	     this.StandardDeck = (CardDeck)  ois.readObject();
         	     this.SourcePack = (CardStack)  ois.readObject();
         	     this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
