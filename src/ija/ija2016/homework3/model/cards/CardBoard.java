@@ -64,12 +64,6 @@ public class CardBoard implements CardBoardInterface {
         {
             observers.add(repaintInterface);
         }
-	
-        public void update() {
-            this.gameOver = this.isGameOver();
-            for(RepaintInterface observer : this.observers)
-                observer.repaint();
-        }
         
 	public CardStack getSourcePack() {
             return this.SourcePack;
@@ -194,21 +188,20 @@ public class CardBoard implements CardBoardInterface {
 	        
         	return hint;
         }
-
-		@Override
-		public void update() {
-	        this.game = this.isGameOn();
-	        for(RepaintInterface observer : this.observers)
-	            observer.repaint();
-		}
+        
+	public void update() {
+	    this.game = this.isGameOn();
+	    for(RepaintInterface observer : this.observers)
+	    observer.repaint();
+	}
 		
-		public int isGameOn()
+	public int isGameOn()
+	{
+            for(int i = 0; i < 4; i++)
 		{
-			for(int i = 0; i < 4; i++)
-			{
-				if (this.getStack(i).size() != 13)
-					return 1;
-			}
-			return 0;
-		}
+                    if (this.getStack(i).size() != 13)
+			return 1;
+                    }
+		return 0;
+	}
 }

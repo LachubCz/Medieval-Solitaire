@@ -14,5 +14,5 @@ package ija.ija2016.homework3.model.cards;
  * @author Holajz
  */
 public interface CanAddInterface {
-    public void fill(CardDeck deck, int count);
+    public void add(CardDeck deck, int count);
 }
