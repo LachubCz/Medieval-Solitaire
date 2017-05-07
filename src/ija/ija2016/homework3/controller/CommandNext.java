@@ -30,6 +30,6 @@ public class CommandNext implements CommandInterface{
 
     @Override
     public boolean canExecute(){
-        return !this.stack.isSourceEmpty();
+        return !this.stack.isEmpty();
     }
 }
