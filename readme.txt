@@ -1,2 +1,2 @@
 Projekt: Klondike
-Èlenové: Tomáš Holík (xholik13), Petr Buchal (xbucha02)
+ÄŒlenovÃ©: TomÃ¡Å¡ HolÃ­k (xholik13), Petr Buchal (xbucha02)
