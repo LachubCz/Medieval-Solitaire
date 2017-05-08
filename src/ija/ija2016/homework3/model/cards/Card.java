@@ -30,13 +30,13 @@ public class Card implements CardInterface {
 			this.value = value;
 	}
 
-    public boolean turnFaceDown() {
-		if(this.isturned == true) {
-			this.isturned = false;
-			return true;
-		}
-		return false;
-    }
+        public boolean turnFaceDown() {
+            if(!this.isturned) {
+                return false;
+            }
+            this.isturned = false;
+            return true;
+        }
 		
 	/**
 	 * Vyctovy typ reprezentujici barvu karty
@@ -180,3 +180,5 @@ public class Card implements CardInterface {
 		return Objects.hash(value, barva);
 	}
 }
+
+

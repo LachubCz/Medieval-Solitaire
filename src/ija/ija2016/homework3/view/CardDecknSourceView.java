@@ -40,15 +40,13 @@ class CardDecknSourceView {
     }
     
     public void paint() {
-        if(pack.isStackEmpty()) {
+        if(!pack.isEmpty()) {
             CardView card = new CardView(CardView.CardViewColor.BACK, 0, 0, y  );
             board.add(card);
             picker = card;	
 			
-            card.addMouseListener(new MouseAdapter()  
-			{  
-             public void mouseReleased(MouseEvent e)  
-                {  
+            card.addMouseListener(new MouseAdapter() {  
+             public void mouseReleased(MouseEvent e) {  
                     CommandInterface command = new CommandNext(pack);
                     board.getCommandBuilder().execute(command);
 		}  
@@ -59,27 +57,23 @@ class CardDecknSourceView {
             board.add(card);
             picker = card;
             
-            card.addMouseListener(new MouseAdapter()  
-			{  
-            public void mouseReleased(MouseEvent e)  
-                {  
+            card.addMouseListener(new MouseAdapter() {  
+            public void mouseReleased(MouseEvent e) {  
                     CommandInterface command = new CommandRenew(pack);
                     board.getCommandBuilder().execute(command);
 		}  
             }); 
         }
         
-        if(!pack.isEmpty()) {
+        if(!pack.isSourceEmpty()) {
             Card modelCard = pack.top();
             CardView card = new CardView(CardView.CardViewColor.ColorView(modelCard.color()), modelCard.value(), x, y  );
             board.add(card);
             putAside = card; 
 			
-            card.addMouseListener(new MouseAdapter()  
-            {  
-		public void mouseReleased(MouseEvent e)  
-                {  
-                    board.setSelectedSource(pack.getDeck(), card);
+            card.addMouseListener(new MouseAdapter() {  
+		public void mouseReleased(MouseEvent e) {  
+                    board.setSelectedSource(pack.getDeck(), null, card);
 		}  
             }); 
         }

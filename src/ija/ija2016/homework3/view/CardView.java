@@ -5,10 +5,13 @@
  */
 package ija.ija2016.homework3.view;
 
+
+import ija.ija2016.homework3.controller.CommandInterface;
 import ija.ija2016.homework3.model.cards.Card;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -27,24 +30,26 @@ public class CardView extends JLabel{
     private float opacity;
     private boolean isSelected;
     private boolean isHint;
+    private int x;
+    private int y;
     
     CardView(CardView.CardViewColor cardColor, int cardValue, int x, int y) {
         this.color = CardViewColor.toColor(cardColor);
         this.value = cardValue;
+        this.x = x;
+        this.y = y;
         
-        ImageIcon icon = LayoutVisualization.get().getCardIcon(cardColor, cardValue);
+        ImageIcon icon = LayoutVisualization.get().getCardImage(cardColor, cardValue);
         this.setIcon(icon);
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
-    void setHintTarget(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 
         public static enum CardViewColor {
-            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK");
+            SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK"),
+            NONE_S("Sempty"), NONE_D("Dempty"), NONE_H("Hempty"), NONE_C("Cempty");
+            
             
             private final String cardValue;
             
@@ -84,8 +89,12 @@ public class CardView extends JLabel{
         
         public static enum CardViewState {
 		NONE("NONE"),
-		SELECTED("SELECTED"),
-		HINT_TARGET("HINT TARGET");
+		SELECTED_CARD("SELECTED CARD"),
+		HINT_CARD("HINT TARGET"),
+                NONE_S("Sempty"),
+                NONE_D("Dempty"),
+                NONE_H("Hempty"),
+                NONE_C("Cempty");
 
 		private final String cardValue;
 
@@ -93,22 +102,6 @@ public class CardView extends JLabel{
 			this.cardValue = value;
 		}
 	}
-        
-        @Override
-        public void paintComponent(final Graphics g) {
-		super.paintComponent(g);
-		if(isSelected || isHint){
-			Graphics2D g2 = (Graphics2D)g;
-			BufferedImage im = isSelected ? LayoutVisualization.get().getState(CardView.CardViewState.SELECTED) :
-							LayoutVisualization.get().getState(CardView.CardViewState.HINT_TARGET);
-			
-                        //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
-                        //getTranslateInstance - Returns a transform representing a translation transformation. move matrix.
-			g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
-			g2.dispose();
-		}
-        }
-        
         
         
         public float getOpacity() {
@@ -121,15 +114,44 @@ public class CardView extends JLabel{
         
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
+            this.repaint();
         }
         
         public Card toCard() {
             return new Card(this.color, this.value);
         }
         
-        public void setHint(boolean isHint) {
-            this.isHint = isHint;
-            repaint();
+        public void setHint(boolean isHinterino) {
+            this.isHint = isHinterino;
+            this.repaint();
+        }
+        
+        public boolean getHint() {
+            return this.isHint;
+        }
+        
+        public boolean getSelected() {
+            return this.isSelected;
+        }
+        
+        @Override
+        public void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+                
+                Graphics2D g2 = (Graphics2D)g;
+                BufferedImage im = null;
+                
+		if(this.getSelected()){
+                    im =  LayoutVisualization.get().getState(CardView.CardViewState.SELECTED_CARD);
+		}
+                if(this.getHint()) {
+                    im = LayoutVisualization.get().getState(CardView.CardViewState.HINT_CARD);
+                }
+                if(this.getSelected() || this.getHint()) {
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+                    g2.drawRenderedImage((RenderedImage)im, AffineTransform.getTranslateInstance(0, 0));
+                    g2.dispose();
+                }
         }
         
         

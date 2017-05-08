@@ -25,6 +25,7 @@ public class CardDeck implements CardDeckInterface
 		this.color = color;
 		this.karty = new ArrayList<Card>(13);
 	}
+        
 	
 	/**
 	 * Konstruktor vytvarejici balicek karet
@@ -50,6 +51,14 @@ public class CardDeck implements CardDeckInterface
 		this.karty = new ArrayList<Card>(size);
 		this.karty.addAll(cardDeck);
 	}
+        
+        public CardDeck() {
+                this.karty = new ArrayList<Card>(52);
+        }
+        
+        public Card.Color getDeckColor() {
+            return this.color;
+        }
   
 	/**
 	 * Kontruktor vytvarejici standartni balicek karet
@@ -207,5 +216,9 @@ public class CardDeck implements CardDeckInterface
 
     public void emplace(Card pop) {
         this.karty.add(pop);
+    }
+
+    boolean contains(Card card) {
+        return this.karty.contains(card);
     }
 }

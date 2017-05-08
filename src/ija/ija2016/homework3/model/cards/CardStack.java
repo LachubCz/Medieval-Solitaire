@@ -13,11 +13,11 @@ import java.util.Objects;
 
 public class CardStack implements CardStackInterface 
 {
-	private CardDeck source; 
+	private CardDeck source = new CardDeck(); 
 	private ArrayList<Card> karty;
 	private int capacity;
 	private Card Cardcolor;
-
+        
 	public CardStack() 
 	{
 		this.capacity = 52;
@@ -35,12 +35,18 @@ public class CardStack implements CardStackInterface
 		this.Cardcolor = null;
 		this.karty = new ArrayList<Card>(size);
 	}
+        
+        public void emplaceStack(Card pop) {
+            this.karty.add(pop);
+        }
 	
 	public void InitPut(Card card)		
 	{		
 		this.Cardcolor = new Card(card.color(), 13);		
 		this.karty.add(card);		
 	}
+        
+        
 	
 	/**
 	 * Konstruktor pro vytvoreni pracujiciho pole o velikosti 13
@@ -59,7 +65,7 @@ public class CardStack implements CardStackInterface
 	 */
 	public boolean put(Card card) 
 	{
-		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+		if((this.isEmpty()) && (card.value() == 13)) {
 			this.Cardcolor = new Card(card.color(), 13);
 				this.karty.add(card);
 				return true;
@@ -86,15 +92,21 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
+	public int CanPutStack()
+	{
+		Card card = (Card)karty.get(karty.size() - 1);
+		return (card.value() - 1); 
+	}
+	
 	public boolean canPutCard(Card card) 
 	{
-		if((this.Cardcolor == null) && (this.isEmpty()) && (card.value() == 13)) {
+		if((this.isEmpty()) && (card.value() == 13)) {
 				return true;
 		}
 		
 		if (!this.isEmpty())
 		{
-			if((this.CanPut() == card.value()) && (this.Cardcolor != null)) {
+			if((this.CanPutStack() == card.value()) && (this.Cardcolor != null)) {
 				 if(!(card.similarColorTo(this.Cardcolor))) {
 					return true;
 				 }
@@ -111,6 +123,14 @@ public class CardStack implements CardStackInterface
 		}
 	}
 	
+	public Card getFromStack(int index)
+	{
+		if (!this.karty.isEmpty())
+			return this.karty.get(index);
+		else
+			return null;
+	}
+		
 	/**
 	 * VloĹľĂ­ karty ze zĂˇsobnĂ­ku stack na vrchol zĂˇsobnĂ­ku. Karty vklĂˇdĂˇ ve stejnĂ©m poĂ¸adĂ­, v jakĂ©m jsou uvedeny v zĂˇsobnĂ­ku stack.
 	 * @param stack - ZĂˇsobnĂ­k vklĂˇdanĂ˝ch karet.
@@ -118,7 +138,7 @@ public class CardStack implements CardStackInterface
 	*/
 	public boolean put(CardStack stack) 
 	{
-		if((stack == null) || (stack.isEmpty() == true) || this.isEmpty()) {
+		if((stack == null) || (stack.isEmpty() == true)) {
 			return false;
 		}
 		karty.addAll(stack.karty);
@@ -126,7 +146,19 @@ public class CardStack implements CardStackInterface
 		return true;
 	}
 	
-	  
+	public boolean InitPut(CardStack stack) 
+	{
+		karty.addAll(stack.karty);
+		stack.karty.clear();
+		return true;
+	}
+	
+    public Card topStack() {
+    	if(!this.karty.isEmpty())
+    		return this.karty.get(this.karty.size()-1);
+    	return null;
+    }
+    
 	/**
 	* Test, zda je balĂ­Ă¨ek karet prĂˇzdnĂ˝.
 	* @return VracĂ­ true, pokud je balĂ­Ă¨ek prĂˇzdnĂ˝.
@@ -143,6 +175,10 @@ public class CardStack implements CardStackInterface
 	{
 		return this.karty.size();
 	}
+	
+    public Card getStack(int index) {
+        return this.karty.get(index);
+    }
 	
 	public int CanPut()
 	{
@@ -256,62 +292,73 @@ public class CardStack implements CardStackInterface
 		return Objects.hash(karty, capacity);
 	}
 
+    //funkce pracujici se stack
     public boolean showNext() {
-    	if (this.karty.size() == 0)
-    		return false;
-    	else
-    	{
-    		if (this.karty.get(this.karty.size() - 1).turnFaceUp())
-    			return true;
-    		else
-    			return false;
-    	}
+        if(this.size() > 0) {
+            Card card = this.karty.remove(this.size() - 1);
+            card.turnFaceUp();
+            return this.source.karty.add(card);
+        }
+        return false;
     }
 
+    //funkce pracujici se stack
     public boolean hideTopCard() {
-    	if (this.karty.size() == 0)
-    		return false;
-    	else
-    	{
-    		if (this.karty.get(this.karty.size() - 1).turnFaceDown())
-    			return true;
-    		else
-    			return false;
-    	}
+        if(!this.source.karty.isEmpty()) {
+            Card card = this.source.pop();
+            card.turnFaceDown();
+            return this.karty.add(card);
+        }
+        return false;
     }
 
-    public boolean isAnyHidden() {
-    	for (int i = 0; i < this.karty.size(); i++)
-    		if (!(this.karty.get(i).isTurnedFaceUp()))
-    		{
-    			return true;
-    		}
-    	return false;
+    //funkce pracujici se stack
+    public boolean MoveBackToStack() {
+        if(this.sizeOfStack() == 0) {
+            for(int i = this.source.size() - 1; i >= 0; i--) {
+                this.karty.add(this.source.karty.remove(i));
+                this.karty.get(this.sizeOfStack() - 1).turnFaceDown();
+            }
+        }
+        return false;
     }
-
-    public void turnOver() {
-    	for (int i = 0; i < this.karty.size(); i++)
-    		this.karty.get(i).turnFaceDown();
+    
+    //funkce pracujici se stack
+    public int sizeOfStack() {
+        return this.size();
     }
+    
 
+
+    
+    //na zbytek funkci pouzit funkce z CardDeck
+    public CardDeck getDeck() {
+        return this.source;
+    }
+    
+    public boolean isSourceEmpty() {
+        return this.source.isEmpty();
+    }
+    
     public Card get(int index) {
-    	if(index < this.karty.size())
-    		return this.karty.get(index);
-    	return null;
+        return this.source.get(index);
+    }
+
+    public void emplace(Card remove) {
+        this.source.emplace(remove);
     }
 
     public Card top() {
-    	if(this.karty.size() > 0)
-    		return this.karty.get(this.karty.size() - 1);
-    	return null;
+        return this.source.top();
+    }
+
+    public boolean canPut(Card card) {
+        return this.source.canPut(card);
     }
 
     public boolean contains(Card card) {
-    	for (int i = 0; i < this.karty.size(); i++)
-    	{
-    		if (this.karty.get(i).equals(card))
-    			return true;
-    	}
-    	return false;
+        return this.source.contains(card);
     }
+    
+    
 }

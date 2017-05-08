@@ -9,5 +9,13 @@ public interface CardBoardInterface {
 
         public boolean isGameOver();
 
-    public CardHint hintForCard(Card toCard);
+        public CardHint hintForCard(Card toCard);
+
+        public int createHint(Card toCard);
+        
+        public void update();
+        
+        public boolean LoadGame (String filename);
+        
+        public boolean SaveGame (String filename);
 }

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * rozhrani reprezentujici pracujici pole, rozsiruje balicek karet
  * @author Tomas Holik, xholik13
  */
-public interface CardStackInterface extends Serializable {
+public interface CardStackInterface extends Serializable, CanAddInterface{
 	/**
 	 * Vlo�� karty ze z�sobn�ku stack na vrchol z�sobn�ku. Karty vkl�d� ve stejn�m po�ad�, v jak�m jsou uvedeny v z�sobn�ku stack.
 	 * @param stack - zasobnik vkladanych karet

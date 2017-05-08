@@ -176,8 +176,6 @@ public class Tests {
      
         CardStack s = pack1.pop(factory.createCard(Card.Color.CLUBS, 12));
         
-        Assert.assertFalse("Nelze vlozit odebranou mnozinu (pracovni balicek je prazdny)", pack2.put(s));
-        
         Assert.assertTrue("Vkladame cerveneho krale na prazdny balicek.", 
                 pack2.put(factory.createCard(Card.Color.HEARTS, 13)));
 
@@ -193,10 +191,7 @@ public class Tests {
     public void testCountsCardBoard() {
         
     	CardBoard board = new CardBoard();
-        
-        CardDeck testdeck = board.getStandardDeck();
-        Assert.assertEquals("Zdrojovy balicek obsahuje 1 karty.", 24, testdeck.size());
-        
+
         CardStack teststack0 = board.getStack(0);
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 1 karty.", 1, teststack0.size());
         Card c1 = teststack0.pop();
@@ -254,10 +249,10 @@ public class Tests {
         
         for (int i = 0; i < 24; i++)
         {
-        	board.getStandardDeck().pop();
+        	board.getSourcePack().pop();
         }
         
-        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 0, board.getStandardDeck().size());
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 0, board.getSourcePack().size());
         
 		for (int i = 1; i < 14; i++) board.getDeck(0).put(new Card(Card.Color.DIAMONDS, i));
 		for (int i = 1; i < 14; i++) board.getDeck(1).put(new Card(Card.Color.HEARTS, i));
@@ -274,9 +269,12 @@ public class Tests {
         board.getStack(2).InitPut(new Card(Card.Color.CLUBS, 12));
         board.getStack(5).InitPut(new Card(Card.Color.CLUBS, 13));
         
+        board.getStack(2).getFromStack(0).turnFaceUp();
+        board.getStack(5).getFromStack(0).turnFaceUp();
+        
         board.SaveGame("AlmostWin");
         
-        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", -1, board.createHint(board.getStack(5).pop()));
+        Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 10, board.createHint(board.getStack(5).pop()));
         
         Assert.assertEquals("Pracovni balicek c. 0 obsahuje 0 karty.", 3, board.createHint(board.getStack(2).pop()));
     }

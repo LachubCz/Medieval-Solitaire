@@ -43,7 +43,7 @@ public abstract class AbstractFactorySolitaire {
 	
 	public abstract CardStack createSourcePack();
 	
-	public abstract CardStack createSourcePack(int cardsToInsert);
+	public abstract CardStack createSourcePack(CardDeck deck);
 	
 	/**
 	 * Vytvari objekt reprezentujici pracovni pole pro karty
@@ -51,5 +51,6 @@ public abstract class AbstractFactorySolitaire {
 	 */
 	public abstract CardStack createWorkingPack();
 	
-	public abstract CardStack createWorkingPack(int cardsToInsert);
+	public abstract CardStack createWorkingPack(CardDeck deck);
+
 }

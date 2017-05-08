@@ -68,9 +68,9 @@ public class CardBoard implements CardBoardInterface {
             this.WorkingStacks.get(0).getFromStack(1).turnFaceUp();
             this.WorkingStacks.get(1).pop();
             this.WorkingStacks.get(1).pop();
-            this.WorkingStacks.get(1).InitPut(Maker.createCard(Card.Color.CLUBS, 3));
-            this.WorkingStacks.get(1).getFromStack(0).turnFaceUp();
-            */
+            //this.WorkingStacks.get(1).InitPut(Maker.createCard(Card.Color.CLUBS, 3));
+            //this.WorkingStacks.get(1).getFromStack(0).turnFaceUp();
+             */
         }
         
         public void registerObserver(PleaseRepaint repaintInterface) 
@@ -99,7 +99,7 @@ public class CardBoard implements CardBoardInterface {
             {
                  FileInputStream fin = new FileInputStream(filename + saveExtension);
                  ObjectInputStream ois = new ObjectInputStream(fin);
-                 this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
+                 //this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
                  this.StandardDeck = (CardDeck)  ois.readObject();
                  this.SourcePack = (CardStack)  ois.readObject();
                  this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
@@ -121,7 +121,7 @@ public class CardBoard implements CardBoardInterface {
             {
                   FileOutputStream fout = new FileOutputStream(filename + saveExtension);
                   ObjectOutputStream oos = new ObjectOutputStream(fout);
-                  oos.writeObject(this.observers);
+                  //oos.writeObject(this.observers);
                   oos.writeObject(this.StandardDeck);
                   oos.writeObject(this.SourcePack);
                   oos.writeObject(this.WorkingStacks);

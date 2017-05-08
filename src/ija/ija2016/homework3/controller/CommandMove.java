@@ -43,37 +43,65 @@ public class CommandMove implements CommandInterface{
     public void execute() {
             if(this.canExecute()) {
                 isTurnedUp = false;
-                if(destination != null && source != null)
+                if (this.source != null)
                 {
-                    this.destination.put(source.pop());
-                    if(!this.source.isEmpty()) {
-                        this.isTurnedUp = this.source.top().isTurnedFaceUp();
-                        this.source.top().turnFaceUp();
+                    if(this.source.size() != 1)
+                    {
+                        if(destination != null && source != null)
+                        {
+                        	this.isTurnedUp = this.source.get(this.source.size()-2).isTurnedFaceUp();
+                            this.destination.put(source.pop());
+                        }
+                        
+                        if(destinationStack != null && source != null)
+                        {
+                        	this.isTurnedUp = this.source.get(this.source.size()-2).isTurnedFaceUp();
+                            this.destinationStack.put(source.pop());
+                        }
                     }
+                	else
+                	{
+                        if(destination != null && source != null)
+                        {
+                        	this.isTurnedUp = true;
+                            this.destination.put(source.pop());
+                        }
+                        
+                        if(destinationStack != null && source != null)
+                        {
+                        	this.isTurnedUp = true;
+                            this.destinationStack.put(source.pop());
+                        }
+                	}
                 }
-                if(destinationStack != null && sourceStack != null)
+                if (this.sourceStack != null)
                 {
-                    this.destinationStack.put(sourceStack.pop());
-                    if(!this.sourceStack.isEmpty()) {
-                        this.isTurnedUp = this.sourceStack.top().isTurnedFaceUp();
-                        this.sourceStack.top().turnFaceUp();
+                    if(this.sourceStack.size() != 1)
+                    {
+                        if(destinationStack != null && sourceStack != null)
+                        {
+                        	this.isTurnedUp = this.sourceStack.getFromStack(this.sourceStack.size()-2).isTurnedFaceUp();
+                            this.destinationStack.put(sourceStack.pop());
+                        }
+                        if(destination != null && sourceStack != null)
+                        {
+                        	this.isTurnedUp = this.sourceStack.getFromStack(this.sourceStack.size()-2).isTurnedFaceUp();
+                            this.destination.put(sourceStack.pop());
+                        }
                     }
-                }
-                if(destination != null && sourceStack != null)
-                {
-                    this.destination.put(sourceStack.pop());
-                    if(!this.sourceStack.isEmpty()) {
-                        this.isTurnedUp = this.sourceStack.top().isTurnedFaceUp();
-                        this.sourceStack.top().turnFaceUp();
-                    }
-                }
-                if(destinationStack != null && source != null)
-                {
-                    this.destinationStack.put(source.pop());
-                    if(!this.source.isEmpty()) {
-                        this.isTurnedUp = this.source.top().isTurnedFaceUp();
-                        this.source.top().turnFaceUp();
-                    }
+                	else
+                	{
+                        if(destinationStack != null && sourceStack != null)
+                        {
+                        	this.isTurnedUp = true;
+                            this.destinationStack.put(sourceStack.pop());
+                        }
+                        if(destination != null && sourceStack != null)
+                        {
+                        	this.isTurnedUp = true;
+                            this.destination.put(sourceStack.pop());
+                        }
+                	}
                 }
             }
     }
@@ -83,7 +111,7 @@ public class CommandMove implements CommandInterface{
         	if(this.source != null)
         		this.source.top().turnFaceDown();
         	if(this.sourceStack != null)
-        		this.sourceStack.top().turnFaceDown();
+        		this.sourceStack.topStack().turnFaceDown();
         }
         if(this.source != null)
         {
@@ -121,7 +149,7 @@ public class CommandMove implements CommandInterface{
     		}
     		if(sourceStack != null)
     		{
-                if(!destination.canPut(sourceStack.top())) {
+                if(!destination.canPut(sourceStack.getStack(sourceStack.size()-1))) {
                     return false;
                 }
                 return true;
@@ -138,7 +166,7 @@ public class CommandMove implements CommandInterface{
     		}
     		if(sourceStack != null)
     		{
-                if(!destinationStack.canPutCard(sourceStack.top())) {
+                if(!destinationStack.canPutCard(sourceStack.getStack(sourceStack.size()-1))) {
                     return false;
                 }
                 return true;

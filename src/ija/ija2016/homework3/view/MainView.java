@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -27,16 +28,15 @@ public class MainView extends JFrame{
 
 
 	private static final long serialVersionUID = 1L;
-	
 	public static final int BOARD_LIMIT = 4;
-	protected ArrayList<BoardView> boards = new ArrayList<>();
+	private ArrayList<BoardView> boards = new ArrayList<>();
 	private JPanel mainPanel;
 	private GridLayout layoutFull;
 	private GridLayout layout4Tiles;
         boolean stopPlayback = false;
         public JButton stopButton;
         private static Clip clip;
-        private static ArrayList<String> songs = new ArrayList<>();
+        private static final ArrayList<String> songs = new ArrayList<>();
         private int songPlayed = 0;
 	
 	public static void main(String[] args) {
@@ -46,11 +46,12 @@ public class MainView extends JFrame{
 				MainView frame = null;
                             try {
                                 frame = new MainView();
+                		frame.setVisible(true);
+                		frame.addBoard();
                             } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
                                 Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                             }
-				frame.setVisible(true);
-				frame.addBoard();
+
 			}
 		});
 	}
@@ -58,22 +59,24 @@ public class MainView extends JFrame{
 	public MainView() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		super("Medieval Klondike");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 700);
+                setIcon();
+		setBounds(100, 100, 1920, 1080);
 		getContentPane().setLayout(null);
 		
 		layoutFull = new GridLayout(1,1,0,0);
 		layout4Tiles = new GridLayout(2,2,0,0);
 		
 		JPanel topP = new JPanel(layoutFull);
-		topP.setBounds(0, 0, 1280, 25);
+		topP.setBounds(0, 0, 1920, 25);
 		
 		JPanel mainP = new JPanel(layoutFull);
-		mainP.setBounds(0, 25, 1280, 660);
+		mainP.setBounds(0, 25, 1920, 1040);
 		
 		getContentPane().add(topP);
 		getContentPane().add(mainP);
 		
 		this.mainPanel = mainP;
+                this.mainPanel.setVisible(true);
 		
 		JButton NewGameButton = new JButton("New Game");
                 NewGameButton.setBounds(0, 0, 1000, 25);
@@ -110,7 +113,8 @@ public class MainView extends JFrame{
 			@Override
 			//button click
 			public void actionPerformed(ActionEvent e) {
-				songPlayed++;
+                            if(stopButton.getText().equals("Mute Music")) {
+                                songPlayed++;
                                 if(songPlayed == 3) {
                                     songPlayed = 0;
                                 }
@@ -120,6 +124,8 @@ public class MainView extends JFrame{
                                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                                     Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                            }
+
 
 			}
 		});
@@ -186,18 +192,19 @@ public class MainView extends JFrame{
 	}
 	
 	
-
 	public void DoRepainting() {
 		//repaint GUI
 		this.repaint();
 		this.revalidate();
 		
 	}
+        
 
 	public void changeView(GridLayout layout) {
 		this.mainPanel.setLayout(layout);
 		
-		//LayoutVisualization.get().setUsingMiniatures((layout == this.layout4Tiles));
+		LayoutVisualization.get().setUsingSmallCards((layout == this.layout4Tiles));
+                this.DoRepainting();
 	}
         
         public static void music(String file) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
@@ -211,5 +218,10 @@ public class MainView extends JFrame{
     
 
         }
+
+    private void setIcon() {
+        URL url = MainView.class.getResource("/ija/textures/icon.png");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(url));
+    }
     
 }
