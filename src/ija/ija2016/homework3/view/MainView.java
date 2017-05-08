@@ -1,4 +1,4 @@
-/*
+/* MainView - Hlavni GUI komponent, zozpovedny k vytvoreni boardy a zmeneni vizualizace
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -12,7 +12,6 @@ package ija.ija2016.homework3.view;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -22,53 +21,59 @@ import javax.swing.JPanel;
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
 import static java.awt.Color.ORANGE;
-import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.Icon;
 
+/**
+ * Hlavni pohled, vytvari boardy a jejich usporadani
+ * @author Holajz
+ */
 public class MainView extends JFrame{
 
 
 	private static final long serialVersionUID = 1L;
 	public static final int BOARD_LIMIT = 4;
-	private ArrayList<BoardView> boards = new ArrayList<>();
-	private JPanel mainPanel;
-	private GridLayout layoutFull;
-	private GridLayout layout4Tiles;
+	private final ArrayList<BoardView> boards = new ArrayList<>();
+	private final JPanel mainPanel;
+	private final GridLayout layoutFull;
+	private final GridLayout layout4Tiles;
         boolean stopPlayback = false;
         public JButton stopButton;
         private static Clip clip;
         private static final ArrayList<String> songs = new ArrayList<>();
         private int songPlayed = 0;
 	
+        /**
+         * Main metoda, vytvari hlavni pohled
+         * @param args - argumenty prikazove radky
+         */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-                        @Override
-			public void run() {
-				MainView frame = null;
-                            try {
-                                frame = new MainView();
-                		frame.setVisible(true);
-                		frame.addBoard();
-                            } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
-                                Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-
-			}
-		});
+		EventQueue.invokeLater(() -> {
+                    MainView frame = null;
+                    try {
+                        frame = new MainView();
+                        frame.setVisible(true);
+                        frame.addBoard();
+                    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+                        Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
 	}
 	
+        /**
+         * Konstruktor vytvarejici hlavni pohled a jeji podrazene pohledy
+         * @throws LineUnavailableException - muze vzniknout pri pousteni muziky
+         * @throws IOException - muze vzniknout pri pousteni muziky
+         * @throws UnsupportedAudioFileException - muze vzniknout pri pousteni muziky
+         */
 	public MainView() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		super("Medieval Klondike");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,13 +103,9 @@ public class MainView extends JFrame{
                 NewGameButton.setForeground(Color.BLACK);
 		topP.add(NewGameButton);
 		
-		NewGameButton.addActionListener(new ActionListener() {
-			@Override
-			//button click
-			public void actionPerformed(ActionEvent e) {
-				addBoard();
-			}
-		});
+		NewGameButton.addActionListener((ActionEvent e) -> {
+                    addBoard();
+                });
                 
                 stopButton = new JButton("Mute Music");
                 stopButton.setBounds(0, 0, 140, 25);
@@ -123,52 +124,43 @@ public class MainView extends JFrame{
                 ChangeSong.setForeground(Color.BLACK);
 		topP.add(ChangeSong);
 		
-		ChangeSong.addActionListener(new ActionListener() {
-			@Override
-			//button click
-			public void actionPerformed(ActionEvent e) {
-                            if(stopButton.getText().equals("Mute Music")) {
-                                songPlayed++;
-                                if(songPlayed == 3) {
-                                    songPlayed = 0;
-                                }
-                                try {
-                                    clip.stop();
-                                    music(songs.get(songPlayed));
-                                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            }
-
-
-			}
-		});
+		ChangeSong.addActionListener((ActionEvent e) -> {
+                    if(stopButton.getText().equals("Mute Music")) {
+                        songPlayed++;
+                        if(songPlayed == 3) {
+                            songPlayed = 0;
+                        }
+                        try {
+                            clip.stop();
+                            music(songs.get(songPlayed));
+                        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
                 
                 
 		
-		stopButton.addActionListener(new ActionListener() {
-			@Override
-			//button click
-			public void actionPerformed(ActionEvent e) {
-                            String buttonText = (stopButton.getText());
-                            
-                            if(buttonText.equals("Unmute Music")) {
-                                stopPlayback = false;
-                                stopButton.setText("Mute Music");
-                                clip.loop(Clip.LOOP_CONTINUOUSLY); 
-                            }
-                            else {
-                                stopPlayback = true;
-                                stopButton.setText("Unmute Music");
-                                clip.stop();
-                                
-                            }
-
-			}
-		});
+		stopButton.addActionListener((ActionEvent e) -> {
+                    String buttonText = (stopButton.getText());
+                    
+                    if(buttonText.equals("Unmute Music")) {
+                        stopPlayback = false;
+                        stopButton.setText("Mute Music");
+                        clip.loop(Clip.LOOP_CONTINUOUSLY);
+                    }
+                    else {
+                        stopPlayback = true;
+                        stopButton.setText("Unmute Music");
+                        clip.stop();
+                        
+                    }
+                });
         }
 
-
+        /**
+         * Metoda pro vytvoreni boardy a pripadne zmeneni vizualizace 
+         */
 	public void addBoard() {
 		if(boards.size() < BOARD_LIMIT) {
 			if(boards.size() == 1) {
@@ -190,6 +182,10 @@ public class MainView extends JFrame{
 		this.DoRepainting();
         }
 	
+        /**
+         * Metoda pro odstraneni boardy a pripadne zmeneni vizualizace
+         * @param board - 
+         */
 	public void removeBoard(BoardView board) {
 		if(boards.size() == 2) {
 			//changes to full layout
@@ -205,7 +201,9 @@ public class MainView extends JFrame{
 		this.DoRepainting();
 	}
 	
-	
+	/**
+         * prekresleni vsech komponentu
+         */
 	public void DoRepainting() {
 		//repaint GUI
 		this.repaint();
@@ -213,7 +211,10 @@ public class MainView extends JFrame{
 		
 	}
         
-
+        /**
+         * Metoda starajici se o zmenu zobrazeni, invokuje LayoutVisualization
+         * @param layout - usporadani hraciho pole
+         */
 	public void changeView(GridLayout layout) {
 		this.mainPanel.setLayout(layout);
 		
@@ -221,6 +222,13 @@ public class MainView extends JFrame{
                 this.DoRepainting();
 	}
         
+        /**
+         * Metoda spoustejici muziku
+         * @param file - soubor pro spusteni
+         * @throws UnsupportedAudioFileException - vznika pri spusteni muziky
+         * @throws IOException - vznika pri spusteni muziky
+         * @throws LineUnavailableException - vznika pri spusteni muziky
+         */
         public static void music(String file) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
         
         URL url = MainView.class.getResource(file);
@@ -233,9 +241,12 @@ public class MainView extends JFrame{
 
         }
 
-    private void setIcon() {
-        URL url = MainView.class.getResource("/ija/textures/icon.png");
-        setIconImage(Toolkit.getDefaultToolkit().getImage(url));
-    }
+        /**
+         * nastaveni ikony hlavniho pohledu
+         */
+        private void setIcon() {
+            URL url = MainView.class.getResource("/ija/textures/icon.png");
+            setIconImage(Toolkit.getDefaultToolkit().getImage(url));
+        }
     
 }
