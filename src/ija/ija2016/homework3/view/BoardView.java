@@ -1,19 +1,13 @@
 package ija.ija2016.homework3.view;
-import ija.ija2016.homework3.controller.CommandInterface;
-import java.util.ArrayList;
-import javax.swing.JPanel;
+
 import ija.ija2016.homework3.controller.CommandBuilder;
-import ija.ija2016.homework3.controller.CommandControl;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardBoard;
 import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import ija.ija2016.homework3.model.cards.CardDeck;
-import ija.ija2016.homework3.model.cards.CardHint;
 import ija.ija2016.homework3.model.cards.CardStack;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -28,6 +22,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ija.ija2016.homework3.model.cards.PleaseRepaint;
+import ija.ija2016.homework3.view.CardView;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 
 
 
@@ -131,20 +128,21 @@ public class BoardView extends JPanel implements PleaseRepaint {
                     CardDeckView deck = new CardDeckView();
                     deck.setModel(cardBoard.getDeck(i));
                     deck.setXY(cardSpace * (i+4), 30);
-                    System.out.println((cardSpace * (i+4)));
+                    //System.out.println((cardSpace * (i+4)));
                     deck.setPanel(this);
                     deck.paint();
                     decks.add(deck);
 		}
                 
-                buttonSave.addActionListener((ActionEvent e) -> {
-                    String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
-                    if(fileName.length() > 0){
-                        CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add("saves/" + fileName);}});
-                        //commander.execute(command);
-                        commander.save("saves/" + fileName);
-                    }
-                });
+                buttonSave.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
+		        if(fileName.length() > 0){
+		        	getCommandBuilder().save("examples/" + fileName);
+		        }
+		    }
+		});
 
                 
 
@@ -164,8 +162,8 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		buttonUndo.addActionListener((ActionEvent e) -> {
                     //CommandInterface command = new CommandControl("undo");
                     //commander.execute(command);
-                    commander.undo();
-                    commander.Update();
+                    getCommandBuilder().undo();
+                    getCommandBuilder().Update();
                 });
                 
                 buttonLoad.addActionListener((ActionEvent e) -> {
@@ -209,7 +207,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
         public void loadFile() {
  
             
-		File[] FileList = new File("saves").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
+		File[] FileList = new File("examples").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
                 
 		if(FileList == null) {
                     JOptionPane.showMessageDialog(null, "There are no saved games in the saves folder.", "Error finding saved games.", JOptionPane.INFORMATION_MESSAGE);
@@ -247,9 +245,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		                    "loadDialog");
 
 		if (fileToLoad != null) {
-			CommandInterface command = new CommandControl("load", new ArrayList<String>(){{add("saves/" + fileToLoad);}});
-			commander.load("saves/" + fileToLoad);
-			//this.getCommandBuilder().execute(command);
+			commander.load("examples/" + fileToLoad);
 			commander.Update();
 		}
         }

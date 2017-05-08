@@ -99,7 +99,7 @@ public class CardBoard implements CardBoardInterface {
             {
                  FileInputStream fin = new FileInputStream(filename + saveExtension);
                  ObjectInputStream ois = new ObjectInputStream(fin);
-                 this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
+                 //this.observers = (ArrayList<PleaseRepaint>)  ois.readObject();
                  this.StandardDeck = (CardDeck)  ois.readObject();
                  this.SourcePack = (CardStack)  ois.readObject();
                  this.WorkingStacks = (ArrayList<CardStack>)  ois.readObject();
@@ -121,7 +121,7 @@ public class CardBoard implements CardBoardInterface {
             {
                   FileOutputStream fout = new FileOutputStream(filename + saveExtension);
                   ObjectOutputStream oos = new ObjectOutputStream(fout);
-                  oos.writeObject(this.observers);
+                  //oos.writeObject(this.observers);
                   oos.writeObject(this.StandardDeck);
                   oos.writeObject(this.SourcePack);
                   oos.writeObject(this.WorkingStacks);
@@ -209,12 +209,13 @@ public class CardBoard implements CardBoardInterface {
         
     public boolean isGameOver()
     {
-            for(int i = 0; i < 4; i++)
-        {
-                    if (this.getStack(i).size() != 13)
-            return false;
-                }
-            return true;
+        for(int i = 0; i < 4; i++) {
+            if (this.getDeck(i).size() != 13) {
+                return false;
+            }
+
+        }
+        return true;
     }
 
 
