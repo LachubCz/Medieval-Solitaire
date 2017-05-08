@@ -1,4 +1,5 @@
 /*
+ * CardInterface: Rozhrani reprezentujici kartu
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
