@@ -180,5 +180,3 @@ public class Card implements CardInterface {
 		return Objects.hash(value, barva);
 	}
 }
-
-
