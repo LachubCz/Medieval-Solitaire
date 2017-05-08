@@ -1,88 +1,100 @@
-/**
- * Trida vytvarejicic veskere nutne hraci prostredky
- * @author Tom� Hol�k, xholik13
+/*
  * @author Petr Buchal, xbucha02
- * @version 0.2
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
-
 package ija.ija2016.homework3.model.board;
+
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
-import ija.ija2016.homework3.model.cards.CardDeckInterface;
-import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
-import ija.ija2016.homework3.model.cards.CardStackInterface;
-import java.util.ArrayList;
 
-/**
- * Trida implementujici abstraktni tridu factory solitaire, vytvari prostredky pro funkcnost klandike
- * @author Tomas Holik, xholik13
- *
- */
-public class FactoryKlondike extends AbstractFactorySolitaire {
+public class FactoryKlondike extends AbstractFactorySolitaire 
+{
 	/**
-	 * Vytvori objekt reprezentujici kartu
-	 * @param color - barva karty
-	 * @param value - hodnota karty
-	 * @return Objekt karty. Pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null
+	 * [vytvori objekt reprezentujici kartu]
+	 * @param  color [barva karty]
+	 * @param  value [hodnota karty]
+	 * @return	   [vraci kartu, pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null]
 	 */
-	public Card createCard(Card.Color color, int value) {
-		if(value > 13 || value < 1) {
+	public Card createCard(Card.Color color, int value) 
+	{
+		if(value > 13 || value < 1) 
+		{
 			return null;
 		}
-		else {
+		else 
+		{
 			Card card = new Card(color, value);
 			return card;
 		}
-
 	}
 	
 	/**
-	 * Vytv��� objekt reprezentuj�c� bal��ek karet
-	 * @return Balicek karet
+	 * [vytvori objekt reprezentujici balicek karet]
+	 * @return [balicek karet]
 	 */
-	public CardDeck createCardDeck() {
+	public CardDeck createCardDeck() 
+	{
 		CardDeck deck = CardDeck.createStandardDeck();
 		return deck;
 	}
 
 	/**
-	 * Vytvari objekt reprezentujici cilovy balicek. Cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku.
-	 * @param color - Zadana barva
-	 * @return Cilovy balicek
+	 * [vytvari objekt reprezentujici cilovy balicek, cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku]
+	 * @param  color [zadana barva]
+	 * @return	   [balicek]
 	 */
-	public CardDeck createTargetPack(Card.Color color) {
+	public CardDeck createTargetPack(Card.Color color) 
+	{
 		CardDeck deck = CardDeck.createTargetPack(color);
 		return deck;
 	}
-        
-        
-        
-        
-	public CardStack createSourcePack() {
+		
+ 	/**
+	 * [vytvori zdrojovy balicek]
+	 * @return [vrati vytvoreny zdrojovy balicek]
+	 */
+	public CardStack createSourcePack() 
+	{
 		CardStack stack = new CardStack();
 		return stack;
 	}
 	
-	public CardStack createSourcePack(CardDeck deck) {
+	/**
+	 * [vytvori zdrojovy balicek a do jeho decku prida karty]
+	 * @param  deck [karty ktere se pridaji do decku ve zdrojovem balicku]
+	 * @return	  [vrati vytvoreny zdrojovy balicek]
+	 */
+	public CardStack createSourcePack(CardDeck deck) 
+	{
 		CardStack stack = new CardStack();
 		stack.add(deck, deck.size());
 		return stack;
 	}
 
 	/**
-	 * Vytvari objekt reprezentujici pracovni pole pro karty
-	 * @return pracovni pole
+	 * [vytvari objekt reprezentujici pracovni pole pro karty]
+	 * @return [pracovni pole]
 	 */
-	public CardStack createWorkingPack() {
+	public CardStack createWorkingPack() 
+	{
 		CardStack stack = CardStack.createWorkingPack();
 		return stack;
 	}
 
-	public CardStack createWorkingPack(CardDeck deck) {
+	/**
+	 * [vytvari objekt reprezentujici pracovni pole pro karty a do jeho decku prida karty]
+	 * @param  deck [karty na pridani]
+	 * @return	  [pracovni pole]
+	 */
+	public CardStack createWorkingPack(CardDeck deck) 
+	{
 		CardStack stack = CardStack.createWorkingPack();
 		stack.add(deck, deck.size());
 		return stack;
 	}
-
 }
