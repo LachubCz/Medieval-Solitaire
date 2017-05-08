@@ -353,7 +353,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 System.out.println("I found something on target deck number " + (hint+1));
                 CardView card = deck.top();
                 card.setHint(true);
-                this.getCommandBuilder().Update();
+                
             }
             else
             {
