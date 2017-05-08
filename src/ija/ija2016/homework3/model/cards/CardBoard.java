@@ -68,9 +68,9 @@ public class CardBoard implements CardBoardInterface {
             this.WorkingStacks.get(0).getFromStack(1).turnFaceUp();
             this.WorkingStacks.get(1).pop();
             this.WorkingStacks.get(1).pop();
-            this.WorkingStacks.get(1).InitPut(Maker.createCard(Card.Color.CLUBS, 3));
-            this.WorkingStacks.get(1).getFromStack(0).turnFaceUp();
-            */
+            //this.WorkingStacks.get(1).InitPut(Maker.createCard(Card.Color.CLUBS, 3));
+            //this.WorkingStacks.get(1).getFromStack(0).turnFaceUp();
+             */
         }
         
         public void registerObserver(PleaseRepaint repaintInterface) 
