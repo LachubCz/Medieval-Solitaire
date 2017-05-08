@@ -14,4 +14,8 @@ public interface CardBoardInterface {
         public int createHint(Card toCard);
         
         public void update();
+        
+        public boolean LoadGame (String filename);
+        
+        public boolean SaveGame (String filename);
 }

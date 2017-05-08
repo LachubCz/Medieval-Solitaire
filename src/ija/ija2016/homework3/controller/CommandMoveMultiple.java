@@ -32,16 +32,14 @@ public class CommandMoveMultiple implements CommandInterface{
                 this.wasTurnedUp = this.source.topStack().isTurnedFaceUp();
                 this.source.topStack().turnFaceUp();
             }
+            wasTurnedUp = true;
         }
     }
 
     public void unexecute(){
         if(!this.wasTurnedUp)
             this.source.topStack().turnFaceDown();
-        CardStack takenDeck = this.destination.pop(card);
-        for(int index = 0; index < takenDeck.size(); index++){
-            this.source.emplace(takenDeck.get(index));
-        }
+        this.source.InitPut(this.destination.pop(card));
     }
 
     public boolean canExecute(){

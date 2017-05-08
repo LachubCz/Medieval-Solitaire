@@ -144,7 +144,8 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
 		        if(fileName.length() > 0){
 		        	CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add("saves/" + fileName);}});
-		        	commander.execute(command);
+		        	//commander.execute(command);
+		        	commander.save("saves/" + fileName);
 		        }
 		    }
 		});
@@ -170,8 +171,10 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		buttonUndo.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	CommandInterface command = new CommandControl("undo");
-		    	commander.execute(command);
+		    	//CommandInterface command = new CommandControl("undo");
+		    	//commander.execute(command);
+		    	commander.undo();
+		    	commander.Update();
 		    }
 		});
                 
@@ -264,7 +267,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
 
 		if (fileToLoad != null) {
 			CommandInterface command = new CommandControl("load", new ArrayList<String>(){{add("saves/" + fileToLoad);}});
-			this.getCommandBuilder().execute(command);
+			commander.load("saves/" + fileToLoad);
+			//this.getCommandBuilder().execute(command);
+			commander.Update();
 		}
         }
         
@@ -390,4 +395,3 @@ public class BoardView extends JPanel implements PleaseRepaint {
         }
 
 }
-
