@@ -16,11 +16,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -29,11 +27,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 import ija.ija2016.homework3.model.cards.PleaseRepaint;
-import java.io.FilenameFilter;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 
 
@@ -47,8 +41,8 @@ public class BoardView extends JPanel implements PleaseRepaint {
 
 	private static final long serialVersionUID = 1L;
 
-	private CommandBuilder commander;
-	private CardBoardInterface cardBoard;
+	private final CommandBuilder commander;
+	private final CardBoardInterface cardBoard;
 	private CardDecknSourceView mainCardPicker; //standard deck and source
 
 	private ArrayList<CardDeckView> decks = new ArrayList<>(); //target pack
@@ -124,73 +118,63 @@ public class BoardView extends JPanel implements PleaseRepaint {
                     CardStackView stack = new CardStackView();
                     stack.setModel(cardBoard.getStack(i));
                     stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.70 )  );
+                    //System.out.println((cardSpace * (i+1)));
+                    //System.out.println((basicValue / 2.70 ));
                     stack.setPanel(this);
                     stack.paint();
                     stacks.add(stack);
 		}
                 
+                //System.out.println("");
+                
                 for(int i = 0; i < 4; i++) {
                     CardDeckView deck = new CardDeckView();
                     deck.setModel(cardBoard.getDeck(i));
                     deck.setXY(cardSpace * (i+4), 30);
+                    System.out.println((cardSpace * (i+4)));
                     deck.setPanel(this);
                     deck.paint();
                     decks.add(deck);
 		}
                 
-                buttonSave.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
-		        if(fileName.length() > 0){
-		        	CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add("saves/" + fileName);}});
-		        	//commander.execute(command);
-		        	commander.save("saves/" + fileName);
-		        }
-		    }
-		});
+                buttonSave.addActionListener((ActionEvent e) -> {
+                    String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
+                    if(fileName.length() > 0){
+                        CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add("saves/" + fileName);}});
+                        //commander.execute(command);
+                        commander.save("saves/" + fileName);
+                    }
+                });
 
                 
 
-                buttonHint.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	if(hintNeeded) {
-                            hintNeeded = false;
-                            removeHint();
-                            buttonHint.setText("Hint Off");
-                        }
-                        else {
-                            hintNeeded = true;
-                            buttonHint.setText("Hint On");
-                            setSelectedSource(selectedSourceDeck, selectedSourceStack, selectedSourceCard);
-                        }
-		    }
-		});
+                buttonHint.addActionListener((ActionEvent e) -> {
+                    if(hintNeeded) {
+                        hintNeeded = false;
+                        removeHint();
+                        buttonHint.setText("Hint Off");
+                    }
+                    else {
+                        hintNeeded = true;
+                        buttonHint.setText("Hint On");
+                        setSelectedSource(selectedSourceDeck, selectedSourceStack, selectedSourceCard);
+                    }
+                });
                 
-		buttonUndo.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	//CommandInterface command = new CommandControl("undo");
-		    	//commander.execute(command);
-		    	commander.undo();
-		    	commander.Update();
-		    }
-		});
+		buttonUndo.addActionListener((ActionEvent e) -> {
+                    //CommandInterface command = new CommandControl("undo");
+                    //commander.execute(command);
+                    commander.undo();
+                    commander.Update();
+                });
                 
-                buttonLoad.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        loadFile();
-		    }
-		});
+                buttonLoad.addActionListener((ActionEvent e) -> {
+                    loadFile();
+                });
 
-                buttonClose.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-		    	closeThisBoard();
-		    }
-		});
+                buttonClose.addActionListener((ActionEvent e) -> {
+                    closeThisBoard();
+                });
 	}
         
         @Override
@@ -217,12 +201,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
             buttonClose.setForeground(Color.BLACK);
             this.add(buttonClose); 
             
-		buttonClose.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	closeThisBoard();
-		    }
-		});
+		buttonClose.addActionListener((ActionEvent e) -> {
+                    closeThisBoard();
+            });
 	}
         
         public void loadFile() {
