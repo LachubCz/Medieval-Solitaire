@@ -21,12 +21,15 @@ import javax.swing.JPanel;
 
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
+import static java.awt.Color.ORANGE;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -86,6 +89,7 @@ public class MainView extends JFrame{
 		getContentPane().add(mainP);
 		
 		this.mainPanel = mainP;
+                mainPanel.setBackground(ORANGE);
                 this.mainPanel.setVisible(true);
 		
 		JButton NewGameButton = new JButton("New Game");

@@ -50,7 +50,7 @@ public class CardStackView {
     
     /**
      * Funkce nastavujici CardStack model tohoto pohledu
-     * @param newDeck 
+     * @param newStack - nastavi model working balicku
      */
     public void setModel(CardStack newStack) {
         stack = newStack;

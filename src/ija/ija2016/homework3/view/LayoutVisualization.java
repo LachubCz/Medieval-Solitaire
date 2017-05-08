@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+/**
+ * Trida ziskavajici textury
+ * @author Holajz
+ */
 public class LayoutVisualization {
     private BufferedImage stateHint;
     private BufferedImage stateHintSmall;
@@ -28,6 +32,9 @@ public class LayoutVisualization {
     private ArrayList<ImageIcon> smallCards = new ArrayList<>();
     private boolean useSmallCards = false;
     
+    /**
+     * konstruktor naplni sva pole texturami pro vyuziti v programu, ziskava dve verze, mensi a vetsi
+     */
     LayoutVisualization() {
         ImageIcon imageEmpty = new ImageIcon(new ImageIcon(LayoutVisualization.class.getResource("/ija/textures/empty.png"))
                 .getImage().getScaledInstance(165, 320, Image.SCALE_SMOOTH));
@@ -126,6 +133,10 @@ public class LayoutVisualization {
         
     }
     
+    /**
+     * vraci instanci teto tridy
+     * @return instanci teto tridy
+     */
     public static LayoutVisualization get() {
 	if(VIEW == null) {
             VIEW = new LayoutVisualization();
@@ -133,9 +144,12 @@ public class LayoutVisualization {
         return VIEW;
     }
 
+    /**
+     * Metoda nastavujici textury pri vyberu karty a cile rady
+     */
     public void setState() {
         try {
-            URL url = LayoutVisualization.class.getResource("/ija/textures/hint.png");
+            URL url = LayoutVisualization.class.getResource("/ija/textures/small_hint.png");
             this.stateHintSmall = ImageIO.read(url);
         }
         catch(IOException e) {
@@ -143,7 +157,7 @@ public class LayoutVisualization {
         }
         
         try {
-            URL url = LayoutVisualization.class.getResource("/ija/textures/selected.png");
+            URL url = LayoutVisualization.class.getResource("/ija/textures/small_selected.png");
             this.stateSelectedSmall = ImageIO.read(url);
         }
         catch(IOException e) {
@@ -171,6 +185,11 @@ public class LayoutVisualization {
         
     }
         
+    /**
+     * Metoda ziskavajici textury pri vyberu karty a cile rady
+     * @param state stav karty, ktery se pozaduje
+     * @return textura daneho stavu
+     */
     public BufferedImage getState(CardView.CardViewState state) {
         if(isLayoutChanged()) {
             if(null == state) {
@@ -199,6 +218,12 @@ public class LayoutVisualization {
         }
     }
     
+    /**
+     * Metoda pro praci s polem textur
+     * @param color - pozadovana barva karty
+     * @param value - pozadovana hodnota karty
+     * @return textura dane karty
+     */
     public ImageIcon getCardImage(CardView.CardViewColor color, int value) {
         ArrayList<ImageIcon> card;
         if(this.useSmallCards) {
@@ -239,10 +264,19 @@ public class LayoutVisualization {
         
     }
     
+    /**
+     * nastavi pouzivani pole s malymi texturami, pri zmene pohledu
+     * @param value - pouzivat nebo nepouzivat male textury
+     */
     public void setUsingSmallCards(boolean value) {
         this.useSmallCards = value;
     }
     
+    
+    /**
+     * Metoda tazajici se o pouzivani malych textur karet
+     * @return - stav
+     */
     public boolean isLayoutChanged() {
         return this.useSmallCards;
     }

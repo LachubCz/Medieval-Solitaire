@@ -56,7 +56,7 @@ public class CardDeckView {
     
     /**
      * Funkce nastavujici target CardDeck model tohoto pohledu
-     * @param newDeck 
+     * @param newDeck - model pod timto pohledem, zpracujici logiku
      */
     public void setModel(CardDeck newDeck) {
         deck = newDeck;
