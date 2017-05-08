@@ -138,9 +138,16 @@ public class CardStack implements CardStackInterface
 	*/
 	public boolean put(CardStack stack) 
 	{
-		if((stack == null) || (stack.isEmpty() == true) || this.isEmpty()) {
+		if((stack == null) || (stack.isEmpty() == true)) {
 			return false;
 		}
+		karty.addAll(stack.karty);
+		stack.karty.clear();
+		return true;
+	}
+	
+	public boolean InitPut(CardStack stack) 
+	{
 		karty.addAll(stack.karty);
 		stack.karty.clear();
 		return true;
@@ -298,7 +305,7 @@ public class CardStack implements CardStackInterface
     //funkce pracujici se stack
     public boolean hideTopCard() {
         if(!this.source.karty.isEmpty()) {
-            Card card = this.source.karty.remove(this.karty.size() - 1);
+            Card card = this.source.pop();
             card.turnFaceDown();
             return this.karty.add(card);
         }
