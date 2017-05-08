@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import ija.ija2016.homework3.model.cards.CardBoard;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;

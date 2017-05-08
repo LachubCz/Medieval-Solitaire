@@ -23,7 +23,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ija.ija2016.homework3.model.cards.PleaseRepaint;
 import ija.ija2016.homework3.view.CardView;
+import java.awt.Font;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -193,13 +196,22 @@ public class BoardView extends JPanel implements PleaseRepaint {
         }
         
         public void CreateGameOver(){
-            JButton buttonClose= new JButton("Game Over");
-            buttonClose.setBounds(400, 200, 200, 200);
-            buttonClose.setBackground(Color.ORANGE);
-            buttonClose.setForeground(Color.BLACK);
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/C13.png"))
+                .getImage().getScaledInstance(250, 400, Image.SCALE_SMOOTH));
+            JLabel label = new JLabel(imageIcon);
+            label.setBounds(0, 50, 960, 540);
+            label.setFont(new Font("Serif", Font.PLAIN, 90));
+            label.setText("<html><p>Well played, sir</p><html>");
+            this.add(label);
+            
+            JButton buttonClose= new JButton("");
+            buttonClose.setBounds(0, 0, 960, 540);
+            buttonClose.setOpaque(false);
+            buttonClose.setContentAreaFilled(false);
+            buttonClose.setBorderPainted(false);
             this.add(buttonClose); 
             
-		buttonClose.addActionListener((ActionEvent e) -> {
+            buttonClose.addActionListener((ActionEvent e) -> {
                     closeThisBoard();
             });
 	}
