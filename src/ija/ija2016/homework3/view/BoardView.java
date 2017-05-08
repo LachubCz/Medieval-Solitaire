@@ -53,6 +53,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
 
 	private ArrayList<CardDeckView> decks = new ArrayList<>(); //target pack
 	private ArrayList<CardStackView> stacks = new ArrayList<>(); //working pack
+        private CardView hint;
 
         private boolean hintNeeded = false;
         
@@ -116,6 +117,8 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 packPicker.paint();
                 
                 mainCardPicker = packPicker;
+                this.stacks = new ArrayList<>();
+                this.decks = new ArrayList<>();
                 
                 for(int i = 0; i < 7; i++) {
                     CardStackView stack = new CardStackView();
@@ -153,6 +156,7 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(hintNeeded) {
                             hintNeeded = false;
+                            removeHint();
                             buttonHint.setText("Hint Off");
                         }
                         else {
@@ -331,28 +335,24 @@ public class BoardView extends JPanel implements PleaseRepaint {
         
         
         public void createHints() {
+            removeHint();
+            
             int hint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
-            URL url = LayoutVisualization.class.getResource("/ija/textures/background.png");
-           // ImageIcon icon = createImageIcon(url);
-            //JLabel label1 = new JLabel("Image and Text",
-            //        icon,
-            //        JLabel.CENTER);
-            //label1.setVerticalTextPosition(JLabel.BOTTOM);
-            //label1.setHorizontalTextPosition(JLabel.CENTER);
-            //this.add(label1);
         
             if(hint == -1)
             {
-                System.out.println("Nic jsem nenasel");
+                //System.out.println("Nic jsem nenasel");
                 return;
             }
         
             if(hint < 10)
             {
         	CardDeckView deck = this.decks.get(hint);
-                System.out.println("I found something on target deck number " + (hint+1));
+                //System.out.println("I found something on target deck number " + (hint+1));
                 CardView card = deck.top();
+                this.hint = card;
                 card.setHint(true);
+
                 
             }
             else
@@ -360,11 +360,20 @@ public class BoardView extends JPanel implements PleaseRepaint {
         	//hint = cislo workingpacku
         	hint = hint - 10;
                 CardStackView stack = this.stacks.get(hint);
-                System.out.println("I found something on working stack number " + (hint+1));
+                //System.out.println("I found something on working stack number " + (hint+1));
                 CardView card = stack.top();
+                this.hint = card;
                 card.setHint(true);
+
+                
             }
 	}
+        
+        private void removeHint() {
+            if(this.hint != null) {
+                this.hint.setHint(false);
+            }
+        }
         
         
         @Override
@@ -380,8 +389,5 @@ public class BoardView extends JPanel implements PleaseRepaint {
             g.drawImage(image, 0, 0, null);
         }
 
-    private ImageIcon createImageIcon(String imagesmiddlegif) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
 

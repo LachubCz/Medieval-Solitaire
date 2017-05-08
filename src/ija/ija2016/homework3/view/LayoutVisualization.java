@@ -11,7 +11,9 @@ import javax.swing.ImageIcon;
 
 public class LayoutVisualization {
     private BufferedImage stateHint;
+    private BufferedImage stateHintSmall;
     private BufferedImage stateSelected;
+    private BufferedImage stateSelectedSmall;
     
     static LayoutVisualization VIEW = null;
     private ArrayList<ImageIcon> cards = new ArrayList<>();
@@ -126,9 +128,24 @@ public class LayoutVisualization {
     public void setState() {
         try {
             URL url = LayoutVisualization.class.getResource("/ija/textures/hint.png");
+            this.stateHintSmall = ImageIO.read(url);
+        }
+        catch(IOException e) {
+            this.stateHintSmall = new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
+        }
+        
+        try {
+            URL url = LayoutVisualization.class.getResource("/ija/textures/selected.png");
+            this.stateSelectedSmall = ImageIO.read(url);
+        }
+        catch(IOException e) {
+
+            this.stateSelectedSmall = new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
+        }
+        
+        try {
+            URL url = LayoutVisualization.class.getResource("/ija/textures/hint.png");
             this.stateHint = ImageIO.read(url);
-            if(this.stateHint == null) {
-            }
         }
         catch(IOException e) {
             this.stateHint = new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
@@ -147,6 +164,20 @@ public class LayoutVisualization {
     }
         
     public BufferedImage getState(CardView.CardViewState state) {
+        if(isLayoutChanged()) {
+            if(null == state) {
+                return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
+        }
+        else switch (state) {
+            case HINT_CARD:
+                return this.stateHintSmall;
+            case SELECTED_CARD:
+                return this.stateSelectedSmall;
+            default:
+                return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
+        }
+            
+        }
         if(null == state) {
             return new BufferedImage(150, 200, BufferedImage.TYPE_INT_ARGB);
         }
