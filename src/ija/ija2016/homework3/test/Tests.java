@@ -1,4 +1,12 @@
-
+/*
+ * Tests: Trida testu logickych casti aplikace
+ * @author Petr Buchal, xbucha02
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
+ */
 package ija.ija2016.homework3.test;
 
 import ija.ija2016.homework3.model.board.AbstractFactorySolitaire;
@@ -16,12 +24,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
-/**
- * Testovaci trida pro java projekt 2016/2017
- * @author Tom� Hol�k, xholik13
- * @author Petr Buchal, xbucha02
- */
 public class Tests {
     
     protected AbstractFactorySolitaire factory;
