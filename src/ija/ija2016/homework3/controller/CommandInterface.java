@@ -1,22 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Petr Buchal, xbucha02
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
 package ija.ija2016.homework3.controller;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Holajz
- */
-public interface CommandInterface extends Serializable{
-    
-    public void execute();
-    
-    public void unexecute();
-    
-    public boolean canExecute();
-    
+public interface CommandInterface extends Serializable
+{	
+	/**
+	 * [metoda vykona prikaz]
+	 */
+	public void execute();
+	
+	/**
+	 * [metoda pro vraceni do stavu pred provedenim prikazu]
+	 */
+	public void unexecute();
+	
+	/**
+	 * [metoda zjisti zda-li jde prikaz vykonat]
+	 * @return [vraci true pokud lze prikaz provest]
+	 */
+	public boolean canExecute();
 }

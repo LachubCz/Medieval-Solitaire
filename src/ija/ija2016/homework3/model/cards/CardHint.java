@@ -1,9 +1,8 @@
 /*
- * @author Tom� Hol�k, xholik13
  * @author Petr Buchal, xbucha02
- * @version 0.3
- * Projekt: Medieval Klondike
- * System: Windows 10
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
  * University: Brno University of Technology
  * Course: IJA
  */
@@ -11,38 +10,70 @@ package ija.ija2016.homework3.model.cards;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Holajz
- */
-public class CardHint {
-    private ArrayList<CardDeck> decks  = new ArrayList<>();
-    private ArrayList<CardStack> stacks = new ArrayList<>();
-    
-    public CardDeck getCardDeck(int i) {
-        return this.decks.get(i);
-    }
+public class CardHint 
+{
+	private ArrayList<CardDeck> decks  = new ArrayList<>();
+	private ArrayList<CardStack> stacks = new ArrayList<>();
+	
+	/**
+	 * [metoda vraci deck s indexem i]
+	 * @param  i [index balicku]
+	 * @return   [balicek]
+	 */
+	public CardDeck getCardDeck(int i) 
+	{
+		return this.decks.get(i);
+	}
 
-    public CardStack getCardStack(int i) {
-    	return this.stacks.get(i);
-    }
-    
-    public ArrayList<CardDeck> getCardDecks() {
-        return this.decks;
-    }
+	/**
+	 * [metoda vraci stack s indexem i]
+	 * @param  i [index balicku]
+	 * @return   [balicek]
+	 */
+	public CardStack getCardStack(int i) 
+	{
+		return this.stacks.get(i);
+	}
+	
+	/**
+	 * [metoda vrati vsechny decky]
+	 * @return [pole balicku]
+	 */
+	public ArrayList<CardDeck> getCardDecks() 
+	{
+		return this.decks;
+	}
 
-    public ArrayList<CardStack> getCardStacks() {
-    	return this.stacks;
-    }
-    
-    public boolean add(CardStack stack) {
-        this.stacks.add(stack);
-    	return true;
-    }
-    
-    public boolean add(CardDeck deck) {
-        this.decks.add(deck);
-    	return true;
-    }
-    
+	/**
+	 * [metoda vrati vsechny stacky]
+	 * @return [pole balicku]
+	 */
+	public ArrayList<CardStack> getCardStacks() 
+	{
+		return this.stacks;
+	}
+	
+	/**
+	 * [metoda prida stack do pole]
+	 * @param  stack [vkladany balicek]
+	 * @return	   [pokud se operace zdarila vraci true]
+	 */
+	public boolean add(CardStack stack) 
+	{
+		if (this.stacks.add(stack))
+			return true;
+		return false;
+	}
+	
+	/**
+	 * [metoda prida deck do pole]
+	 * @param  stack [vkladany balicek]
+	 * @return	   [pokud se operace zdarila vraci true]
+	 */
+	public boolean add(CardDeck deck) 
+	{
+		if (this.decks.add(deck))
+			return true;
+		return false;
+	}
 }

@@ -1,54 +1,52 @@
-/**
- * Rozhran� reprezentuj�c� balicek karet.
- * @author Tom� Hol�k, xholik13
+/*
  * @author Petr Buchal, xbucha02
- * @version 0.2
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
-
 package ija.ija2016.homework3.model.cards;
 
 import java.io.Serializable;
 
-/**
- * Rozhrani reprezentujici balicek karet.
- * @author Tomas Holik, xholik13
- */
 public interface CardDeckInterface extends Serializable{
 	
 	/**
-	 * Vr�t� kartu z vrcholu z�sobn�ku (karta z�st�v� na z�sobn�ku). Pokud je bal��ek pr�zdn�, vrac� null.
-	 * @return Karta z vrcholu bal��ku.
+	 * [vrati kartu z vrcholu zasobniku (karta zustava na zasobnkiku), pokud je balicek prazdny, vraci null]
+	 * @return [karta z vrcholu balicku]
 	 */
 	public abstract Card get();
 	  
 	/**
-	 * Vr�t� kartu na uvedenem indexu. Spodni karta je na indexu 0, vrchol je na indexu size()-1. Pokud je bal��ek pr�zdn�, nebo index mimo rozsah, vrac� null.
-	 * @param i - Pozice karty v balicku.
-	 * @return Karta z vrcholu bal��ku.
+	 * [vrati kartu na uvedenem indexu, spodni karta je na indexu 0, vrchol je na indexu size() -1, pokud je balicek prazdny, nebo index mimo rozsah, vraci null]
+	 * @param  index [pozice karty v balicku]
+	 * @return	   [karta na uvedenem indexu]
 	 */
 	public abstract Card get(int i);
 	  
 	/**
-	 * Test, zda je bal��ek karet pr�zdn�.
-	 * @return Vrac� true, pokud je bal��ek pr�zdn�.
+	 * [metoda testuje zdali je balicek prazdny]
+	 * @return [vraci true, pokud je balicek prazdny]
 	 */
 	public abstract boolean isEmpty();
 	  
 	/**
-	 * Odebere kartu z vrcholu bal��ku. Pokud je bal��ek pr�zdn�, vrac� null.
-	 * @return Karta z vrcholu balicku
+	 * [odebere kartu z vrcholu balicku, pokud je balicek prazdny, vraci null]
+	 * @return [vraci kartu z vrcholu balicku]
 	 */
 	public abstract Card pop();
 	  
 	/**
-	 * Vlo�� kartu na vrchol bal��ku.
-	 * @param c - vkladana karta
-	 * @return Uspesnost akce
+	 * [vlozi kartu na vrchol balicku]
+	 * @param  card [vkladana karta]
+	 * @return	  [uspesnost akce]
 	 */
 	public abstract boolean put(Card c);
 	  
 	/**
-	 * @return Aktualni pocet karet v balicku
+	 * [metoda vraci velikost balicku]
+	 * @return [velikost balicku]
 	 */
 	public abstract int size();
 }
