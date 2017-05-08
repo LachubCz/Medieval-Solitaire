@@ -1,4 +1,4 @@
-/*
+/* CardDeckView - Zpracovava pohled target balicku
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -17,6 +17,10 @@ import ija.ija2016.homework3.model.cards.CardStack;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Trida reprezentujici pohled target balicku
+ * @author Holajz
+ */
 public class CardDeckView {
 
     public int x,y;
@@ -24,23 +28,43 @@ public class CardDeckView {
     private CardView card;
     CardDeck deck;
     
+    /**
+     * Metoda nastavujici pozice x a y v GUI
+     * @param newX - pozice x
+     * @param newY - pozice y
+     */
     public void setXY(int newX, int newY) {
 	x = newX;
 	y = newY;
     }
     
+    /**
+     * Metoda nastavujici hlavni pohled
+     * @param newBoard - boarda
+     */
     public void setPanel(BoardView newBoard) {
 	board = newBoard;
     }
 
+    /**
+     * Funkce vracejici vrchol target balicku
+     * @return pohled karty
+     */
     public CardView top() {
         return this.card;
     }
     
+    /**
+     * Funkce nastavujici target CardDeck model tohoto pohledu
+     * @param newDeck 
+     */
     public void setModel(CardDeck newDeck) {
         deck = newDeck;
     }
 
+    /**
+     * Funkce zpracujici vykresleni a zpracovani eventu od uzivatele
+     */
     void paint() {
         CardView cardView;
         Card stackCard = deck.top();

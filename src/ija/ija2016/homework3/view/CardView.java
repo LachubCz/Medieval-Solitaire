@@ -1,4 +1,4 @@
-/*
+/* CardView - zpracovava pohled karty
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -10,12 +10,10 @@
 package ija.ija2016.homework3.view;
 
 
-import ija.ija2016.homework3.controller.CommandInterface;
 import ija.ija2016.homework3.model.cards.Card;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -24,19 +22,25 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Trida reprezentujici jednu kartu v GUI
  * @author Holajz
  */
 public class CardView extends JLabel{
     
     private Card.Color color;
     int value;
-    private float opacity;
     private boolean isSelected;
     private boolean isHint;
     private int x;
     private int y;
     
+    /**
+     * Kontruktor pro vytvoreni pohledu karty 
+     * @param cardColor - barva karty
+     * @param cardValue - hodnota karty
+     * @param x - pozice x v GUI karty
+     * @param y - pozice y v GUI karty
+     */
     CardView(CardView.CardViewColor cardColor, int cardValue, int x, int y) {
         this.color = CardViewColor.toColor(cardColor);
         this.value = cardValue;
@@ -49,7 +53,9 @@ public class CardView extends JLabel{
         this.setBounds(x, y, icon.getIconWidth(), icon.getIconHeight());
     }
 
-
+        /**
+         * Mozne barvy pohledu karty
+         */
         public static enum CardViewColor {
             SPADES("S"), DIAMONDS("D"), HEARTS("H"), CLUBS("C"), BACK("BACK"), NONE("NONE"), NEW_DECK("NEWDECK"),
             NONE_S("Sempty"), NONE_D("Dempty"), NONE_H("Hempty"), NONE_C("Cempty");
@@ -91,6 +97,9 @@ public class CardView extends JLabel{
             
         }
         
+        /**
+         * Mozne stavy karty
+         */
         public static enum CardViewState {
 		NONE("NONE"),
 		SELECTED_CARD("SELECTED CARD"),
@@ -107,37 +116,52 @@ public class CardView extends JLabel{
 		}
 	}
         
-        
-        public float getOpacity() {
-            return this.opacity;
-        }
-        
-        public void setOpacity(float opacity) {
-            this.opacity = opacity;
-        }
-        
+        /**
+         * Nastavi tuto kartu jako vybranou, nebo naopak zrusi vyber
+         * @param isSelected - invokace vybrani
+         */
         public void setSelected(boolean isSelected) {
             this.isSelected = isSelected;
             this.repaint();
         }
         
+        /**
+         * Konvertuje tuto kartu do modelu Card
+         * @return vraci konvertovanou kartu
+         */
         public Card toCard() {
             return new Card(this.color, this.value);
         }
         
+        /**
+         * Nastavi tuto kartu jako cil rady, nebo naopak zrusi cil
+         * @param isHinterino - 
+         */
         public void setHint(boolean isHinterino) {
             this.isHint = isHinterino;
             this.repaint();
         }
         
+        /**
+         * Metoda ziskavajici stav rady karty
+         * @return je target rady nebo ne
+         */
         public boolean getHint() {
             return this.isHint;
         }
         
+        /**
+         * Metoda ziskavajici stav vybrani karty
+         * @return je vybrana nebo ne
+         */
         public boolean getSelected() {
             return this.isSelected;
         }
         
+        /**
+         * Metoda pro vykresleni karty
+         * @param g - graficky kontext
+         */
         @Override
         public void paintComponent(final Graphics g) {
 		super.paintComponent(g);

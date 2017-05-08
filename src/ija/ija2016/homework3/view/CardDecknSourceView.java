@@ -1,4 +1,4 @@
-/*
+/* CardDecknSourceView - Zpracovava pohled source a standard balicku 
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -17,7 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * Trida reprezentujici a zpracujici pohled source a standard balicku
  * @author Holajz
  */
 class CardDecknSourceView {
@@ -29,19 +29,35 @@ class CardDecknSourceView {
     private CardView picker;
     private CardView putAside;
     
+     /**
+     * Metoda nastavujici pozice x a y v GUI
+     * @param newX - pozice x
+     * @param newY - pozice y
+     */
     public void setXY(int newX, int newY) {
 	x = newX;
 	y = newY;
     }
 
+     /**
+     * Metoda nastavujici hlavni pohled
+     * @param newBoard - boarda
+     */
     public void setPanel(BoardView newBoard) {
         board = newBoard;
     }
     
+     /**
+     * Funkce nastavujici CardStack model tohoto pohledu
+     * @param newDeck 
+     */
     public void setModel(CardStack sourcePack) {
         this.pack = sourcePack;
     }
     
+    /**
+     * Funkce zpracujici vykresleni a zpracovani eventu od uzivatele
+     */
     public void paint() {
         if(!pack.isEmpty()) {
             CardView card = new CardView(CardView.CardViewColor.BACK, 0, 0, y  );

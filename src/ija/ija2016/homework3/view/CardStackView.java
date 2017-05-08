@@ -1,4 +1,4 @@
-/*
+/* CardStackView - zpracovava pohled working balicku
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -18,6 +18,10 @@ import ija.ija2016.homework3.model.cards.CardStack;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Trida reprezentujici a zpracujici pohled working balicku
+ * @author Holajz
+ */
 public class CardStackView {
     public int x;
     public int y;
@@ -25,19 +29,37 @@ public class CardStackView {
     CardStack stack;
     CardView topCard;
 
+     /**
+     * Metoda nastavujici pozice x a y v GUI
+     * @param newX - pozice x
+     * @param newY - pozice y
+     */
     public void setXY(int newX, int newY) {
 	x = newX;
 	y = newY;
     }
     
+    
+     /**
+     * Metoda nastavujici hlavni pohled
+     * @param newBoard - boarda
+     */
     public void setPanel(BoardView newBoard) {
 	board = newBoard;
     }
     
+    /**
+     * Funkce nastavujici CardStack model tohoto pohledu
+     * @param newDeck 
+     */
     public void setModel(CardStack newStack) {
         stack = newStack;
     }
     
+     /**
+     * Funkce vracejici vrchol working balicku
+     * @return pohled karty
+     */
     public CardView top() {
         return this.topCard;
     }

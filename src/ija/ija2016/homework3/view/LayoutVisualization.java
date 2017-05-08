@@ -1,4 +1,4 @@
-/*
+/* LayoutVisualization - ziskava textury a korektne meni jejich velikost
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -11,7 +11,6 @@ package ija.ija2016.homework3.view;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

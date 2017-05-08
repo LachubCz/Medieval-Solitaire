@@ -1,4 +1,5 @@
-/*
+/* 
+ * BoardView: Hlavni component pro tvorbu boardu - jedna trida, jedna boarda v GUI
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
@@ -20,7 +21,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ija.ija2016.homework3.model.cards.PleaseRepaint;
-import ija.ija2016.homework3.view.CardView;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -39,7 +38,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-
+/**
+ * Trida predstavujici jeden board v GUI
+ * @author Holajz
+ */
 public class BoardView extends JPanel implements PleaseRepaint {
  
 	private CardDeck selectedSourceDeck = null;
@@ -61,6 +63,10 @@ public class BoardView extends JPanel implements PleaseRepaint {
         private boolean hintNeeded = false;
         
 
+        /**
+         * Konstruktor teto boardy
+         * @param newCardBoard model teto boardy
+         */
 	public BoardView(CardBoard newCardBoard) {
 		commander = new CommandBuilder(newCardBoard);
 		this.setLayout(null);
@@ -69,6 +75,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 this.CreateAll();
 	}
 
+        /**
+         * Vytvori a nabinduje vsechny komponenty teto boardy
+         */
 	private void CreateAll() {
                 JButton buttonSave = new JButton("Save");
                 buttonSave.setBounds(0, 0, 80, 25);
@@ -146,15 +155,12 @@ public class BoardView extends JPanel implements PleaseRepaint {
                     decks.add(deck);
 		}
                 
-                buttonSave.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
-		        if(fileName.length() > 0){
-		        	getCommandBuilder().save("examples/" + fileName);
-		        }
-		    }
-		});
+                buttonSave.addActionListener((ActionEvent e) -> {
+                    String fileName = JOptionPane.showInputDialog(null, "Vlozte jmeno souboru:", "Vlozte jmeno souboru", JOptionPane.WARNING_MESSAGE);
+                    if(fileName.length() > 0){
+                        getCommandBuilder().save("examples/" + fileName);
+                    }
+                });
 
                 
 
@@ -187,6 +193,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 });
 	}
         
+        /**
+         * Premaluje vsechny komponenty teto boardy
+         */
         @Override
         public void repaint() {
             removeComponents();
@@ -204,6 +213,9 @@ public class BoardView extends JPanel implements PleaseRepaint {
             this.revalidate();
         }
         
+        /**
+         * Vytvori obrazovku konce hry
+         */
         public void CreateGameOver(){
             ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/win.png"))
                 .getImage().getScaledInstance(960, 520, Image.SCALE_SMOOTH));
@@ -224,13 +236,15 @@ public class BoardView extends JPanel implements PleaseRepaint {
             });
 	}
         
+        
+        /**
+         * Vytvori komponent pro vizualizaci zpracovani nacitani souboru
+         */
         public void loadFile() {
- 
-            
-		File[] FileList = new File("examples").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
+            File[] FileList = new File("examples").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
                 
 		if(FileList == null) {
-                    JOptionPane.showMessageDialog(null, "There are no saved games in the saves folder.", "Error finding saved games.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Neexistuji zadne ulozene hry, ujistete se, ze je vytvorena slozka examples s prilozenymi soubory.", "Chyba pri vyhledavani ulozenych her.", JOptionPane.INFORMATION_MESSAGE);
                     return;
 		}
                 
@@ -257,8 +271,8 @@ public class BoardView extends JPanel implements PleaseRepaint {
                 
 		String fileToLoad = (String)JOptionPane.showInputDialog(
 		                    this,
-		                    "Select Game you want to play",
-		                    "Load game",
+		                    "Vyber hru, kterou chces hrat",
+		                    "Nacist hru",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
 		                    fileNamesArray,
@@ -270,11 +284,17 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		}
         }
         
+        /**
+         * Metoda oodstranujici board z GUI
+         */
         public void closeThisBoard() {
             MainView mainWindow = (MainView)this.getTopLevelAncestor();
             mainWindow.removeBoard(this);
         }
         
+        /**
+         * Odstrani veskere komponenty z boardy
+         */
         private void removeComponents() {
             Component [] components = this.getComponents();
             for(Component component: components) {
@@ -285,23 +305,46 @@ public class BoardView extends JPanel implements PleaseRepaint {
             }
         }
 
+        /**
+         * Metoda ziskavajici CommandBuilder teto boardy
+         * @return CommandBuilder teto boardy
+         */
         public CommandBuilder getCommandBuilder() {
             return this.commander;
         }
         
+        /**
+         * Metoda ziskavajici model target balicku, ktery je momentalne vybran
+         * @return target balicek nebo source balicek
+         */
         public CardDeck getSelectedSourceDeck() {
             return this.selectedSourceDeck;
         }
         
+        /**
+         * Metoda ziskavajici model working balicku, ktery je momentalne vybran
+         * @return working balicek
+         */
         public CardStack getSelectedSourceStack() {
             return this.selectedSourceStack;
         }
         
+        /**
+         * Nastavi momentalne vybrany target balicek/source balicek nebo working balicek
+         * @param deck - vybrany target balicek nebo source balicek
+         * @param stack - vybrany working balicek 
+         */
         public void setSelectedSource(CardDeck deck, CardStack stack) {
             this.selectedSourceDeck = deck;
             this.selectedSourceStack = stack;
         }
         
+        /**
+         * Nastavi momentalne vybrany balicek/source balicek nebo working balicek a CardView predstavujici vybranou kartu v techto baliccich
+         * @param deck - vybrany target balicek nebo source balicek
+         * @param stack - vybrany working balicek
+         * @param sourceCard - vybrana karta
+         */
         public void setSelectedSource(CardDeck deck, CardStack stack,  CardView sourceCard) {
             if(this.selectedSourceCard != null) {
                 this.selectedSourceCard.setSelected(false);
@@ -319,38 +362,55 @@ public class BoardView extends JPanel implements PleaseRepaint {
 		}
         }
         
+        /**
+         * Zrusi vyber balicku a karty
+         */
         public void unselectSelectedSource(){
             this.setSelectedSource(null, null, null);
 	}
         
+        /**
+         * Metoda pro zjisteni, zda je target/source balicek nebo working balicek vybrany
+         * @return pravda , nepravda
+         */
         public boolean isSourceDeckorStackSelected() {
             return this.selectedSourceDeck != null || this.selectedSourceStack != null;
         }
         
+        /**
+         * Metoda pro ziskani karty z balicek, ze ktereho se presunou karty az po tuto kartu
+         * @return karta
+         */
         public Card getSelectedtMultipleMoveCard(){
             return this.selectedMultipleCard;
 	}
         
+        /**
+         * Nastavi kartu z balicku, ze ktereho se presunou karty az po tuto kartu
+         * @param card - karta
+         */
 	public void setSelectedtMultipleMoveCard(Card card) {
             this.selectedMultipleCard = card;
 	}
         
-        
+        /**
+         * Metoda pro ziskani rady. Radu pro hrace ziskava z modulu, podle vracene hodnoty ziska mozny cil, vrchol je nasledne zvyraznen pro hrace.
+         */
         public void createHints() {
             removeHint();
             
-            int hint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
+            int cardHint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
         
-            if(hint == -1)
+            if(cardHint == -1)
             {
                 //System.out.println("Nic jsem nenasel");
                 return;
             }
         
-            if(hint < 10)
+            if(cardHint < 10)
             {
-        	CardDeckView deck = this.decks.get(hint);
-                //System.out.println("I found something on target deck number " + (hint+1));
+        	CardDeckView deck = this.decks.get(cardHint);
+                //System.out.println("Nasel jsem neco v target packu cislo \\\\" + (hint+1) + "\\\\");
                 CardView card = deck.top();
                 this.hint = card;
                 card.setHint(true);
@@ -359,10 +419,10 @@ public class BoardView extends JPanel implements PleaseRepaint {
             }
             else
             {
-        	//hint = cislo workingpacku
-        	hint = hint - 10;
-                CardStackView stack = this.stacks.get(hint);
-                //System.out.println("I found something on working stack number " + (hint+1));
+        	//hint = cislo workingpacku - 10
+        	cardHint = cardHint - 10;
+                CardStackView stack = this.stacks.get(cardHint);
+                //System.out.println("Nasel jsem neco ve working packu cislo \\\\" + (hint+1) + "\\\\");
                 CardView card = stack.top();
                 this.hint = card;
                 card.setHint(true);
@@ -371,13 +431,19 @@ public class BoardView extends JPanel implements PleaseRepaint {
             }
 	}
         
+        /**
+         * Odstrani zvyrazneni karty. Invokace pri zmeneni karty, presunu nebo pri opetovnem stlaceni tlacitka hint.
+         */
         private void removeHint() {
             if(this.hint != null) {
                 this.hint.setHint(false);
             }
         }
         
-        
+        /**
+         * Vykresli tento komponent
+         * @param g - graficky context
+         */
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
