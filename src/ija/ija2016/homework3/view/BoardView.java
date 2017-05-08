@@ -1,3 +1,12 @@
+/*
+ * @author Petr Buchal, xbucha02
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
+ */
+
 package ija.ija2016.homework3.view;
 
 import ija.ija2016.homework3.controller.CommandBuilder;
@@ -196,16 +205,15 @@ public class BoardView extends JPanel implements PleaseRepaint {
         }
         
         public void CreateGameOver(){
-            ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/C13.png"))
-                .getImage().getScaledInstance(250, 400, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/win.png"))
+                .getImage().getScaledInstance(960, 520, Image.SCALE_SMOOTH));
             JLabel label = new JLabel(imageIcon);
-            label.setBounds(0, 50, 960, 540);
+            label.setBounds(0, 0, 960, 520);
             label.setFont(new Font("Serif", Font.PLAIN, 90));
-            label.setText("<html><p>Well played, sir</p><html>");
             this.add(label);
             
             JButton buttonClose= new JButton("");
-            buttonClose.setBounds(0, 0, 960, 540);
+            buttonClose.setBounds(0, 0, 960, 520);
             buttonClose.setOpaque(false);
             buttonClose.setContentAreaFilled(false);
             buttonClose.setBorderPainted(false);
