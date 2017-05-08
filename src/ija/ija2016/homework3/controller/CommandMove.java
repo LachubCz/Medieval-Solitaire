@@ -34,7 +34,6 @@ public class CommandMove implements CommandInterface
 	 * [konstruktor]
 	 * @param  source	  [zdroj]
 	 * @param  destination [cil]
-	 * @return			 [vraci instanci tridy]
 	 */
 	public CommandMove(CardStack source, CardDeck destination) 
 	{
@@ -46,7 +45,6 @@ public class CommandMove implements CommandInterface
 	 * [konstruktor]
 	 * @param  source	  [zdroj]
 	 * @param  destination [cil]
-	 * @return			 [vraci instanci tridy]
 	 */
 	public CommandMove(CardStack source, CardStack destination) 
 	{
@@ -58,7 +56,6 @@ public class CommandMove implements CommandInterface
 	 * [konstruktor]
 	 * @param  source	  [zdroj]
 	 * @param  destination [cil]
-	 * @return			 [vraci instanci tridy]
 	 */
 	public CommandMove(CardDeck source, CardStack destination) 
 	{

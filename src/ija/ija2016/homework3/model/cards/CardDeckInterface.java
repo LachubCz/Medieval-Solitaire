@@ -20,7 +20,7 @@ public interface CardDeckInterface extends Serializable{
 	  
 	/**
 	 * [vrati kartu na uvedenem indexu, spodni karta je na indexu 0, vrchol je na indexu size() -1, pokud je balicek prazdny, nebo index mimo rozsah, vraci null]
-	 * @param  index [pozice karty v balicku]
+	 * @param  i [pozice karty v balicku]
 	 * @return	   [karta na uvedenem indexu]
 	 */
 	public abstract Card get(int i);
@@ -39,7 +39,7 @@ public interface CardDeckInterface extends Serializable{
 	  
 	/**
 	 * [vlozi kartu na vrchol balicku]
-	 * @param  card [vkladana karta]
+	 * @param  c [vkladana karta]
 	 * @return	  [uspesnost akce]
 	 */
 	public abstract boolean put(Card c);

@@ -38,14 +38,14 @@ public interface CardBoardInterface
 
 	/**
 	 * [pomocna metoda pro createHint - najde balicky, kam muze byt karta polozena]
-	 * @param  Card [karta na polozeni]
+         * @param toCard  [karta pro kterou se ziskava hint]
 	 * @return	  [instance tridy CardHint ve ktere jsou ulozeny balicky na ktere se da karta polozit]
 	 */
 	public CardHint hintForCard(Card toCard);
 
 	/**
 	 * [metoda vytvori napovedu pro vybranou kartu]
-	 * @param  Card [karta pro napovedu]
+	 * @param  toCard [karta pro napovedu]
 	 * @return	  [cislo ciloveho (0,1,2,3) / pracovniho (10,11,12,13,14,15,16) balicku]
 	 */
 	public int createHint(Card toCard);

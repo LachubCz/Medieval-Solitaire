@@ -67,7 +67,7 @@ public class CardHint
 	
 	/**
 	 * [metoda prida deck do pole]
-	 * @param  stack [vkladany balicek]
+	 * @param  deck [vkladany balicek]
 	 * @return	   [pokud se operace zdarila vraci true]
 	 */
 	public boolean add(CardDeck deck) 
