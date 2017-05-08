@@ -245,9 +245,11 @@ public class CardBoard implements CardBoardInterface
 	 */
 	public boolean isGameOver()
 	{
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 7; i++)
 		{
-			if (this.getStack(i).size() != 13)
+			if(this.getStack(i).isEmpty() == false)
+				return false;
+			if(!this.getSourcePack().isEmpty() || !this.getSourcePack().isSourceEmpty())
 				return false;
 		}
 		return true;
