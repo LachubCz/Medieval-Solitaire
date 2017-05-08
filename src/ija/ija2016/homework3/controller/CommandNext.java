@@ -1,4 +1,5 @@
 /*
+ * CommandNext: Trida prikazu, ktery otaci vrchni kartu ze zdrojoveho balicku a vklada ji na odebiraci balicek
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
