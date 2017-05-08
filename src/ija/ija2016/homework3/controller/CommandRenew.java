@@ -1,4 +1,5 @@
 /*
+ * CommandRenew: Trida prikazu, ktery obrati balicek karet z odebiraciho balicku na zdrojovy balicek
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
