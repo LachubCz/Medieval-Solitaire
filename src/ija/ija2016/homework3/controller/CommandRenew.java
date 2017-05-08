@@ -1,44 +1,53 @@
 /*
- * @author Tom� Hol�k, xholik13
  * @author Petr Buchal, xbucha02
- * @version 0.3
- * Projekt: Medieval Klondike
- * System: Windows 10
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
  * University: Brno University of Technology
  * Course: IJA
  */
 package ija.ija2016.homework3.controller;
 
-import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardStack;
-import java.util.ArrayList;
 
-/**
- *
- * @author Holajz
- */
 public class CommandRenew implements CommandInterface{
-    CardStack stack = null;
+	CardStack stack = null;
 
-    public CommandRenew(CardStack source){
-        this.stack = source;
-    }
+	/**
+	 * [konstruktor]
+	 * @param  source [cil]
+	 */
+	public CommandRenew(CardStack source)
+	{
+		this.stack = source;
+	}
 
-    @Override
-    public void execute(){
-        if(this.canExecute()){
-            stack.MoveBackToStack();
-        }       
-    }
+	/**
+	 * [metoda vykona prikaz]
+	 */
+	public void execute()
+	{
+		if(this.canExecute())
+		{
+			stack.MoveBackToStack();
+		}	   
+	}
 
-    @Override
-    public void unexecute(){
-        while(!stack.isEmpty())
-            stack.showNext();
-    }
+	/**
+	 * [metoda pro vraceni do stavu pred provedenim prikazu]
+	 */
+	public void unexecute()
+	{
+		while(!stack.isEmpty())
+			stack.showNext();
+	}
 
-    @Override
-    public boolean canExecute(){
-        return this.stack.isEmpty();
-    }
+	/**
+	 * [metoda zjisti zda-li jde prikaz vykonat]
+	 * @return [vraci true pokud lze prikaz provest]
+	 */
+	public boolean canExecute()
+	{
+		return this.stack.isEmpty();
+	}
 }
