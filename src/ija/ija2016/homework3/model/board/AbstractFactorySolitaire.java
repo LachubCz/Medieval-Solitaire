@@ -1,4 +1,5 @@
 /*
+ * AbstractFactorySolitaire: Abstraktni trida obsahujici metody pro tvorbu jednotlivych balicku
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
