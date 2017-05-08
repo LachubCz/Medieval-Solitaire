@@ -9,7 +9,7 @@ import ija.ija2016.homework3.model.cards.CardStack;
 import java.util.ArrayList;
 
 public class CommandBuilder {
-        public static final String saveExtension = ".XXXXXX";
+        //public static final String saveExtension = ".XXXXXX";
         CardBoardInterface cardBoard = null;
         ArrayList<CommandInterface> undoStack;
 
@@ -19,6 +19,8 @@ public class CommandBuilder {
     }
 
     public void execute(CommandInterface command) {
+        if(command.getClass() == CardBoardInterface.class)
+            this.executeCallAble((CommandControl)command);
     	if(command.canExecute())
     	{
             command.execute();
@@ -27,6 +29,22 @@ public class CommandBuilder {
         }
     }
 
+    private void executeCallAble(CommandControl command) {
+        java.lang.reflect.Method method;
+        try{
+            if(command.hasArguments()){
+                method = this.getClass().getMethod(command.getCall(), ArrayList.class);
+            }
+            else {
+                method = this.getClass().getMethod(command.getCall());
+            }
+            this.cardBoard.update();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     private void push(CommandInterface command){
         this.undoStack.add(command);
     }
@@ -44,6 +62,16 @@ public class CommandBuilder {
             return true;
         }
         return false;
+    }
+    
+    public void save(String fileName)
+    {
+    	cardBoard.SaveGame(fileName);
+    }
+    
+    public void load(String fileName)
+    {
+    	cardBoard.LoadGame(fileName);
     }
     
     public void move(CardDeck source, CardDeck destination){
@@ -78,4 +106,3 @@ public class CommandBuilder {
         this.cardBoard.update();
     }
 }
-	
