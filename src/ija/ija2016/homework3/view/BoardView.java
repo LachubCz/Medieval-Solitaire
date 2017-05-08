@@ -206,14 +206,14 @@ public class BoardView extends JPanel implements PleaseRepaint {
         
         public void CreateGameOver(){
             ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/win.png"))
-                .getImage().getScaledInstance(960, 520, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(1920, 1080, Image.SCALE_SMOOTH));
             JLabel label = new JLabel(imageIcon);
-            label.setBounds(0, 0, 960, 520);
+            label.setBounds(0, 0, 1920, 1040);
             label.setFont(new Font("Serif", Font.PLAIN, 90));
             this.add(label);
             
             JButton buttonClose= new JButton("");
-            buttonClose.setBounds(0, 0, 960, 520);
+            buttonClose.setBounds(0, 0, 1920, 1040);
             buttonClose.setOpaque(false);
             buttonClose.setContentAreaFilled(false);
             buttonClose.setBorderPainted(false);
