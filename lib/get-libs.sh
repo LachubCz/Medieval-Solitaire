@@ -14,6 +14,9 @@ wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/hint.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/icon.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/reassemble.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/selected.png
+wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/small_hint.png
+wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/small_selected.png
+wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/win.png
 #textures_clubs
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/C1.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/C2.png
