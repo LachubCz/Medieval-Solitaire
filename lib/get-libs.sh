@@ -1,11 +1,6 @@
 #libraries
 wget https://github.com/junit-team/junit4/releases/download/r4.12/junit-4.12.jar
 wget http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
-#change folder
-cd ..
-cd src
-cd ija
-cd textures
 #textures_general
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/background.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/card_back.png
@@ -77,9 +72,6 @@ wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/S11.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/S12.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/S13.png
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/textures/Sempty.png
-#change folder
-cd ..
-cd music
 #music
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/music/m1.wav
 wget http://eva.fit.vutbr.cz/~xbucha02/ija/music/m2.wav
