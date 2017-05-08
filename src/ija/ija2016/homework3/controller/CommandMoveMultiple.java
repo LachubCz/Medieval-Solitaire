@@ -1,4 +1,5 @@
 /*
+ * CommandMoveMultiple: Trida prikazu, ktery presouva balicky karet mezi jednotlivymi balicky karet na hraci desce
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
