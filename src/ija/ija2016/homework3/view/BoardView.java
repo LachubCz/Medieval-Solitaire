@@ -1,155 +1,203 @@
+/* 
+ * BoardView: Hlavni component pro tvorbu boardu - jedna trida, jedna boarda v GUI
+ * @author Petr Buchal, xbucha02
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
+ */
+
 package ija.ija2016.homework3.view;
-import ija.ija2016.homework3.controller.CommandInterface;
-import java.util.ArrayList;
-import javax.swing.JPanel;
-import ija.ija2016.homework3.model.cards.RepaintInterface;
+
 import ija.ija2016.homework3.controller.CommandBuilder;
-import ija.ija2016.homework3.controller.CommandControl;
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardBoard;
 import ija.ija2016.homework3.model.cards.CardBoardInterface;
 import ija.ija2016.homework3.model.cards.CardDeck;
-import ija.ija2016.homework3.model.cards.CardDeckInterface;
-import ija.ija2016.homework3.model.cards.CardHint;
-import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import ija.ija2016.homework3.model.cards.PleaseRepaint;
+import java.awt.Font;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
+/**
+ * Trida predstavujici jeden board v GUI
+ * @author Holajz
+ */
+public class BoardView extends JPanel implements PleaseRepaint {
+ 
+	private CardDeck selectedSourceDeck = null;
+        private CardStack selectedSourceStack = null;
+	private Card selectedMultipleCard = null;
 
-public class BoardView extends JPanel implements RepaintInterface {
-	private CardDeck selectedSource = null;
-	private Card selectedMultiMoveCard = null;
-
-    private CardView selectedSourceCard = null;
+        private CardView selectedSourceCard = null;
 
 	private static final long serialVersionUID = 1L;
 
-	private CommandBuilder commander;
-	private CardBoard cardBoard;
-	private CardPackView mainCardPicker; //standard deck
+	private final CommandBuilder commander;
+	private final CardBoardInterface cardBoard;
+	private CardDecknSourceView mainCardPicker; //standard deck and source
 
 	private ArrayList<CardDeckView> decks = new ArrayList<>(); //target pack
 	private ArrayList<CardStackView> stacks = new ArrayList<>(); //working pack
+        private CardView hint;
 
-    private boolean hintNeeded = false;
+        private boolean hintNeeded = false;
+        
 
+        /**
+         * Konstruktor teto boardy
+         * @param newCardBoard model teto boardy
+         */
 	public BoardView(CardBoard newCardBoard) {
 		commander = new CommandBuilder(newCardBoard);
 		this.setLayout(null);
 		cardBoard = newCardBoard;
-		newCardBoard.registerObserver((RepaintInterface)this);
-		this.CreateAll();
+		newCardBoard.registerObserver((PleaseRepaint)this);
+                this.CreateAll();
 	}
 
+        /**
+         * Vytvori a nabinduje vsechny komponenty teto boardy
+         */
 	private void CreateAll() {
                 JButton buttonSave = new JButton("Save");
                 buttonSave.setBounds(0, 0, 80, 25);
+                buttonSave.setBackground(Color.ORANGE);
+                buttonSave.setForeground(Color.BLACK);
                 this.add(buttonSave);
                 
-                JButton buttonHint = new JButton("Hint Off");
-                buttonHint.setBounds(80, 0, 80, 25);
-                this.add(buttonHint);
-                
 		JButton buttonUndo = new JButton("Undo");
-                buttonUndo.setBounds(160, 0, 80, 25);
+                buttonUndo.setBounds(80, 0, 80, 25);
+                buttonUndo.setBackground(Color.ORANGE);
+                buttonUndo.setForeground(Color.BLACK);
                 this.add(buttonUndo);
 
                 JButton buttonLoad = new JButton("Load");
-                buttonLoad.setBounds(320, 0, 80, 25);
+                buttonLoad.setBounds(160, 0, 80, 25);
+                buttonLoad.setBackground(Color.ORANGE);
+                buttonLoad.setForeground(Color.BLACK);
                 this.add(buttonLoad);
                 
                 JButton buttonClose = new JButton("Close");
-                buttonClose.setBounds(400, 0, 80, 25);
+                buttonClose.setBounds(240, 0, 80, 25);
+                buttonClose.setBackground(Color.ORANGE);
+                buttonClose.setForeground(Color.BLACK);
                 this.add(buttonClose);
                 
-                int basicValue = this.getHeight();
-                int cardSpace = (int)(basicValue / 4.4);
+                JButton buttonHint;
+                if(hintNeeded) {
+                    buttonHint = new JButton("Hint On");
+                }
+                else {
+                    buttonHint = new JButton("Hint Off");
+                }
+                buttonHint.setBounds(320, 0, 80, 25);
+                buttonHint.setBackground(Color.ORANGE);
+                buttonHint.setForeground(Color.BLACK);
+                this.add(buttonHint);
                 
-                CardPackView packPicker = new CardPackView();
+                
+                int basicValue = this.getHeight();
+ 
+
+                
+                int cardSpace = (int)(basicValue / 4.6);
+                
+                CardDecknSourceView packPicker = new CardDecknSourceView();
                 packPicker.setModel(cardBoard.getSourcePack());
-                packPicker.setXY(cardSpace * (1), 35);
+                packPicker.setXY(cardSpace * (1), 30);
                 packPicker.setPanel(this);
                 packPicker.paint();
                 
                 mainCardPicker = packPicker;
+                this.stacks = new ArrayList<>();
+                this.decks = new ArrayList<>();
                 
                 for(int i = 0; i < 7; i++) {
                     CardStackView stack = new CardStackView();
                     stack.setModel(cardBoard.getStack(i));
-                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.4 )  );
+                    stack.setXY(cardSpace * (i+1), (int)(basicValue / 2.70 )  );
+                    //System.out.println((cardSpace * (i+1)));
+                    //System.out.println((basicValue / 2.70 ));
                     stack.setPanel(this);
                     stack.paint();
                     stacks.add(stack);
 		}
                 
+                //System.out.println("");
+                
                 for(int i = 0; i < 4; i++) {
                     CardDeckView deck = new CardDeckView();
                     deck.setModel(cardBoard.getDeck(i));
-                    deck.setXY(cardSpace * (i+4), 35  );
+                    deck.setXY(cardSpace * (i+4), 30);
+                    //System.out.println((cardSpace * (i+4)));
                     deck.setPanel(this);
                     deck.paint();
                     decks.add(deck);
 		}
-
-                buttonSave.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        String fileName = JOptionPane.showInputDialog(null, "Enter file name:", "Dialog for file name", JOptionPane.WARNING_MESSAGE);
-		        if(fileName.length() > 0){
-		        	CommandInterface command = new CommandControl("save", new ArrayList<String>(){{add("saves/" + fileName);}});
-		        	commander.execute(command);
-		        }
-		    }
-		});
+                
+                buttonSave.addActionListener((ActionEvent e) -> {
+                    String fileName = JOptionPane.showInputDialog(null, "Vlozte jmeno souboru:", "Vlozte jmeno souboru", JOptionPane.WARNING_MESSAGE);
+                    if(fileName.length() > 0){
+                        getCommandBuilder().save("examples/" + fileName);
+                    }
+                });
 
                 
 
-                buttonHint.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	if(hintNeeded) {
-                            hintNeeded = false;
-                            clearHints();
-                            buttonHint.setText("Hint Off");
-                        }
-                        else {
-                            hintNeeded = true;
-                            buttonHint.setText("Hint On");
-                            setSelectedSource(selectedSource, selectedSourceCard);
-                        }
-		    }
-		});
+                buttonHint.addActionListener((ActionEvent e) -> {
+                    if(hintNeeded) {
+                        hintNeeded = false;
+                        removeHint();
+                        buttonHint.setText("Hint Off");
+                    }
+                    else {
+                        hintNeeded = true;
+                        buttonHint.setText("Hint On");
+                        setSelectedSource(selectedSourceDeck, selectedSourceStack, selectedSourceCard);
+                    }
+                });
                 
-		buttonUndo.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	CommandInterface command = new CommandControl("undo");
-		    	commander.execute(command);
-		    }
-		});
+		buttonUndo.addActionListener((ActionEvent e) -> {
+                    //CommandInterface command = new CommandControl("undo");
+                    //commander.execute(command);
+                    getCommandBuilder().undo();
+                    getCommandBuilder().Update();
+                });
                 
-                buttonLoad.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        loadFile();
-		    }
-		});
+                buttonLoad.addActionListener((ActionEvent e) -> {
+                    loadFile();
+                });
 
-                buttonClose.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-		    	closeThisBoard();
-		    }
-		});
+                buttonClose.addActionListener((ActionEvent e) -> {
+                    closeThisBoard();
+                });
 	}
         
-        public void Recreate() {
+        /**
+         * Premaluje vsechny komponenty teto boardy
+         */
+        @Override
+        public void repaint() {
             removeComponents();
             this.removeAll();
             
@@ -165,27 +213,88 @@ public class BoardView extends JPanel implements RepaintInterface {
             this.revalidate();
         }
         
+        /**
+         * Vytvori obrazovku konce hry
+         */
         public void CreateGameOver(){
-            JButton buttonClose= new JButton("Game Over");
-            buttonClose.setBounds(250, 60, 140, 80);
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(BoardView.class.getResource("/ija/textures/win.png"))
+                .getImage().getScaledInstance(1920, 1080, Image.SCALE_SMOOTH));
+            JLabel label = new JLabel(imageIcon);
+            label.setBounds(0, 0, 1920, 1040);
+            label.setFont(new Font("Serif", Font.PLAIN, 90));
+            this.add(label);
+            
+            JButton buttonClose= new JButton("");
+            buttonClose.setBounds(0, 0, 1920, 1040);
+            buttonClose.setOpaque(false);
+            buttonClose.setContentAreaFilled(false);
+            buttonClose.setBorderPainted(false);
             this.add(buttonClose); 
             
-		buttonClose.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	closeThisBoard();
-		    }
-		});
+            buttonClose.addActionListener((ActionEvent e) -> {
+                    closeThisBoard();
+            });
 	}
         
+        
+        /**
+         * Vytvori komponent pro vizualizaci zpracovani nacitani souboru
+         */
         public void loadFile() {
+            File[] FileList = new File("examples").listFiles((File dir, String filename) -> filename.endsWith(".XXX"));
+                
+		if(FileList == null) {
+                    JOptionPane.showMessageDialog(null, "Neexistuji zadne ulozene hry, ujistete se, ze je vytvorena slozka examples s prilozenymi soubory.", "Chyba pri vyhledavani ulozenych her.", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+		}
+                
+                String[] fileString = new String[FileList.length];
+                
+                int i = 0;
+		for (File file : FileList) {
+                   fileString[i] = file.getName().replaceAll("\\.XXX$", "");
+                   i++;
+		}		
+		
+                /*
+                public static Object showInputDialog(Component parentComponent,
+                     Object message,
+                     String title,
+                     int messageType,
+                     Icon icon,
+                     Object[] selectionValues,
+                     Object initialSelectionValue)
+                */
+                
+                Object[] fileNamesArray = new Object[fileString.length];
+		fileNamesArray = (Object[])fileString;
+                
+		String fileToLoad = (String)JOptionPane.showInputDialog(
+		                    this,
+		                    "Vyber hru, kterou chces hrat",
+		                    "Nacist hru",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    fileNamesArray,
+		                    "loadDialog");
+
+		if (fileToLoad != null) {
+			commander.load("examples/" + fileToLoad);
+			commander.Update();
+		}
         }
         
+        /**
+         * Metoda oodstranujici board z GUI
+         */
         public void closeThisBoard() {
             MainView mainWindow = (MainView)this.getTopLevelAncestor();
             mainWindow.removeBoard(this);
         }
         
+        /**
+         * Odstrani veskere komponenty z boardy
+         */
         private void removeComponents() {
             Component [] components = this.getComponents();
             for(Component component: components) {
@@ -196,25 +305,54 @@ public class BoardView extends JPanel implements RepaintInterface {
             }
         }
 
+        /**
+         * Metoda ziskavajici CommandBuilder teto boardy
+         * @return CommandBuilder teto boardy
+         */
         public CommandBuilder getCommandBuilder() {
-            return commander;
+            return this.commander;
         }
         
-        public CardDeck getSelectedSource() {
-            return this.selectedSource;
+        /**
+         * Metoda ziskavajici model target balicku, ktery je momentalne vybran
+         * @return target balicek nebo source balicek
+         */
+        public CardDeck getSelectedSourceDeck() {
+            return this.selectedSourceDeck;
         }
         
-        public void setSelectedSource(CardDeck deck) {
-            this.selectedSource = deck;
+        /**
+         * Metoda ziskavajici model working balicku, ktery je momentalne vybran
+         * @return working balicek
+         */
+        public CardStack getSelectedSourceStack() {
+            return this.selectedSourceStack;
         }
         
-                public void setSelectedSource(CardDeck deck, CardView sourceCard) {
+        /**
+         * Nastavi momentalne vybrany target balicek/source balicek nebo working balicek
+         * @param deck - vybrany target balicek nebo source balicek
+         * @param stack - vybrany working balicek 
+         */
+        public void setSelectedSource(CardDeck deck, CardStack stack) {
+            this.selectedSourceDeck = deck;
+            this.selectedSourceStack = stack;
+        }
+        
+        /**
+         * Nastavi momentalne vybrany balicek/source balicek nebo working balicek a CardView predstavujici vybranou kartu v techto baliccich
+         * @param deck - vybrany target balicek nebo source balicek
+         * @param stack - vybrany working balicek
+         * @param sourceCard - vybrana karta
+         */
+        public void setSelectedSource(CardDeck deck, CardStack stack,  CardView sourceCard) {
             if(this.selectedSourceCard != null) {
                 this.selectedSourceCard.setSelected(false);
             }
-            this.selectedSource = deck;
+            this.selectedSourceStack = stack;
+            this.selectedSourceDeck = deck;
             this.selectedSourceCard = sourceCard;
-            this.setMultiMoveCard(null);
+            this.setSelectedtMultipleMoveCard(null);
             
 		if(sourceCard != null){
 		sourceCard.setSelected(true);
@@ -224,39 +362,99 @@ public class BoardView extends JPanel implements RepaintInterface {
 		}
         }
         
+        /**
+         * Zrusi vyber balicku a karty
+         */
         public void unselectSelectedSource(){
-            this.setSelectedSource(null, null);
+            this.setSelectedSource(null, null, null);
 	}
         
-        public boolean isSourceSelected() {
-            return this.selectedSource != null;
+        /**
+         * Metoda pro zjisteni, zda je target/source balicek nebo working balicek vybrany
+         * @return pravda , nepravda
+         */
+        public boolean isSourceDeckorStackSelected() {
+            return this.selectedSourceDeck != null || this.selectedSourceStack != null;
         }
         
-        public Card getMultiMoveCard(){
-            return this.selectedMultiMoveCard;
+        /**
+         * Metoda pro ziskani karty z balicek, ze ktereho se presunou karty az po tuto kartu
+         * @return karta
+         */
+        public Card getSelectedtMultipleMoveCard(){
+            return this.selectedMultipleCard;
 	}
         
-	public void setMultiMoveCard(Card card) {
-            this.selectedMultiMoveCard = card;
+        /**
+         * Nastavi kartu z balicku, ze ktereho se presunou karty az po tuto kartu
+         * @param card - karta
+         */
+	public void setSelectedtMultipleMoveCard(Card card) {
+            this.selectedMultipleCard = card;
 	}
         
+        /**
+         * Metoda pro ziskani rady. Radu pro hrace ziskava z modulu, podle vracene hodnoty ziska mozny cil, vrchol je nasledne zvyraznen pro hrace.
+         */
+        public void createHints() {
+            removeHint();
+            
+            int cardHint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
         
-    public void createHints() {
-        int hint = this.cardBoard.createHint(this.selectedSourceCard.toCard());
+            if(cardHint == -1)
+            {
+                //System.out.println("Nic jsem nenasel");
+                return;
+            }
         
-        if(hint == -1)
-        {
-        	//nenasla se shoda
-        }
-        
-        if(hint < 10)
-        {
-        	//hint = cislo targetpacku 
-        }
-        else
-        {
-        	//hint = cislo workingpacku
-        	hint = hint - 10;
-        }
+            if(cardHint < 10)
+            {
+        	CardDeckView deck = this.decks.get(cardHint);
+                //System.out.println("Nasel jsem neco v target packu cislo \\\\" + (hint+1) + "\\\\");
+                CardView card = deck.top();
+                this.hint = card;
+                card.setHint(true);
+
+                
+            }
+            else
+            {
+        	//hint = cislo workingpacku - 10
+        	cardHint = cardHint - 10;
+                CardStackView stack = this.stacks.get(cardHint);
+                //System.out.println("Nasel jsem neco ve working packu cislo \\\\" + (hint+1) + "\\\\");
+                CardView card = stack.top();
+                this.hint = card;
+                card.setHint(true);
+
+                
+            }
 	}
+        
+        /**
+         * Odstrani zvyrazneni karty. Invokace pri zmeneni karty, presunu nebo pri opetovnem stlaceni tlacitka hint.
+         */
+        private void removeHint() {
+            if(this.hint != null) {
+                this.hint.setHint(false);
+            }
+        }
+        
+        /**
+         * Vykresli tento komponent
+         * @param g - graficky context
+         */
+        @Override
+        protected void paintComponent(final Graphics g) {
+            super.paintComponent(g);
+            Image image = null;
+            try {
+                URL url = LayoutVisualization.class.getResource("/ija/textures/background.png");
+                image = ImageIO.read(url);
+            } catch (IOException ex) {
+                Logger.getLogger(BoardView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            g.drawImage(image, 0, 0, null);
+        }
+
 }

@@ -1,9 +1,9 @@
 /*
- * @author Tom� Hol�k, xholik13
+ * CardHintInterface: Rozhrani pro tridu, ktera reprezentuje pole balicku, ktere byli vyhozene napovedou jako potencialni pro vkladani
  * @author Petr Buchal, xbucha02
- * @version 0.3
- * Projekt: Medieval Klondike
- * System: Windows 10
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
  * University: Brno University of Technology
  * Course: IJA
  */
@@ -11,14 +11,17 @@ package ija.ija2016.homework3.model.cards;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Holajz
- */
-public interface CardHintInterface {
-    
-    public ArrayList<CardDeck> getCardDecks();
-
-    public ArrayList<CardStack> getCardStacks();
-    
+public interface CardHintInterface 
+{
+	/**
+	 * [metoda vrati vsechny decky]
+	 * @return [pole balicku]
+	 */
+	public ArrayList<CardDeck> getCardDecks();
+	
+	/**
+	 * [metoda vrati vsechny stacky]
+	 * @return [pole balicku]
+	 */
+	public ArrayList<CardStack> getCardStacks();
 }

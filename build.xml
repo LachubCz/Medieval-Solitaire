@@ -10,8 +10,8 @@
     <property name="jar.name" value="ija-client"/>
 	<property name="doc.dir" value="doc"/>
 	<property name="main-class" value="ija.ija2016.homework3.view.MainView"/>
-	<property name="resources.dir" value="src/ija/textures"/>
-	<property name="music.dir" value="src/ija/music"/>
+	<property name="resources.dir" value="build/main/ija/textures"/>
+	<property name="music.dir" value="build/main/ija/music"/>
 	
 	
 	<path id="libs">
@@ -38,15 +38,26 @@
         </exec>-->
     </target>
 	
+	<target name="doc" depends="get-libs, clean">
+	    <mkdir dir="${doc.dir}"/>
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="Windows-1250">
+			<classpath refid="libs"/>
+		</javadoc>
+	</target>
+	
 
-    <target name="compile" depends=" get-libs, clean">
+    <target name="compile" depends="doc">
         <mkdir dir="${build.dir.classes}"/>
         <javac srcdir="${src.dir}" destdir="${build.dir.classes}" includeantruntime="false" encoding="Windows-1250"> 
 			<classpath refid="libs"/>
 		</javac>
-		<copy todir="build/main">
-		<fileset dir="src"
-             includes="**/*.wav,**/*.png" />
+		<copy todir="build/main/ija/music">
+		<fileset dir="lib/music"
+             includes="**/*.wav" />
+		</copy>
+		<copy todir="build/main/ija/textures">
+		<fileset dir="lib/textures"
+             includes="**/*.png" />
 		</copy>
         <mkdir dir="${dest.dir}"/>
         <jar destfile="${dest.dir}/${jar.name}.jar" basedir="${build.dir.classes}" encoding="Windows-1250">
@@ -62,39 +73,9 @@
 		</jar>
     </target>
 	
-	<target name="doc" depends="compile">
-	    <mkdir dir="${doc.dir}"/>
-		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="Windows-1250">
-			<classpath refid="libs"/>
-		</javadoc>
-	</target>
+
 	
-	
-	<!--<target name="test-compile" depends="compile">
-        <mkdir dir="${build.dir.tests}"/>
-        <javac srcdir="${test.src.dir}" destdir="${build.dir.tests}" includeantruntime="false" encoding="Windows-1250">
-			<classpath refid="libs"/>
-		</javac>
-    </target>
-	
-	
-	<target name="test" depends="test-compile">
-        <junit haltonfailure="no" printsummary="yes">
-            <classpath>
-                <path refid="libs2"/>
-            </classpath>
-            <formatter type="brief" usefile="false" />
-            <batchtest>
-                <fileset dir="${build.dir.tests}"> 
-				<include name="**/*Test*.class"/>
-				<include name="**/Test*.class"/>
-				<include name="**/*Test.class"/>
-				</fileset>
-            </batchtest>
-        </junit>
-	</target>-->
-	
-	<target name="run" depends="doc">
+	<target name="run" depends="compile">
 		<java jar="${dest.dir}/${jar.name}.jar" fork="true"/>
 	</target>
 		

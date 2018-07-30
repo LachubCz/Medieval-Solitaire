@@ -1,55 +1,64 @@
-/**
- * Abstraktni trida pro factory klondike
- * @author Tom� Hol�k, xholik13
+/*
+ * AbstractFactorySolitaire: Abstraktni trida obsahujici metody pro tvorbu jednotlivych balicku
  * @author Petr Buchal, xbucha02
- * @version 0.2
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
-
 package ija.ija2016.homework3.model.board;
+
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardDeck;
-import ija.ija2016.homework3.model.cards.CardDeckInterface;
-import ija.ija2016.homework3.model.cards.CardInterface;
 import ija.ija2016.homework3.model.cards.CardStack;
-import ija.ija2016.homework3.model.cards.CardStackInterface;
 
-/**
- * Abstraktni trida pro factory klondike
- * @author Tom� Hol�k
- */
-public abstract class AbstractFactorySolitaire {
-	
+public abstract class AbstractFactorySolitaire 
+{
 	/**
-	 * Vytv��� objekt reprezentuj�c� bal��ek karet
-	 * @return Balicek karet
+	 * [vytvori objekt reprezentujici balicek karet]
+	 * @return [balicek karet]
 	 */
 	public abstract CardDeck createCardDeck();
 	
 	/**
-	 * Vytvori objekt reprezentujici kartu
-	 * @param color - barva karty
-	 * @param value - hodnota karty
-	 * @return Objekt karty. Pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null
+	 * [vytvori objekt reprezentujici kartu]
+	 * @param  color [barva karty]
+	 * @param  value [hodnota karty]
+	 * @return	   [vraci kartu, pokud je nektery z parametru neplatny (objekt nelze vytvorit), vraci null]
 	 */
 	public abstract Card createCard(Card.Color color, int value);
 	
 	/**
-	 * Vytvari objekt reprezentujici cilovy balicek. Cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku.
-	 * @param color - zadana barva
-	 * @return Cilovy balicek
+	 * [vytvari objekt reprezentujici cilovy balicek, cilem hrace je vlozit vsechny karty zadane barvy do ciloveho balicku]
+	 * @param  color [zadana barva]
+	 * @return	   [balicek]
 	 */
 	public abstract CardDeck createTargetPack(Card.Color color);
 	
-	
+	/**
+	 * [vytvori zdrojovy balicek]
+	 * @return [vrati vytvoreny zdrojovy balicek]
+	 */
 	public abstract CardStack createSourcePack();
 	
-	public abstract CardStack createSourcePack(int cardsToInsert);
+	/**
+	 * [vytvori zdrojovy balicek a do jeho decku prida karty]
+	 * @param  deck [karty ktere se pridaji do decku ve zdrojovem balicku]
+	 * @return	  [vrati vytvoreny zdrojovy balicek]
+	 */
+	public abstract CardStack createSourcePack(CardDeck deck);
 	
 	/**
-	 * Vytvari objekt reprezentujici pracovni pole pro karty
-	 * @return pracovni pole
+	 * [vytvari objekt reprezentujici pracovni pole pro karty]
+	 * @return [pracovni pole]
 	 */
 	public abstract CardStack createWorkingPack();
 	
-	public abstract CardStack createWorkingPack(int cardsToInsert);
+	/**
+	 * [vytvari objekt reprezentujici pracovni pole pro karty a do jeho decku prida karty]
+	 * @param  deck [karty na pridani]
+	 * @return	  [pracovni pole]
+	 */
+	public abstract CardStack createWorkingPack(CardDeck deck);
 }

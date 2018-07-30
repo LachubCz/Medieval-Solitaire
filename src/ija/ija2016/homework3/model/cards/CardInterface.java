@@ -1,28 +1,27 @@
-/**
- * Rozhran� reprezentuj�c� jednu kartu.
- * @author Tom� Hol�k, xholik13
+/*
+ * CardInterface: Rozhrani reprezentujici kartu
  * @author Petr Buchal, xbucha02
- * @version 0.2
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
 package ija.ija2016.homework3.model.cards;
 
 import java.io.Serializable;
 
-/**
- * Rozhrani reprezentujici jednu kartu. Karta obsahuje informaci o sv� hodnot� (1 a� 13) a barv�. Tyto informace jsou nastaveny konstruktorem. Hodnota 1 reprezentuje eso (ace), 11 a� 13 postupn� kluk (jack), kr�lovna (queen) a kr�l (king). Barvu definuje v��tov� typ Color.
- * @author Tomas Holik, xholik13
- *
- */
-public interface CardInterface extends Serializable{
-	
+public interface CardInterface extends Serializable
+{
 	/**
-	 * @return Hodnota karty
+	 * [metoda vraci hodnotu karty]
+	 * @return [hodnota karty]
 	 */
 	public abstract int value();
 	  
 	/**
-	 * Testuje, zda je karta otocena licem nahoru
-	 * @return Vysledek testu, true = karta je otocena licem nahoru.
+	 * [testuje, zda je karta otocena licem nahoru]
+	 * @return [vysledek testu, true = karta je otocena licem nahoru]
 	 */
 	public abstract boolean isTurnedFaceUp();
 	  
@@ -33,21 +32,22 @@ public interface CardInterface extends Serializable{
 	public abstract boolean turnFaceUp();
 	  
 	/**
-	 * @return Barva karty
+	 * [metoda testuje barvu karty]
+	 * @return [barva karty]
 	 */
 	public abstract Card.Color color();
 	  
 	/**
-	 * Testuje, zda m� karta podobnou barvu jako karta zadan�. Podobnou barvou se mysl� �ern� (piky, k��e) a �erven� (k�ry a srdce).
-	 * @param c - karta pro srovnani
-	 * @return Informace o shod� barev karet.
+	 * [testuje, zda ma karta podobnou barvu jako karta zadana, podobnou barvou se mysli cerna (piky, kule) a cervena (kary a srdce)]
+	 * @param  c [karta pro srovnani]
+	 * @return   [informace o shode barev karet]
 	 */
 	public abstract boolean similarColorTo(Card c);
 	  
 	/**
-	 * Porovn� hodnotu karty se zadanou kartou c. Pokud jsou stejn�, vrac� 0. Pokud je karta v�t�� ne� zadan� c, vrac� kladn� rozd�l hodnot.
-	 * @param c - Karta, s kterou se porovn�v�.
-	 * @return Vrac� rozd�l hodnot karet.
+	 * [porovna hodnotu karty se zadanou kartou c, pokud jsou stejne, vraci 0, pokud je karta vetsi nez zadana c, vraci kladny rozdil hodnot]
+	 * @param  c [karta s kterou se porovnava]
+	 * @return   [vraci rozdil hodnot karet]
 	 */
 	public abstract int compareValue(Card c);
 }

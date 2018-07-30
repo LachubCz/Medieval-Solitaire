@@ -1,52 +1,54 @@
 /*
- * @author Tom� Hol�k, xholik13
+ * CommandRenew: Trida prikazu, ktery obrati balicek karet z odebiraciho balicku na zdrojovy balicek
  * @author Petr Buchal, xbucha02
- * @version 0.3
- * Projekt: Medieval Klondike
- * System: Windows 10
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
  * University: Brno University of Technology
  * Course: IJA
  */
 package ija.ija2016.homework3.controller;
 
-import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardStack;
-import java.util.ArrayList;
 
-/**
- *
- * @author Holajz
- */
 public class CommandRenew implements CommandInterface{
-    CardStack stack = null;
-    ArrayList<Card> cards= null;
+	CardStack stack = null;
 
-    public CommandRenew(CardStack source){
-        this.stack = source;
-    }
+	/**
+	 * [konstruktor]
+	 * @param  source [cil]
+	 */
+	public CommandRenew(CardStack source)
+	{
+		this.stack = source;
+	}
 
-    @Override
-    public void execute(){
-        if(this.canExecute()){
-            cards= new ArrayList<>();
-            for(int index = 0; index < stack.size(); index++)
-                cards.add(stack.get(index));
-            stack.turnOver();
-        }       
-    }
+	/**
+	 * [metoda vykona prikaz]
+	 */
+	public void execute()
+	{
+		if(this.canExecute())
+		{
+			stack.MoveBackToStack();
+		}	   
+	}
 
-    @Override
-    public void unexecute(){
-        while(!stack.isStackEmpty())
-            stack.showNext();
-        while(stack.size() > 0)
-            stack.pop();
-        while(stack.size() > 0)
-            stack.emplace(cards.remove(0));
-    }
+	/**
+	 * [metoda pro vraceni do stavu pred provedenim prikazu]
+	 */
+	public void unexecute()
+	{
+		while(!stack.isEmpty())
+			stack.showNext();
+	}
 
-    @Override
-    public boolean canExecute(){
-        return !this.stack.isStackEmpty();
-    }
+	/**
+	 * [metoda zjisti zda-li jde prikaz vykonat]
+	 * @return [vraci true pokud lze prikaz provest]
+	 */
+	public boolean canExecute()
+	{
+		return this.stack.isEmpty();
+	}
 }

@@ -1,50 +1,71 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CommandMoveMultiple: Trida prikazu, ktery presouva balicky karet mezi jednotlivymi balicky karet na hraci desce
+ * @author Petr Buchal, xbucha02
+ * @author Tomas Holik, xholik13
+ * @version 1.0
+ * Project: Medieval Klondike
+ * University: Brno University of Technology
+ * Course: IJA
  */
 package ija.ija2016.homework3.controller;
 
 import ija.ija2016.homework3.model.cards.Card;
 import ija.ija2016.homework3.model.cards.CardStack;
 
-/**
- *
- * @author Holajz
- */
-public class CommandMoveMultiple implements CommandInterface{
-    CardStack source      = null;
-    CardStack destination = null;
-    Card card             = null;
-    boolean wasTurnedUp    = false;
+public class CommandMoveMultiple implements CommandInterface
+{
+	CardStack source = null;
+	CardStack destination = null;
+	Card card = null;
+	boolean isTurnedUp = false;
 
-    public CommandMoveMultiple(CardStack source, CardStack destination, Card card){
-        this.source = source;
-        this.destination = destination;
-        this.card = card;
-    }
+	/**
+	 * [konstruktor]
+	 * @param  source	  [zdroj]
+	 * @param  destination [cil]
+	 * @param  card		[zacatek od ktereho se ma odebirat]
+	 */
+	public CommandMoveMultiple(CardStack source, CardStack destination, Card card)
+	{
+		this.source = source;
+		this.destination = destination;
+		this.card = card;
+	}
 
-    public void execute(){
-        if(this.canExecute()){
-            wasTurnedUp = false;
-            this.destination.put(this.source.pop(card));
-            if(!this.source.isEmpty()){
-                this.wasTurnedUp = this.source.top().isTurnedFaceUp();
-                this.source.top().turnFaceUp();
-            }
-        }
-    }
+	/**
+	 * [metoda vykona prikaz]
+	 */
+	public void execute()
+	{
+		if(this.canExecute())
+		{
+			isTurnedUp = false;
+			this.destination.put(this.source.pop(card));
+			if(!this.source.isEmpty())
+			{
+				this.isTurnedUp = this.source.topStack().isTurnedFaceUp();
+				this.source.topStack().turnFaceUp();
+			}
+			isTurnedUp = true;
+		}
+	}
 
-    public void unexecute(){
-        if(!this.wasTurnedUp)
-            this.source.top().turnFaceDown();
-        CardStack takenDeck = this.destination.pop(card);
-        for(int index = 0; index < takenDeck.size(); index++){
-            this.source.emplace(takenDeck.get(index));
-        }
-    }
+	/**
+	 * [metoda pro vraceni do stavu pred provedenim prikazu]
+	 */
+	public void unexecute()
+	{
+		if(!this.isTurnedUp)
+			this.source.topStack().turnFaceDown();
+		this.source.InitPut(this.destination.pop(card));
+	}
 
-    public boolean canExecute(){
-        return this.destination.canPut(this.card) && this.source.contains(card);
-    }
+	/**
+	 * [metoda zjisti zda-li jde prikaz vykonat]
+	 * @return [vraci true pokud lze prikaz provest]
+	 */
+	public boolean canExecute()
+	{
+		return this.destination.canPutCard(this.card);
+	}
 }
