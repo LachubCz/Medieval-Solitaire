@@ -13,7 +13,6 @@
 	<property name="resources.dir" value="build/main/ija/textures"/>
 	<property name="music.dir" value="build/main/ija/music"/>
 	
-	
 	<path id="libs">
 		<fileset dir="${lib}" includes="*.jar"/>
 		<pathelement location="${build.dir.classes}"/>
@@ -31,21 +30,13 @@
 		    <delete dir="${doc.dir}"/>
     </target>
 	
-	
-	<target name="get-libs">
-        <!--<exec executable="/bin/bash">
-            <arg value="lib/get-libs.sh"/>
-        </exec>-->
-    </target>
-	
-	<target name="doc" depends="get-libs, clean">
+	<target name="doc" depends="clean">
 	    <mkdir dir="${doc.dir}"/>
 		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="Windows-1250">
 			<classpath refid="libs"/>
 		</javadoc>
 	</target>
 	
-
     <target name="compile" depends="doc">
         <mkdir dir="${build.dir.classes}"/>
         <javac srcdir="${src.dir}" destdir="${build.dir.classes}" includeantruntime="false" encoding="Windows-1250"> 
@@ -73,11 +64,8 @@
 		</jar>
     </target>
 	
-
-	
 	<target name="run" depends="compile">
 		<java jar="${dest.dir}/${jar.name}.jar" fork="true"/>
 	</target>
 		
-	
 </project>
