@@ -1,4 +1,9 @@
+<h1 style="font-size:80px"><img height="40" style="padding-bottom: -10px;" src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png">Medieval Solitaire</h1>
+
 # Medieval Solitaire
+
+# ![][1] Medieval Solitaire
+[1]: https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png
 
 <img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png" height="40"/>
 
