@@ -2,7 +2,7 @@
  * @author Petr Buchal, xbucha02
  * @author Tomas Holik, xholik13
  * @version 1.0
- * Project: Medieval Klondike
+ * Project: Medieval Solitaire
  * University: Brno University of Technology
  * Course: IJA
  */
