@@ -1,11 +1,4 @@
-<h1 style="font-size:80px"><img height="60" style="margin-bottom: -10px"src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png">   Medieval Solitaire</h1>
-
-# Medieval Solitaire
-
-# ![][1] Medieval Solitaire
-[1]: https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png
-
-<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png" height="40"/>
+<h1><img height="50" style="margin-bottom: -10px"src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png">    Medieval Solitaire</h1>
 
 [![Build Status](https://travis-ci.org/LachubCz/Medieval-Solitaire.svg?branch=master)](https://travis-ci.org/LachubCz/Medieval-Solitaire) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf43bc40c6e3456c818a8918b9687a25)](https://www.codacy.com/project/LachubCz/MedievalSolitaire/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LachubCz/MedievalSolitaire&amp;utm_campaign=Badge_Grade_Dashboard)
 
