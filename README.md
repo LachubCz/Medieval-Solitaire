@@ -1,5 +1,7 @@
-<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png" height="40"/>
 # Medieval Solitaire
+
+<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png" height="40"/>
+
 [![Build Status](https://travis-ci.org/LachubCz/Medieval-Solitaire.svg?branch=master)](https://travis-ci.org/LachubCz/Medieval-Solitaire) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf43bc40c6e3456c818a8918b9687a25)](https://www.codacy.com/project/LachubCz/MedievalSolitaire/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LachubCz/MedievalSolitaire&amp;utm_campaign=Badge_Grade_Dashboard)
 
 Medieval Solitaire originated as a school project from Java course and exceeded all expectations which school project can ever has. Now everyone can download it and enjoy wonders of this art piece.
