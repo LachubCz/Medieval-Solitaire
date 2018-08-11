@@ -1,4 +1,4 @@
-<h1 style="font-size:80px"><img height="60" src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png">   Medieval Solitaire</h1>
+<h1 style="font-size:80px"><img height="60" style="margin-bottom: -10px"src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/lib/textures/icon.png">   Medieval Solitaire</h1>
 
 # Medieval Solitaire
 
