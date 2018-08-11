@@ -7,7 +7,7 @@ Medieval Solitaire originated as a school project from Java course and exceeded 
 ## Installation and launch
 1. Download and install Apache Ant
 2. Download and unzip this repository 
-3. In unzipped repositry run command `ant run`
+3. In unzipped repository run command `ant run`
 
 ## Features
 
@@ -19,7 +19,7 @@ Game has wonderful historically accurate sountrack composed by various modern ar
 
 1. 
 2. 
-3. Glorius Morning by Waterflame (from legendary flash game Age of War)
+3. Glorius Morning by Waterflame (song from legendary flash game Age of War)
 
 ### Unique game features
 
