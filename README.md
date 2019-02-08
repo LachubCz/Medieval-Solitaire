@@ -15,16 +15,11 @@ Medieval Solitaire originated as a school project from Java course and exceeded 
 Deck of fifty-two playing cards is the only known complete deck of illuminated ordinary playing cards from the 15th century (ca. 1470-1485). The suit symbols, based on equipment associated with the hunt, are hunting horns, dog collars, hound tethers, and game nooses. The figures appear to be based on Franco-Flemish models. [<a href="https://www.metmuseum.org/art/collection/search/475513">source</a>]
 
 ### Soundtrack
-Game has wonderful historically accurate sountrack composed by various modern artists.
-
-1. 
-2. 
-3. Glorius Morning by Waterflame (song from legendary flash game Age of War)
+Game has wonderful historically accurate sountrack composed by various modern artists e.g. Glorius Morning by Waterflame (song from legendary flash game Age of War).
 
 ### Unique game features
 
 #### Undo
-You can undo up to infinite latest moves.
 
 #### Hint
 
