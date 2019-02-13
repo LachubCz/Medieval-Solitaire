@@ -20,13 +20,16 @@ Game has wonderful historically accurate sountrack composed by various modern ar
 ### Unique game features
 
 #### Undo
+<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/images/undo.gif" height="350"/>
 
 #### Hint
+<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/images/hint.gif" height="350"/>
 
 #### Save and Load
+<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/images/save_load.gif" height="350"/>
 
 #### Multiple games at once
-
+<img src="https://raw.githubusercontent.com/LachubCz/Medieval-Solitaire/master/images/multiple_games.gif" height="350"/>
 
 ****
 ###### Created by: Petr Buchal and Tomas Holik
